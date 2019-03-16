@@ -5,6 +5,10 @@ MH_cpp <- function(B, sd, burn = 0L, thin = 1L) {
     .Call(`_Mozza_MH_cpp`, B, sd, burn, thin)
 }
 
+cousins_1stdegree <- function(n, tile_length, Haplos, chr, dist, kinship = FALSE) {
+    .Call(`_Mozza_cousins_1stdegree`, n, tile_length, Haplos, chr, dist, kinship)
+}
+
 make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE) {
     .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship)
 }

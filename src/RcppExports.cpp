@@ -20,6 +20,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cousins_1stdegree
+List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
+RcppExport SEXP _Mozza_cousins_1stdegree(SEXP nSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type tile_length(tile_lengthSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
+    rcpp_result_gen = Rcpp::wrap(cousins_1stdegree(n, tile_length, Haplos, chr, dist, kinship));
+    return rcpp_result_gen;
+END_RCPP
+}
 // make_inds
 List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
 RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
@@ -196,6 +212,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_MH_cpp", (DL_FUNC) &_Mozza_MH_cpp, 4},
+    {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 6},
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 6},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 7},
