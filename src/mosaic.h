@@ -22,12 +22,19 @@ namespace mozza {
 class mosaic {
 public:
   int chrs; // nombre de chromosomes (eg 22)
-  const std::vector<double> & chr_len; // un vecteur de chrs (22) longueurs (en cM...)
-  std::vector<std::vector<int>> tiles; // un vecteur de chrs (22) vecteurs de 'tiles'
+  // référence à un vecteur de chrs (22) longueurs (en cM...)
+  const std::vector<double> & chr_len; 
+  
+  // longueur totale des chromosomes
+  double genome_length;
+  
+  // un vecteur de chrs (22) vecteurs de 'tiles'
+  std::vector<std::vector<int>> tiles; 
+
   // idem avec les points de coupure (en cM) entre les tuiles
   // NB Il y a toujours un bpoint en fin de chr, sa position doit coincider avec chr_len[chr]
   std::vector<std::vector<double>> bpoints; 
-  
+
   // position du curseur
   unsigned int cursor_chr;  
   double cursor_pos; // en cM
@@ -38,7 +45,7 @@ public:
   
   // constructeur par mélange 
   // le1, le2 = longueur moyenne des morceaux (loi exp) des deux haplotypes d'origine
-  // sauf erreur les valeurs par défaut correspondent à la mitose (morceaux d'un morgan)
+  // sauf erreur les valeurs par défaut correspondent à la meiose (morceaux d'un morgan)
   mosaic(mosaic & M1, mosaic & M2, double le1 = 100., double l2 = 100.);
   
   // constructeur avec des tuiles tirée uniforméments entre 0 et (ntiles - 1), 

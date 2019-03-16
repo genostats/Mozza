@@ -5,12 +5,16 @@ MH_cpp <- function(B, sd, burn = 0L, thin = 1L) {
     .Call(`_Mozza_MH_cpp`, B, sd, burn, thin)
 }
 
-make_inds <- function(n, length_tiles, Haplos, chr, dist) {
-    .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist)
+make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE) {
+    .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship)
 }
 
 make_pairs <- function(N, le1, le2, length_tiles, Haplos, chr, dist) {
     .Call(`_Mozza_make_pairs`, N, le1, le2, length_tiles, Haplos, chr, dist)
+}
+
+nuclear_families <- function(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship = FALSE) {
+    .Call(`_Mozza_nuclear_families`, nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship)
 }
 
 essai <- function() {
@@ -47,6 +51,10 @@ test_push_genos <- function(H) {
 
 test_xptr <- function(Haplos, chr, dist) {
     .Call(`_Mozza_test_xptr`, Haplos, chr, dist)
+}
+
+families_of_4_v0 <- function(N, Haplos, chr, dist) {
+    .Call(`_Mozza_families_of_4_v0`, N, Haplos, chr, dist)
 }
 
 families_of_4 <- function(N, Haplos, chr, dist) {

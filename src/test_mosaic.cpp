@@ -174,11 +174,11 @@ std::vector<int> test_push_genos(IntegerVector H) {
   Ma2.print_chr(0);
   Mb1.print_chr(0);
   Mb2.print_chr(0);
-  std::vector<std::pair<mozza::mosaic,mozza::mosaic>> x 
-    { std::pair<mozza::mosaic, mozza::mosaic>(M1,  M2),
-      std::pair<mozza::mosaic, mozza::mosaic>(P1,  P2),
-      std::pair<mozza::mosaic, mozza::mosaic>(Ma1, Ma2), 
-      std::pair<mozza::mosaic, mozza::mosaic>(Mb1, Mb2) };
+  std::vector<mozza::zygote> x 
+  { mozza::zygote(M1,  M2),
+    mozza::zygote(P1,  P2),
+    mozza::zygote(Ma1, Ma2), 
+    mozza::zygote(Mb1, Mb2) };
   std::vector<int> R;
   push_genotypes_at_cursor(x, H, R);
   
@@ -203,7 +203,7 @@ XPtr<matrix4> test_xptr(XPtr<matrix4> Haplos, IntegerVector chr, NumericVector d
 }
 
 //[[Rcpp::export]]
-XPtr<matrix4> families_of_4(int N, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist) {
+XPtr<matrix4> families_of_4_v0(int N, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist) {
   std::vector<mozza::zygote> x; 
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
 
@@ -231,3 +231,19 @@ XPtr<matrix4> families_of_4(int N, XPtr<matrix4> Haplos, IntegerVector chr, Nume
 }
 
 
+// new version using new constructor / + operator
+//[[Rcpp::export]]
+XPtr<matrix4> families_of_4(int N, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist) {
+  std::vector<mozza::zygote> x; 
+  int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
+  
+  for(int i = 0; i < N; i++) {
+    mozza::zygote M(mozza::human_autosomes_b37, n_haps, 20);
+    mozza::zygote F(mozza::human_autosomes_b37, n_haps, 20);
+    x.push_back(M);
+    x.push_back(F);
+    x.push_back(M+F);
+    x.push_back(M+F);
+  }
+  return drop_to_bed_matrix(x, Haplos, chr, dist);
+}

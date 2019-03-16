@@ -21,8 +21,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // make_inds
-XPtr<matrix4> make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist);
-RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP) {
+List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
+RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inds(n, length_tiles, Haplos, chr, dist));
+    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_inds(n, length_tiles, Haplos, chr, dist, kinship));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -49,6 +50,23 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     rcpp_result_gen = Rcpp::wrap(make_pairs(N, le1, le2, length_tiles, Haplos, chr, dist));
+    return rcpp_result_gen;
+END_RCPP
+}
+// nuclear_families
+List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
+RcppExport SEXP _Mozza_nuclear_families(SEXP nb_famsSEXP, SEXP nb_offspringsSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type nb_fams(nb_famsSEXP);
+    Rcpp::traits::input_parameter< int >::type nb_offsprings(nb_offspringsSEXP);
+    Rcpp::traits::input_parameter< double >::type tile_length(tile_lengthSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
+    rcpp_result_gen = Rcpp::wrap(nuclear_families(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -147,6 +165,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// families_of_4_v0
+XPtr<matrix4> families_of_4_v0(int N, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist);
+RcppExport SEXP _Mozza_families_of_4_v0(SEXP NSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    rcpp_result_gen = Rcpp::wrap(families_of_4_v0(N, Haplos, chr, dist));
+    return rcpp_result_gen;
+END_RCPP
+}
 // families_of_4
 XPtr<matrix4> families_of_4(int N, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist);
 RcppExport SEXP _Mozza_families_of_4(SEXP NSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP) {
@@ -164,8 +196,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_MH_cpp", (DL_FUNC) &_Mozza_MH_cpp, 4},
-    {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 5},
+    {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 6},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
+    {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 7},
     {"_Mozza_essai", (DL_FUNC) &_Mozza_essai, 0},
     {"_Mozza_test_cursor", (DL_FUNC) &_Mozza_test_cursor, 0},
     {"_Mozza_essai2", (DL_FUNC) &_Mozza_essai2, 0},
@@ -175,6 +208,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_test_IBD_sibs", (DL_FUNC) &_Mozza_test_IBD_sibs, 3},
     {"_Mozza_test_push_genos", (DL_FUNC) &_Mozza_test_push_genos, 1},
     {"_Mozza_test_xptr", (DL_FUNC) &_Mozza_test_xptr, 3},
+    {"_Mozza_families_of_4_v0", (DL_FUNC) &_Mozza_families_of_4_v0, 4},
     {"_Mozza_families_of_4", (DL_FUNC) &_Mozza_families_of_4, 4},
     {NULL, NULL, 0}
 };

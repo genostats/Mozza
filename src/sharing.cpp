@@ -3,7 +3,7 @@
 
 namespace mozza {
 
-// longueur IBD entre M1 et M2
+// longueur IBD entre haplotypes M1 et M2
 // note : on ne vérifie pas que la longueur des chromosomes / la fin de la dernière tuile coincident...
 // NOTE la position du curseur est modifiée (on pourrait la sauver et remettre le curseur à sa place ?)
 double sharing(mosaic & M1, mosaic & M2) {

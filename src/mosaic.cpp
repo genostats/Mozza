@@ -4,16 +4,21 @@ using namespace Rcpp;
 
 namespace mozza {
 
+// constructeur avec une tuile 'tile' constante
 mosaic::mosaic(const std::vector<double> & chr_len, int tile) : 
-chrs(chr_len.size()), chr_len(chr_len), tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
+chrs(chr_len.size()), chr_len(chr_len), genome_length(std::accumulate(chr_len.begin(), chr_len.end(), 0.)), 
+tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
   for(int i = 0; i < chrs; i++) {
     tiles[i].push_back(tile);
     bpoints[i].push_back(chr_len[i]);
   }
 }
 
+// constructeur avec des tuiles de 0 à ntiles-1, de longueur prise dans une exponentielle 
+// avec longueur moyenne mean_length
 mosaic::mosaic(const std::vector<double> & chr_len, int ntiles, double mean_length) : 
-chrs(chr_len.size()), chr_len(chr_len), tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
+chrs(chr_len.size()), chr_len(chr_len), genome_length(std::accumulate(chr_len.begin(), chr_len.end(), 0.)), 
+tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
   for(int i = 0; i < chrs; i++) {
     double le = chr_len[i];
     double pos = 0; 
@@ -32,8 +37,11 @@ chrs(chr_len.size()), chr_len(chr_len), tiles(chrs), bpoints(chrs), cursor_chr(0
   }
 }  
 
+// constructeur qui mélange M1 et M2, en prenant dans M1 des morceaux de longueur
+// ~ exp(le1) et dans M2 des morceaux de longueur ~ exp(le2)
 mosaic::mosaic(mosaic & M1, mosaic & M2, double le1, double le2) :
-chrs(M1.chrs), chr_len(M1.chr_len), tiles(chrs),  bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
+chrs(M1.chrs), chr_len(M1.chr_len), genome_length(M1.genome_length), 
+tiles(chrs),  bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
   double p1 = le1/(le1 + le2); // proba d'être sur M1.
   if(M2.chrs != chrs)
     stop("Two mosaic haplotypes with different chrs");
