@@ -1,0 +1,169 @@
+
+*****************************************************
+*             Classe mozza::mosaic                  *
+*        Fichiers mosaic.h mosaic*.cpp              *
+*              et human_autosomes.h                 *
+*****************************************************
+
+
+La classe mosaic définie dans mosaic.h permet de créer des haplotypes
+mosaïque. Les membres sont "documentés" dans la classe.
+
+Les haplotypes mosaiques sont des vecteurs d'entiers... 
+
+* infos sur les chromosomes
+
+  int chrs; // nombre de chromosomes (eg 22)
+  // référence à un vecteur de chrs (22) longueurs (en cM...)
+  const std::vector<double> & chr_len;
+
+  // longueur totale des chromosomes
+  double genome_length;
+
+
+* des vecteurs pour les tuiles 
+
+  // un vecteur de chrs (22) vecteurs de 'tiles'
+  std::vector<std::vector<int>> tiles;
+
+  // idem avec les points de coupure (en cM) entre les tuiles
+  // NB Il y a toujours un bpoint en fin de chr, sa position doit coincider avec chr_len[chr]
+  std::vector<std::vector<double>> bpoints;
+
+
+* position d'un "curseur" qui pointe un endroit du génome.
+* Le i_cursor est l'indice (dans les vecteurs de tuiles) de la tuile pointée
+* par le curseur
+
+  // position du curseur
+  unsigned int cursor_chr;
+  double cursor_pos; // en cM
+  unsigned int i_cursor;
+
+
+* Constructeurs. Le premier construit des haplotypes avec une seule tuile.
+* Le second mélange deux haplotypes mosaiques préexistant en y piochant des
+* morceaux de longueurs prises dans des lois exp (les longueurs sont en cM)
+* Le troisième fait une mosaïque à la hapgen
+* Le code est dans mosaic.cpp
+
+  // constructeur avec la tuile tile (0) répétée sur tous les chrs
+  mosaic(const std::vector<double> & chr_len, int tile = 0);
+
+  // constructeur par mélange 
+  // le1, le2 = longueur moyenne des morceaux (loi exp) des deux haplotypes d'origine
+  // sauf erreur les valeurs par défaut correspondent à la meiose (morceaux d'un morgan)
+  mosaic(mosaic & M1, mosaic & M2, double le1 = 100., double l2 = 100.);
+
+  // constructeur avec des tuiles tirée uniforméments entre 0 et (ntiles - 1), 
+  // de longueurs prises dans une loi exp lambda = 1/mean_length
+  // [truc à la hapgen]
+  mosaic(const std::vector<double> & chr_len, int ntiles, double mean_length);
+
+* NOTE
+* On peut utiliser pour l'argument chr_len des constructeurs 1 et 3
+* le vecteur mozza::human_autosomes_b37
+* qui est défini dans human_autosomes.h
+* ainsi que mozza::length_human_autosomes_b37  (la somme des longueurs)
+
+* Fonctions de gestion du curseur. Utilisées par les fonctions qui calculent l'IBD
+* Le code est dans mosaic_cursor.cpp
+
+  // positionner le curseur
+  void set_cursor(unsigned int chr = 0, double pos = 0.);
+
+  // avancer le curseur [en récupérant ou pas les tuiles et les break points rencontrées sur le chemin]
+  void step_cursor(double length); // avance de length
+  void forward_cursor(double pos); // avance jusqu'à pos (supposé > cursor_pos, sinon on bouge pas)
+
+  // idem step cursor mais push_back dans til et pbt les numéros de tuiles et les positions de bpoints
+  // "dépassés sur le chemin"
+  void step_cursor(double length, std::vector<int> & til, std::vector<double> & bpt);
+
+  // numéro de la tuile au curseur
+  int tile_at_cursor();
+
+* Fonctions d'affichage rudimentaire...
+* Le code est dans mosaic_print.cpp
+
+  void print();
+  void print_chr(int i);
+  void print_cursor();
+
+*****************************************************
+*             Classe mozza::zygote                  *
+*               Fichier zygote.h                    *
+*****************************************************
+
+* Cette classe est juste un moyen d'éviter d'écrire std::pair<mosaic,mosaic>
+* Les membres sont donc .first et .second
+
+* Constructeur zygote(mosaic h1, mosaic h2) : crée la paire
+* Le constructeur
+* zygote(const std::vector<double> & chr_len, int ntiles, double mean_length)
+* appelle le constructeur "à la hapgen" pour créer les deux haplotypes
+
+* Fonction + : appelle le "constructeur méiotique" pour faire un enfant
+
+
+*****************************************************
+*    Fonctions                                      *
+*          mozza::sharing                           *
+*          mozza::IBD_length                        *
+*          mozza::kinship_matrix                    *
+*          mozza::drop_to_bed_matrix                *
+*    Fichiers mozza.h et                            *
+*          sharing.cpp                              *
+*          ibd.cpp                                  *
+*          kinship_matrix.cpp                       *
+*          drop_to_bed_matrix.cpp                   * 
+*****************************************************
+
+
+double sharing(mosaic & M1, mosaic & M2)l
+
+* calcule la longueur IBD entre haplotypes M1 et M2
+* cette fonction (comme les suivantes) modifie la valeur du curseur
+
+
+std::tuple<double, double, double> IBD_length(zygote & Z1, zygote & Z2);
+
+* Renvoie un triplet avec les longueurs des portions de génome avec 
+* IBD 0, 1 et 2. La fonction ne vérifie pas que tous les haplotypes sont
+* construits sur des génomes de même structure... 
+* [ pour bien faire il faudrait ne pas avoir cette structure stockée
+*   les haplotypes mosaique ... et de même il faudrait avoir un 
+*   seul curseur pour tous les haplotypes ... ]
+
+
+NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
+
+* Prend un vecteur de zygotes et renvoie la matrice de kinship, calculée
+* à l'aide de IBD_length
+
+
+XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotypes, IntegerVector chr, NumericVector dist);
+
+* Cette fonction fait à peu près ce que son nom indique (drop_to_matrix4 aurait été mieux)
+* La matrix4 haplotypes est une matrix4 d'haplotypes codés 0, 1
+*
+* NOTE TECHNIQUE
+* la fonction utilise push_genotypes_at_cursor(std::vector<zygote> & x, T1 & allele_at_haplo, T2 & genotypes)
+* définie dans push_genotypes_at_cursor.h
+* Qui suppose que allele_at_haplo est un vecteur des allèles portés par les divers haplotypes "source" à la position
+* courante et genotypes est n'importe quoi qui a une function push_back : un vecteur d'entiers ou bien un SNP_push_back
+* 
+* La classe SNP_push_back définie dans push_m4_row.h 
+* permet de remplir une ligne d'une matrix4 par des push_back
+*
+* Dans le même fichier la fonction push_m4_row permet de pusher les valeurs 
+* contenues dans une ligne d'une matrix4 vers un vecteur d'entiers 
+
+
+
+
+ cousins_1stdegree.cpp
+ make_inds.cpp
+ make_pairs.cpp
+ nuclear_families.cpp
+
