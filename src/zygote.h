@@ -6,8 +6,10 @@ namespace mozza {
 class zygote : public std::pair<mosaic, mosaic> {
 public:
   zygote(mosaic h1, mosaic h2) : std::pair<mosaic, mosaic>(h1, h2)  {}
-  zygote(const std::vector<double> & chr_len, int ntiles, double mean_length) :
-  std::pair<mosaic, mosaic>(mosaic(chr_len, ntiles, mean_length), mosaic(chr_len, ntiles, mean_length)) {}
+  zygote(const std::vector<double> & chr_len, int ntiles, double mean_length)
+    : std::pair<mosaic, mosaic>(mosaic(chr_len, ntiles, mean_length), mosaic(chr_len, ntiles, mean_length)) {}
+  zygote(const std::vector<double> & chr_len, const std::vector<double> & proba_tiles, double mean_length)
+    : std::pair<mosaic, mosaic>(mosaic(chr_len, proba_tiles, mean_length), mosaic(chr_len, proba_tiles, mean_length)) {}
 };
 
 inline zygote operator+(zygote Z1, zygote Z2) {

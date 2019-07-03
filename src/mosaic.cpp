@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include "mosaic.h"
+#include "sample_cp.h"
 using namespace Rcpp;
 
 namespace mozza {
@@ -25,6 +26,40 @@ tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
     while(true) {
       // tire et ajoute une tuile
       tiles[i].push_back(R::runif(0,1)*ntiles);
+      // position de fin de cette tuile
+      pos += R::rexp(mean_length);
+      if(pos < le) {
+        bpoints[i].push_back(pos);
+      } else {
+        bpoints[i].push_back(le);
+        break;
+      }
+    }
+  }
+}  
+
+// constructeur avec des tuiles de 0 à proba_tiles.size()-1, 
+// de longueur prise dans une exponentielle avec longueur moyenne mean_length
+// d'indices tirés selon les valeurs du vecteur proba_tiles
+mosaic::mosaic(const std::vector<double> & chr_len, const std::vector<double> & proba_tiles, double mean_length) : 
+chrs(chr_len.size()), chr_len(chr_len), genome_length(std::accumulate(chr_len.begin(), chr_len.end(), 0.)), 
+tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
+  // probas cumulées
+  std::vector<double> cum_probas;
+  double S = 0;
+  for(auto a : proba_tiles) {
+    S += a;
+    cum_probas.push_back(S);
+  }
+  // normaliser !
+  for(auto & a : cum_probas) a /= S;
+  // code quasi identique à celui du constructeur précédent
+  for(int i = 0; i < chrs; i++) {
+    double le = chr_len[i];
+    double pos = 0; 
+    while(true) {
+      // tire et ajoute une tuile
+      tiles[i].push_back( sample_cp(cum_probas) );
       // position de fin de cette tuile
       pos += R::rexp(mean_length);
       if(pos < le) {

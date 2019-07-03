@@ -6,20 +6,6 @@
 
 using namespace Rcpp;
 
-// MH_cpp
-NumericMatrix MH_cpp(int B, double sd, int burn, int thin);
-RcppExport SEXP _Mozza_MH_cpp(SEXP BSEXP, SEXP sdSEXP, SEXP burnSEXP, SEXP thinSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type B(BSEXP);
-    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
-    Rcpp::traits::input_parameter< int >::type burn(burnSEXP);
-    Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
-    rcpp_result_gen = Rcpp::wrap(MH_cpp(B, sd, burn, thin));
-    return rcpp_result_gen;
-END_RCPP
-}
 // cousins_1stdegree
 List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
 RcppExport SEXP _Mozza_cousins_1stdegree(SEXP nSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
@@ -49,6 +35,23 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
     rcpp_result_gen = Rcpp::wrap(make_inds(n, length_tiles, Haplos, chr, dist, kinship));
+    return rcpp_result_gen;
+END_RCPP
+}
+// make_inds_probs
+List make_inds_probs(int n, const std::vector<double>& proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
+RcppExport SEXP _Mozza_make_inds_probs(SEXP nSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type proba_haplos(proba_haplosSEXP);
+    Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_inds_probs(n, proba_haplos, length_tiles, Haplos, chr, dist, kinship));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -211,9 +214,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_Mozza_MH_cpp", (DL_FUNC) &_Mozza_MH_cpp, 4},
     {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 6},
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 6},
+    {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 7},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 7},
     {"_Mozza_essai", (DL_FUNC) &_Mozza_essai, 0},

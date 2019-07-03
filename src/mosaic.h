@@ -52,6 +52,11 @@ public:
   // de longueurs prises dans une loi exp lambda = 1/mean_length
   // [truc à la hapgen]
   mosaic(const std::vector<double> & chr_len, int ntiles, double mean_length);
+
+  // constructeur avec des tuiles de 0 à proba_tiles.size()-1, 
+  // de longueur prise dans une exponentielle comme ci-dessus
+  // d'indices tirés selon les valeurs du vecteur proba_tiles
+  mosaic(const std::vector<double> & chr_len, const std::vector<double> & proba_tiles, double mean_length);
   
   // positionner le curseur
   void set_cursor(unsigned int chr = 0, double pos = 0.);

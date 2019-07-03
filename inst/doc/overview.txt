@@ -44,7 +44,7 @@ Les haplotypes mosaiques sont des vecteurs d'entiers...
 * Constructeurs. Le premier construit des haplotypes avec une seule tuile.
 * Le second mélange deux haplotypes mosaiques préexistant en y piochant des
 * morceaux de longueurs prises dans des lois exp (les longueurs sont en cM)
-* Le troisième fait une mosaïque à la hapgen
+* Le troisième et le quatrième font une mosaïque à la hapgen
 * Le code est dans mosaic.cpp
 
   // constructeur avec la tuile tile (0) répétée sur tous les chrs
@@ -59,6 +59,11 @@ Les haplotypes mosaiques sont des vecteurs d'entiers...
   // de longueurs prises dans une loi exp lambda = 1/mean_length
   // [truc à la hapgen]
   mosaic(const std::vector<double> & chr_len, int ntiles, double mean_length);
+
+  // constructeur avec des tuiles de 0 à proba_tiles.size()-1, 
+  // de longueur prise dans une exponentielle comme ci-dessus
+  // d'indices tirés selon les valeurs du vecteur proba_tiles
+  mosaic::mosaic(const std::vector<double> & chr_len, const std::vector<double> & proba_tiles, double mean_length);
 
 * NOTE
 * On peut utiliser pour l'argument chr_len des constructeurs 1 et 3
@@ -99,9 +104,11 @@ Les haplotypes mosaiques sont des vecteurs d'entiers...
 * Les membres sont donc .first et .second
 
 * Constructeur zygote(mosaic h1, mosaic h2) : crée la paire
-* Le constructeur
-* zygote(const std::vector<double> & chr_len, int ntiles, double mean_length)
+
+* Le constructeur zygote(const std::vector<double> & chr_len, int ntiles, double mean_length)
 * appelle le constructeur "à la hapgen" pour créer les deux haplotypes
+
+* Idem pour zygote(const std::vector<double> & chr_len, const std::vector<double> & proba_tiles, double mean_length)
 
 * Fonction + : appelle le "constructeur méiotique" pour faire un enfant
 
