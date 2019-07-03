@@ -1,3 +1,4 @@
+require(Mozza)
 H <- read.bed.matrix("~/PROJECTS/PCA/2019/1KG_haplos")
 H <- set.dist(H, HumanGeneticMap::genetic.map.b37)
 
@@ -30,6 +31,7 @@ x <- rbind(x0,x1,x2)
 
 K <- GRM(x)
 eiK <- eigen(K)
-plot(eiK$vectors, col = x@ped$population)
+plot(eiK$vectors, col = factor(x@ped$population))
+
 L <- bed.loadings(x, eiK$vectors[,1:2])
 plot(L[,1], col = x@snps$chr, pch = ".") 
