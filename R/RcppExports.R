@@ -9,8 +9,8 @@ make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE) {
     .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship)
 }
 
-make_inds_probs <- function(n, proba_haplos, length_tiles, Haplos, chr, dist, kinship = FALSE) {
-    .Call(`_Mozza_make_inds_probs`, n, proba_haplos, length_tiles, Haplos, chr, dist, kinship)
+make_inds_probs <- function(N, proba_haplos, length_tiles, Haplos, chr, dist, kinship = FALSE) {
+    .Call(`_Mozza_make_inds_probs`, N, proba_haplos, length_tiles, Haplos, chr, dist, kinship)
 }
 
 make_pairs <- function(N, le1, le2, length_tiles, Haplos, chr, dist) {
@@ -19,6 +19,10 @@ make_pairs <- function(N, le1, le2, length_tiles, Haplos, chr, dist) {
 
 nuclear_families <- function(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship = FALSE) {
     .Call(`_Mozza_nuclear_families`, nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship)
+}
+
+nuclear_families_probs <- function(Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship = FALSE) {
+    .Call(`_Mozza_nuclear_families_probs`, Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship)
 }
 
 essai <- function() {
