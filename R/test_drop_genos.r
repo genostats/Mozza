@@ -8,11 +8,11 @@ test_drop_genos <- function(N = 10, chr.max = min(22,floor(N/3))) {
 
   bed <- test_xptr(Haplos@bed, chr, dist)
 
-  ids <- sprintf("m%0*d", log10(N) + 1, 1:N)
-  snps <- data.frame(chr = chr, id = ids, dist = dist, pos = NA,
+  id <- sprintf("m%0*d", log10(N) + 1, 1:N)
+  snps <- data.frame(chr = chr, id = id, dist = dist, pos = NA,
                A1 = NA, A2 = NA, stringsAsFactors = FALSE)
 
-  ped <- data.frame(famid = NA, ids = c("F", "M", "O1", "O2"), father = c(NA,NA,"F","F"), 
+  ped <- data.frame(famid = NA, id = c("F", "M", "O1", "O2"), father = c(NA,NA,"F","F"), 
                     mother = c(NA,NA,"M","M"), sex = NA, pheno = NA, stringsAsFactors = FALSE)
 
   new("bed.matrix", bed = bed, snps = snps, ped = ped, p = NULL, mu = NULL,

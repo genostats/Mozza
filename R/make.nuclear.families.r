@@ -19,11 +19,11 @@ make.nuclear.families <- function(nb.fams, nb.offsprings, haplos, proba.haplos, 
 
   N <- sum(nb.fams)
   famid <- rep( 1:N, each = (2 + nb.offsprings) )
-  ids <- rep( c(1:2, 2+(1:nb.offsprings)), N )
+  id <- rep( c(1:2, 2+(1:nb.offsprings)), N )
   father <- rep(c(NA, NA, rep(1, nb.offsprings)), N)
   mother <- rep(c(NA, NA, rep(2, nb.offsprings)), N)
   sex <- rep(c(1,2, rep(NA, nb.offsprings)), N)
-  ped <- data.frame(famid = famid, ids = ids, father = father, mother = mother, sex = sex, 
+  ped <- data.frame(famid = famid, id = id, father = father, mother = mother, sex = sex, 
                     pheno = NA, stringsAsFactors = FALSE)
   
   x <- new("bed.matrix", bed = L$bed, snps = haplos@snps, ped = ped, p = NULL, mu = NULL,

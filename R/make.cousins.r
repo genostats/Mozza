@@ -8,8 +8,8 @@ make.cousins <- function(n, haplos, tile.length = 20, kinship = FALSE) {
   L <- cousins_1stdegree(n, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, kinship)
   
   famid <- rep( 1:n, each = 2)
-  ids <- rep( 1:2, n )
-  ped <- data.frame(famid = famid, ids = ids, father = NA, mother = NA, sex = NA, 
+  id <- rep( 1:2, n )
+  ped <- data.frame(famid = famid, id = id, father = NA, mother = NA, sex = NA, 
                     pheno = NA, stringsAsFactors = FALSE)
   
   x <- new("bed.matrix", bed = L$bed, snps = haplos@snps, ped = ped, p = NULL, mu = NULL,

@@ -6,7 +6,7 @@ make.pairs <- function(nb.pairs, haplos, shared.length, unshared.length, tile.le
   L <- make_pairs(nb.pairs, shared.length, unshared.length, tile.length, 
                   haplos@bed, haplos@snps$chr, haplos@snps$dist)
 
-  ped <- data.frame(famid = rep(1:nb.pairs, each=2), ids = c("A", "B"), father = NA, 
+  ped <- data.frame(famid = rep(1:nb.pairs, each=2), id = c("A", "B"), father = NA, 
                     mother = NA, sex = NA, pheno = NA, stringsAsFactors = FALSE)
   
   x <- new("bed.matrix", bed = L$bed, snps = haplos@snps, ped = ped, p = NULL, mu = NULL,

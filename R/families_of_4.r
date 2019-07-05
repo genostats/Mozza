@@ -8,11 +8,11 @@ test_families_of_4 <- function(fams = 10, SNPS = 100, haps = 20, chr.max = min(2
 
   bed <- families_of_4(fams, Haplos@bed, chr, dist)
 
-  ids <- sprintf("m%0*d", log10(SNPS) + 1, 1:SNPS)
-  snps <- data.frame(chr = chr, id = ids, dist = dist, pos = NA,
+  id <- sprintf("m%0*d", log10(SNPS) + 1, 1:SNPS)
+  snps <- data.frame(chr = chr, id = id, dist = dist, pos = NA,
                A1 = NA, A2 = NA, stringsAsFactors = FALSE)
 
-  ped <- data.frame(famid = rep(1:fams, each=4), ids = c("F", "M", "O1", "O2"), father = c(NA,NA,"F","F"), 
+  ped <- data.frame(famid = rep(1:fams, each=4), id = c("F", "M", "O1", "O2"), father = c(NA,NA,"F","F"), 
                     mother = c(NA,NA,"M","M"), sex = NA, pheno = NA, stringsAsFactors = FALSE)
 
   new("bed.matrix", bed = bed, snps = snps, ped = ped, p = NULL, mu = NULL,

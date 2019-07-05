@@ -9,11 +9,11 @@ test_make_pairs <- function(pairs, len1, len2, SNPS = 1e4, haps = 100, tile.leng
   
   L <- make_pairs(pairs, len1, len2, tile.length, Haplos@bed, chr, dist)
 
-  ids <- sprintf("m%0*d", log10(SNPS) + 1, 1:SNPS)
-  snps <- data.frame(chr = chr, id = ids, dist = dist, pos = NA,
+  id <- sprintf("m%0*d", log10(SNPS) + 1, 1:SNPS)
+  snps <- data.frame(chr = chr, id = id, dist = dist, pos = NA,
                A1 = NA, A2 = NA, stringsAsFactors = FALSE)
 
-  ped <- data.frame(famid = rep(1:pairs, each=2), ids = c("A", "B"), father = NA, 
+  ped <- data.frame(famid = rep(1:pairs, each=2), id = c("A", "B"), father = NA, 
                     mother = NA, sex = NA, pheno = NA, stringsAsFactors = FALSE)
 
   x <- new("bed.matrix", bed = L$bed, snps = snps, ped = ped, p = NULL, mu = NULL,
