@@ -111,4 +111,4 @@ tiles(chrs),  bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
   }
 }
 
-}; // end namespace
+} // end namespace

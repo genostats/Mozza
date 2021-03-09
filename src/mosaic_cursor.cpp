@@ -63,4 +63,4 @@ void mosaic::step_cursor(double len, std::vector<int> & til, std::vector<double>
 //   return tiles[cursor_chr][i_cursor];
 // }
 
-};
+}

@@ -1,7 +1,7 @@
 require(Mozza)
-require(gaston.utils)
+# require(gaston.utils)
 
-H <- read.bed.matrix("~/PROJECTS/PCA/2019/1KG_haplos")
+H <- read.bed.matrix("~/DATA/1KG_haplos/1KG_haplos")
 H <- set.dist(H, HumanGeneticMap::genetic.map.b37)
 
 # si les pops n'ont pas été bien mises dans 1KG_haplos.ped... :/

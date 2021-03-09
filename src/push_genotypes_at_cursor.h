@@ -26,6 +26,6 @@ inline void push_genotypes_at_cursor(std::vector<zygote> & x, T1 & allele_at_hap
   }
 }
 
-};
+}
 
 #endif

@@ -57,4 +57,4 @@ XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotyp
   return A;
 }
 
-};
+}

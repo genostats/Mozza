@@ -80,5 +80,5 @@ public:
   void print_cursor();
 };
 
-};
+}
 #endif

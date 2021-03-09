@@ -27,4 +27,4 @@ double sharing(mosaic & M1, mosaic & M2) {
   return shared;
 }
 
-};
+}

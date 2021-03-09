@@ -22,4 +22,4 @@ NumericMatrix kinship_matrix(std::vector<zygote> & ZYG) {
   return K;
 }
 
-}; // end namespace
+} // end namespace

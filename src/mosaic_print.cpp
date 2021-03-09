@@ -22,4 +22,4 @@ void mosaic::print_cursor() {
   Rcout << "cursor at " << cursor_chr << ": " << cursor_pos;
   Rcout << " (i = " << i_cursor << " tile = " << tile_at_cursor() << ")\n";
 }
-};
+}

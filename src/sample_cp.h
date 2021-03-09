@@ -15,5 +15,5 @@ inline int sample_cp(const std::vector<double> & cum_prob) {
   return i;
 }
 
-}; // namespace mozza
+} // namespace mozza
 

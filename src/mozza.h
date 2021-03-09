@@ -17,6 +17,6 @@ namespace mozza {
     
     
   NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
-};
+}
 
 #endif

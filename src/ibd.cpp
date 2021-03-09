@@ -62,4 +62,4 @@ std::tuple<double, double, double> IBD_length(zygote & Z1, zygote & Z2) {
   return std::make_tuple(IBD0, IBD1, IBD2);
 }
 
-};
+}

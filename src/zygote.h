@@ -16,5 +16,5 @@ inline zygote operator+(zygote Z1, zygote Z2) {
   return zygote(mosaic(Z1.first, Z1.second), mosaic(Z2.first, Z2.second));
 }
 
-};
+}
 #endif
