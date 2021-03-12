@@ -11,4 +11,4 @@ License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.0), RcppParallel (>= 4.4.2)
 Depends: gaston
 LinkingTo: Rcpp, RcppParallel, gaston
-SystemRequirements: GNU make
+SystemRequirements: GNU make, C++11
