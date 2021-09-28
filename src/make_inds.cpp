@@ -38,7 +38,8 @@ std::vector<mozza::zygote> make_inds(int n, const std::vector<double> & proba_ti
 
 // Habillages avec un drop_to_bed_matrix pour finir
 //[[Rcpp::export]]
-List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship = false) {
+List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
+               bool kinship = false, bool fraternity = false) {
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   std::vector<mozza::zygote> ZYG { make_inds(n, n_haps, length_tiles) }; 
   
@@ -46,6 +47,8 @@ List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector c
   L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
+  if(fraternity) 
+    L["fraternity"] = fraternity_matrix(ZYG);
   return L;
 }
 
@@ -56,7 +59,8 @@ List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector c
 // proportions différentes.
 //[[Rcpp::export]]
 List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_tiles, 
-                     XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship = false) {
+                     XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
+                     bool kinship = false, bool fraternity = false) {
 
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   if(n_haps != proba_haplos.nrow() || N.size() != proba_haplos.ncol())
@@ -75,5 +79,7 @@ List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_
   L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
+  if(fraternity) 
+    L["fraternity"] = fraternity_matrix(ZYG);
   return L;
 }

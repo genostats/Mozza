@@ -1,11 +1,11 @@
 
 # nb.inds = nbre d'indidividus (non apparentés) à générer
 # haplos = bed matrix d'haplotypes
-make.cousins <- function(n, haplos, tile.length = 20, kinship = FALSE) {
+make.cousins <- function(n, haplos, tile.length = 20, kinship = FALSE, fraternity = FALSE) {
   if(all(haplos@snps$dist == 0))
     stop("Set genetic distance between markers with set.dist !")
   
-  L <- cousins_1stdegree(n, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, kinship)
+  L <- cousins_1stdegree(n, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, kinship, fraternity)
   
   famid <- rep( 1:n, each = 2)
   id <- rep( 1:2, n )
@@ -18,10 +18,7 @@ make.cousins <- function(n, haplos, tile.length = 20, kinship = FALSE) {
   if(getOption("gaston.auto.set.stats", TRUE))
     x <- set.stats(x)
   
-  if(kinship) {
-    L$bed = x
-    return(L);
-  }
-  x
+  L$bed <- x
+  L
 }
 

@@ -4,7 +4,8 @@
 using namespace Rcpp;
 
 //[[Rcpp::export]]
-List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship = false) {
+List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
+                       bool kinship = false, bool fraternity = false) {
   std::vector<mozza::zygote> ZYG; 
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   
@@ -22,5 +23,7 @@ List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerV
   L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
+  if(fraternity) 
+    L["fraternity"] = fraternity_matrix(ZYG);
   return L;
 }

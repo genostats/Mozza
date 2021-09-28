@@ -3,7 +3,7 @@
 using namespace Rcpp;
 
 namespace mozza {
-NumericMatrix kinship_matrix(std::vector<zygote> & ZYG) {
+NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG) {
   int n = ZYG.size();
   double total_length(0);
   if(n > 0)
@@ -12,7 +12,7 @@ NumericMatrix kinship_matrix(std::vector<zygote> & ZYG) {
   for(int i = 0; i < n; i++) {
     for(int j = i; j < n; j++) {
       auto IBD = IBD_length(ZYG[i], ZYG[j]);
-      K(j,i) = (0.5*std::get<1>(IBD) + std::get<2>(IBD)) / total_length;
+      K(j,i) = (std::get<2>(IBD)) / total_length;
     }
   }
   // symetriser

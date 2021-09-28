@@ -3,30 +3,62 @@
 #include "mozza.h"
 using namespace Rcpp;
 
+// n0 : nb indiv à la génération 0
+// nGen : nb total de generation
+// keep : nb de generations à garder
+// lambda : parametre loi de Poisson
 //[[Rcpp::export]]
-List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
-                      bool kinship = false, bool fraternity = false) {
-  std::vector<mozza::zygote> ZYG; 
-  int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
-  
-  for(int i = 0; i < nb_fams; i++) {
-    mozza::zygote M(mozza::human_autosomes_b37, n_haps, tile_length);
-    mozza::zygote F(mozza::human_autosomes_b37, n_haps, tile_length);
-    ZYG.push_back(M);
-    ZYG.push_back(F);
-    for(int j = 0; j < nb_offsprings; j++)
-      ZYG.push_back(M+F);
+List population(int n0, int nGen, int keep, double lambda, 
+                double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
+                bool kinship = false, bool fraternity = false) {
+
+  if(keep < 1) keep = 1;
+  // vecteur de longueur keep, pour contenir les générations conservées
+  std::vector<std::vector<mozza::zygote>> POP(keep);
+
+  int n_haps = Haplos->ncol; // chaque haplotype = un "individu" de la bed matrix
+
+  // génération 0
+  for(int i = 0; i < n0; i++) {
+    POP[0].emplace_back( mozza::human_autosomes_b37, n_haps, tile_length ); // appelle le constructeur de mozza::zygote
+  }
+
+  // générations suivantes
+  for(int gen = 1; gen < nGen; gen++) {
+    int parents = (gen - 1) % keep;
+    int enfants = gen % keep;
+    POP[enfants].clear(); 
+    int nParents = POP[parents].size();
+    // on mélange les indices pour créer les couples.
+    IntegerVector I = sample(nParents, nParents, false, R_NilValue, false);
+    for(int k = 0; k < nParents/2; k++) {
+      int nOff = R::rpois(lambda);
+      for(int a = 0; a < nOff; a++) {
+        POP[enfants].push_back( POP[parents][I[2*k]] + POP[parents][I[2*k+1]] );
+      }
+    }
+  }
+
+  // Une fois que c'est fini on met tout dans un seul vecteur.
+  std::vector<mozza::zygote> ZYG;
+  for(int gen = nGen-keep; gen < nGen; gen++) {
+    int g = gen % keep;
+    for(auto zy : POP[g]) {
+      ZYG.push_back(zy);
+    }
   }
   List L;
+
   L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
+  L["N"] = ZYG.size();
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity) 
     L["fraternity"] = fraternity_matrix(ZYG);
+
   return L;
 }
-
-
+/*
 // Version avec haplotypes probabilisés
 // nb_fams familles à nb_offsprings
 void nuclear_families(std::vector<mozza::zygote> & ZYG, int nb_fams, int nb_offsprings, const std::vector<double> & proba_tiles,
@@ -75,4 +107,4 @@ List nuclear_families_probs(IntegerVector Nfams, int nb_offsprings, NumericMatri
     L["fraternity"] = fraternity_matrix(ZYG);
   return L;
 }
-
+*/

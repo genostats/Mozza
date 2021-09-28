@@ -7,8 +7,8 @@
 using namespace Rcpp;
 
 // cousins_1stdegree
-List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
-RcppExport SEXP _Mozza_cousins_1stdegree(SEXP nSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_cousins_1stdegree(SEXP nSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -18,13 +18,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    rcpp_result_gen = Rcpp::wrap(cousins_1stdegree(n, tile_length, Haplos, chr, dist, kinship));
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(cousins_1stdegree(n, tile_length, Haplos, chr, dist, kinship, fraternity));
     return rcpp_result_gen;
 END_RCPP
 }
 // make_inds
-List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
-RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,13 +35,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inds(n, length_tiles, Haplos, chr, dist, kinship));
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(make_inds(n, length_tiles, Haplos, chr, dist, kinship, fraternity));
     return rcpp_result_gen;
 END_RCPP
 }
 // make_inds_probs
-List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
-RcppExport SEXP _Mozza_make_inds_probs(SEXP NSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_make_inds_probs(SEXP NSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -51,7 +53,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inds_probs(N, proba_haplos, length_tiles, Haplos, chr, dist, kinship));
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(make_inds_probs(N, proba_haplos, length_tiles, Haplos, chr, dist, kinship, fraternity));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -73,8 +76,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // nuclear_families
-List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
-RcppExport SEXP _Mozza_nuclear_families(SEXP nb_famsSEXP, SEXP nb_offspringsSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_nuclear_families(SEXP nb_famsSEXP, SEXP nb_offspringsSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,13 +88,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    rcpp_result_gen = Rcpp::wrap(nuclear_families(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship));
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(nuclear_families(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship, fraternity));
     return rcpp_result_gen;
 END_RCPP
 }
 // nuclear_families_probs
-List nuclear_families_probs(IntegerVector Nfams, int nb_offsprings, NumericMatrix proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship);
-RcppExport SEXP _Mozza_nuclear_families_probs(SEXP NfamsSEXP, SEXP nb_offspringsSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP) {
+List nuclear_families_probs(IntegerVector Nfams, int nb_offsprings, NumericMatrix proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_nuclear_families_probs(SEXP NfamsSEXP, SEXP nb_offspringsSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -103,7 +107,28 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    rcpp_result_gen = Rcpp::wrap(nuclear_families_probs(Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship));
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(nuclear_families_probs(Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship, fraternity));
+    return rcpp_result_gen;
+END_RCPP
+}
+// population
+List population(int n0, int nGen, int keep, double lambda, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_population(SEXP n0SEXP, SEXP nGenSEXP, SEXP keepSEXP, SEXP lambdaSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n0(n0SEXP);
+    Rcpp::traits::input_parameter< int >::type nGen(nGenSEXP);
+    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type tile_length(tile_lengthSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(population(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship, fraternity));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -232,12 +257,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 6},
-    {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 6},
-    {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 7},
+    {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 7},
+    {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
+    {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
-    {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 7},
-    {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 8},
+    {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 8},
+    {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
+    {"_Mozza_population", (DL_FUNC) &_Mozza_population, 10},
     {"_Mozza_essai", (DL_FUNC) &_Mozza_essai, 0},
     {"_Mozza_test_cursor", (DL_FUNC) &_Mozza_test_cursor, 0},
     {"_Mozza_essai2", (DL_FUNC) &_Mozza_essai2, 0},

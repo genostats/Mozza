@@ -17,6 +17,7 @@ namespace mozza {
     
     
   NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
+  NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG);
 }
 
 #endif
