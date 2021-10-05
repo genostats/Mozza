@@ -15,7 +15,9 @@ namespace mozza {
   inline int IBD_at_point(zygote & Z1, zygote & Z2);
   std::tuple<double, double, double> IBD_length(zygote & Z1, zygote & Z2);
     
-    
+  inline bool HBD_at_point(zygote & Z);
+  double HBD_length(zygote & Z);
+     
   NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
   NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG);
 }

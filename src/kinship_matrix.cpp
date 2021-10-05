@@ -10,7 +10,10 @@ NumericMatrix kinship_matrix(std::vector<zygote> & ZYG) {
     total_length = ZYG[0].first.genome_length; // on suppose que tout a la même longueur partout...
   NumericMatrix K(n,n);
   for(int i = 0; i < n; i++) {
-    for(int j = i; j < n; j++) {
+    // le coeff diagonal
+    double HBD = HBD_length(ZYG[i]);
+    K(i,i) = 1.0 + HBD / total_length; // 1 + coeff de consanguinité
+    for(int j = i+1; j < n; j++) {
       auto IBD = IBD_length(ZYG[i], ZYG[j]);
       K(j,i) = (0.5*std::get<1>(IBD) + std::get<2>(IBD)) / total_length;
     }
