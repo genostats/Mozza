@@ -1,0 +1,43 @@
+#' Generates VCF file
+#'
+#' @param x 
+#' @param filename 
+#' @param depth1 
+#' @param depth2 
+#' @param eps 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' x <- as.bed.matrix(LCT.gen, LCT.fam, LCT.bim)
+#' vcf.gen(x, "/tmp/LCT.vcf", 5, 10)
+
+vcf.gen <- function(x, filename, depth1, depth2, eps = 10^((-0.1)*runif(ncol(x), 20, 30))) {
+  zz <- file(filename, "w")
+  cat("##fileformat=VCFv4.1\n##fileDate=2021-10-12\n##source=GastonVCFsimulation\n", file=zz)
+  cat("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t", file = zz)
+  
+  if(anyDuplicated(x@ped$id)) {
+    id <- paste(x@ped$famid, x@ped$id, sep=":")
+  } else {
+    id <- x@ped$id
+  }
+  cat(paste(id, collapse = "\t"), "\n", file = zz)
+  
+  num.chr <- as.integer(x@snps$chr)
+  CHR <- ifelse(is.na(num.chr), x@snps$chr, paste("chr", num.chr, sep = ""))
+  for(i in 1:ncol(x)) {
+    geno <- as.vector(gaston::as.matrix(x[,i]))
+    u <- vcf.gen.line(geno, eps[i], depth1, depth2)
+    cat(CHR[i], x@snps$pos[i], x@snps$id[i], x@snps$A1[i], x@snps$A2[i], file = zz, sep = "\t")
+    cat("\t999\tPASS\t.\tGT:AD:DP:GQ:PL\t", file = zz)
+    cat(u, file = zz, sep = "\t")
+    cat("\n", file = zz)
+    if( i %% 100 == 0 ) cat("Writing SNP", i, "\r")
+  }
+  cat("\n")
+  close(zz)
+}
+
+

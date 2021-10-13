@@ -1,7 +1,6 @@
 
 test_families_of_4 <- function(fams = 10, SNPS = 100, haps = 20, chr.max = min(22,floor(SNPS/3))) {
-  # il faut construire une bed matrix avec haps haplotypes différents
-  Haplos <- as.bed.matrix( matrix( rbinom(haps*SNPS, 1, .5), nrow = haps) )
+  Haplos <- as.bed.matrix( matrix( rbinom(haps*SNPS, 1, .5), nrow = haps) )   # une bed matrix avec haps haplotypes
   chr <- sort( sample(1:chr.max, SNPS, TRUE) )
   # positions au hasard
   dist <- as.vector(unlist(tapply(chr, chr, function(x) sort(runif(length(x), 0 , Human.autosomes.b37[x[1]])) ))) 

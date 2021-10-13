@@ -6,6 +6,28 @@
 
 using namespace Rcpp;
 
+// GQ
+NumericVector GQ(NumericMatrix phtab);
+RcppExport SEXP _Mozza_GQ(SEXP phtabSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type phtab(phtabSEXP);
+    rcpp_result_gen = Rcpp::wrap(GQ(phtab));
+    return rcpp_result_gen;
+END_RCPP
+}
+// GT
+IntegerVector GT(NumericMatrix phtab);
+RcppExport SEXP _Mozza_GT(SEXP phtabSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type phtab(phtabSEXP);
+    rcpp_result_gen = Rcpp::wrap(GT(phtab));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cousins_1stdegree
 List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
 RcppExport SEXP _Mozza_cousins_1stdegree(SEXP nSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
@@ -257,6 +279,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_Mozza_GQ", (DL_FUNC) &_Mozza_GQ, 1},
+    {"_Mozza_GT", (DL_FUNC) &_Mozza_GT, 1},
     {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 7},
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
     {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},

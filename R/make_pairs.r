@@ -1,7 +1,6 @@
 
 test_make_pairs <- function(pairs, len1, len2, SNPS = 1e4, haps = 100, tile.length = 20) {
-  # il faut construire une bed matrix avec haps haplotypes différents
-  Haplos <- as.bed.matrix( matrix( rbinom(haps*SNPS, 1, .5), nrow = haps) )
+  Haplos <- as.bed.matrix( matrix( rbinom(haps*SNPS, 1, .5), nrow = haps) ) # une bed matrix avec haps haplotypes
   chr <- sort( sample(1:22, SNPS, TRUE) )
   # positions au hasard
   dist <- as.vector(unlist(tapply(chr, chr, function(x) sort(runif(length(x), 0 , Human.autosomes.b37[x[1]])) ))) 

@@ -1,7 +1,6 @@
 
 test_drop_genos <- function(N = 10, chr.max = min(22,floor(N/3))) {
-  # il faut construire une bed matrix avec 4 haplotypes différents
-  Haplos <- as.bed.matrix( matrix( rbinom(4*N, 1, .5), nrow = 4) )
+  Haplos <- as.bed.matrix( matrix( rbinom(4*N, 1, .5), nrow = 4) ) # une bed matrix avec haps haplotypes 
   chr <- sort( sample(1:chr.max, N, TRUE) )
   # positions au hasard
   dist <- as.vector(unlist(tapply(chr, chr, function(x) sort(runif(length(x), 0 , Human.autosomes.b37[x[1]])) ))) 
