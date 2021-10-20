@@ -28,16 +28,14 @@ vcf.gen <- function(x, filename, depth1, depth2, eps = 10^((-0.1)*runif(ncol(x),
   num.chr <- as.integer(x@snps$chr)
   CHR <- ifelse(is.na(num.chr), x@snps$chr, paste("chr", num.chr, sep = ""))
   for(i in 1:ncol(x)) {
-    geno <- as.vector(gaston::as.matrix(x[,i]))
-    u <- vcf.gen.line(geno, eps[i], depth1, depth2)
+    geno <- get.geno.vector(x, i);
     cat(CHR[i], x@snps$pos[i], x@snps$id[i], x@snps$A1[i], x@snps$A2[i], file = zz, sep = "\t")
     cat("\t999\tPASS\t.\tGT:AD:DP:GQ:PL\t", file = zz)
-    cat(u, file = zz, sep = "\t")
+    cat(vcf.gen.line(geno, eps[i], depth1, depth2), file = zz)
     cat("\n", file = zz)
     if( i %% 100 == 0 ) cat("Writing SNP", i, "\r")
   }
   cat("\n")
   close(zz)
 }
-
 

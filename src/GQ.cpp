@@ -1,16 +1,19 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// remplace apply(phtab, 1, median)
+// remplace GQ <- round( apply(phtab, 1, median) ); GQ[GQ > 99] <- 99
 // phtab etant une matrice trois colonnes
 // [[Rcpp::export]]
-NumericVector GQ(NumericMatrix phtab) {
+IntegerVector GQ(NumericMatrix phtab) {
   int n = phtab.nrow();
-  NumericVector R = no_init(n);
+  IntegerVector R = no_init(n);
   for(int i = 0; i < n; i++) {
-    double a0 = phtab(i,0); 
-    double a1 = phtab(i,1);
-    double a2 = phtab(i,2);
+    int a0 = (int) round(phtab(i,0)); 
+    int a1 = (int) round(phtab(i,1));
+    int a2 = (int) round(phtab(i,2));
+    a0 = a0>99?99:a0;
+    a1 = a1>99?99:a1;
+    a2 = a2>99?99:a2;
     // c'est moche mais trois tests maxi...
     if(a0 <= a1) {
       if(a1 <= a2) { // a0 <= a1 <= a2

@@ -13,6 +13,10 @@ cousins_1stdegree <- function(n, tile_length, Haplos, chr, dist, kinship = FALSE
     .Call(`_Mozza_cousins_1stdegree`, n, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
+getGenoVector <- function(pA, snpIndex, Rindex = TRUE) {
+    .Call(`_Mozza_getGenoVector`, pA, snpIndex, Rindex)
+}
+
 make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship, fraternity)
 }
@@ -31,6 +35,10 @@ nuclear_families <- function(nb_fams, nb_offsprings, tile_length, Haplos, chr, d
 
 nuclear_families_probs <- function(Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_nuclear_families_probs`, Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship, fraternity)
+}
+
+pasteVcfElts <- function(genoN, rd, rd2, rd3, GQ, phtab) {
+    .Call(`_Mozza_pasteVcfElts`, genoN, rd, rd2, rd3, GQ, phtab)
 }
 
 population <- function(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
