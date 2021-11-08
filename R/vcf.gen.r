@@ -26,7 +26,7 @@ vcf.gen <- function(x, filename, depth1, depth2, eps = 10^((-0.1)*runif(ncol(x),
   cat(paste(id, collapse = "\t"), "\n", file = zz)
   
   num.chr <- as.integer(x@snps$chr)
-  CHR <- ifelse(is.na(num.chr), x@snps$chr, paste("chr", num.chr, sep = ""))
+  CHR <- ifelse(is.na(num.chr), as.character(x@snps$chr), as.character(num.chr))
   for(i in 1:ncol(x)) {
     geno <- get.geno.vector(x, i);
     cat(CHR[i], x@snps$pos[i], x@snps$id[i], x@snps$A1[i], x@snps$A2[i], file = zz, sep = "\t")

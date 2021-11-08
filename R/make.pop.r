@@ -12,6 +12,8 @@ make.pop <- function(n0, n.gen, n.keep, lambda, haplos, proba.haplos, tile.lengt
 
   if(all(haplos@snps$dist == 0))
     stop("Set genetic distance between markers with set.dist !")
+  if(n.keep > n.gen)
+    stop("n.gen must be greater or equal to n.keep")
 
   if(missing(proba.haplos)) 
     L <- population(n0, n.gen, n.keep, lambda, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, kinship, fraternity)
@@ -22,11 +24,15 @@ make.pop <- function(n0, n.gen, n.keep, lambda, haplos, proba.haplos, tile.lengt
   }
 
   N <- L$N
-  famid <- rep(1,N)
-  id <- 1:N
-  father <- rep(0,N)
-  mother <- rep(0,N)
-  sex <- rep(NA, N)
+  famid <- rep(NA_integer_,N)
+  # renumbering ids from 1 to N
+  id <- 1:N 
+  father <- match(L$father, L$id)
+  mother <- match(L$mother, L$id)
+  
+  sex <- rep(NA_integer_, N)
+  sex[ father ] <- 1
+  sex[ mother ] <- 2
   ped <- data.frame(famid = famid, id = id, father = father, mother = mother, sex = sex, 
                     pheno = NA, stringsAsFactors = FALSE)
   
@@ -37,6 +43,7 @@ make.pop <- function(n0, n.gen, n.keep, lambda, haplos, proba.haplos, tile.lengt
     x <- set.stats(x)
 
   L$bed <- x
+  L$id <- L$father <- L$mother <- NULL
   L
 }
 
