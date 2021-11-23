@@ -7,7 +7,7 @@ using namespace Rcpp;
 // cette fonction fait des individus indépendants
 // avec des haplos mosaiques avec tuiles de longueurs 
 // length_tiles parmi n_haps haplotypes
-// Ils sont pusher dans un vecteur de mozza::zygote
+// Ils sont pushed back dans un vecteur de mozza::zygote
 void make_inds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, double length_tiles = 20.) {
   for(int i = 0; i < n; i++) {
     ZYG.push_back( mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles) );
@@ -63,9 +63,13 @@ List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_
                      bool kinship = false, bool fraternity = false) {
 
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
-  if(n_haps != proba_haplos.nrow() || N.size() != proba_haplos.ncol())
+  if(n_haps != proba_haplos.nrow() || N.size() != proba_haplos.ncol()) {
+    Rcerr << "nb haplotypes = " << n_haps << "\n";
+    Rcerr << "probability matrix has " << proba_haplos.nrow() << " rows\n";
+    Rcerr << "probability matrix has " << proba_haplos.ncol() << " cols\n";
+    Rcerr << "number of demes " << N.size() << "\n";
     stop("Dimensions mismatch");
-
+  }
   std::vector<mozza::zygote> ZYG;
   
   std::vector<double> p( n_haps );

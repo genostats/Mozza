@@ -35,7 +35,9 @@ Generating unrelated individuals with tile haplotypes
 \details{
 If `proba.haplos` is missing, all haplotypes are used with the same probability.
 `proba.haplos` should be a matrix with as many rows of haplotypes. If there are several columns, 
-`nb.inds` individuals will be generated for each column of probabilities.
+`nb.inds` individuals will be generated for each column of probabilities. If `nb.inds` is 
+a vector of length `ncol(proba.haplos)`, it specifies the number of individuals to be 
+generated for each probability set.
 }
 \examples{
 #' # installs KGH is not already installed
