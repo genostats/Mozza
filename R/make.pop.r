@@ -20,7 +20,7 @@ make.pop <- function(n0, n.gen, n.keep, lambda, haplos, proba.haplos, tile.lengt
   else {
     if(is.vector(proba.haplos))
       proba.haplos <- matrix(proba.haplos, ncol = 1)
-    stop("ARG")
+    stop("NOT IMPLEMENTED YET")
   }
 
   N <- L$N
