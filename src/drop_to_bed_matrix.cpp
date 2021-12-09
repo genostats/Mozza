@@ -57,4 +57,45 @@ XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotyp
   return A;
 }
 
+
+// Idem avec seulement des haplotypes
+XPtr<matrix4> drop_to_bed_matrix(std::vector<mosaic> & x, XPtr<matrix4> haplotypes, IntegerVector chr, NumericVector dist) {
+  int nb_snps = chr.size();
+  if(nb_snps != dist.size() || nb_snps != haplotypes->nrow)
+    stop("Dimensions mismatch");
+  
+  int nb_inds = x.size(); // nb individus à créer
+  XPtr<matrix4> A(new matrix4(nb_snps, nb_inds));
+  
+  // initialiser les positions
+  int c = chr[0] - 1;
+  for(auto & z : x) {
+    z.set_cursor(c); 
+  }
+  // c'est parti
+  for(int i = 0; i < nb_snps; i++) {
+    // aller à la position du SNP (si besoin en changeant de chr)
+    double pos = dist[i];
+    if(c == chr[i] - 1) {
+      for(auto & z : x) {
+        z.forward_cursor(pos); 
+      }
+    } else {
+      c = chr[i] - 1;
+      for(auto & z : x) {
+        z.set_cursor(c, pos); 
+      }   
+    }
+    // alleles pour le SNP dans haplotypes->data[i]
+    // pour pas s'embêter on va juste les copier dans un std::vector
+    std::vector<char> alleles;
+    push_m4_row(haplotypes->data[i], haplotypes->ncol, alleles);
+    // cet objet permet de push back des valeurs dans A->data[i]
+    SNP_push_back S(A->data[i], A->ncol);
+    // la fonction push back les alleles à la position courante du curseur
+    push_genotypes_at_cursor(x, alleles, S);
+  }
+  return A;
+}
+
 }

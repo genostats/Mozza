@@ -26,6 +26,15 @@ inline void push_genotypes_at_cursor(std::vector<zygote> & x, T1 & allele_at_hap
   }
 }
 
+// le même pour simplement des haplotypes
+template<typename T1, typename T2>
+inline void push_genotypes_at_cursor(std::vector<mosaic> & x, T1 & allele_at_haplo, T2 & genotypes) {
+  for(auto & p : x) {
+    int h = p.tile_at_cursor();
+    genotypes.push_back( allele_at_haplo[h] );
+  }
+}
+
 }
 
 #endif

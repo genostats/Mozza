@@ -8,6 +8,7 @@ using namespace Rcpp;
  */
 
 // ncol = le nombre d'invidus / le nombre de valeurs à pusher
+// cette fonction prend un vecteur d'une bed matrix et le push back dans V
 template<typename T>
 inline void push_m4_row(unsigned char * snp, size_t ncol, std::vector<T> & V) {
   int true_ncol = ncol/4 + ((ncol%4 == 0)?0:1);

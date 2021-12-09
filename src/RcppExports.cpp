@@ -6,11 +6,6 @@
 
 using namespace Rcpp;
 
-#ifdef RCPP_USE_GLOBAL_ROSTREAM
-Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
-Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
-#endif
-
 // GQ
 IntegerVector GQ(NumericMatrix phtab);
 RcppExport SEXP _Mozza_GQ(SEXP phtabSEXP) {
@@ -60,6 +55,39 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type snpIndex(snpIndexSEXP);
     Rcpp::traits::input_parameter< bool >::type Rindex(RindexSEXP);
     rcpp_result_gen = Rcpp::wrap(getGenoVector(pA, snpIndex, Rindex));
+    return rcpp_result_gen;
+END_RCPP
+}
+// make_haps
+List make_haps(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool ibd);
+RcppExport SEXP _Mozza_make_haps(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP ibdSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< bool >::type ibd(ibdSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_haps(n, length_tiles, Haplos, chr, dist, ibd));
+    return rcpp_result_gen;
+END_RCPP
+}
+// make_haps_probs
+List make_haps_probs(IntegerVector N, NumericMatrix proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool ibd);
+RcppExport SEXP _Mozza_make_haps_probs(SEXP NSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP ibdSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type proba_haplos(proba_haplosSEXP);
+    Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< bool >::type ibd(ibdSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_haps_probs(N, proba_haplos, length_tiles, Haplos, chr, dist, ibd));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -311,12 +339,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// write_hap_file
+void write_hap_file(XPtr<matrix4> p_A, std::string filename);
+RcppExport SEXP _Mozza_write_hap_file(SEXP p_ASEXP, SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type p_A(p_ASEXP);
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
+    write_hap_file(p_A, filename);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_GQ", (DL_FUNC) &_Mozza_GQ, 1},
     {"_Mozza_GT", (DL_FUNC) &_Mozza_GT, 1},
     {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 7},
     {"_Mozza_getGenoVector", (DL_FUNC) &_Mozza_getGenoVector, 3},
+    {"_Mozza_make_haps", (DL_FUNC) &_Mozza_make_haps, 6},
+    {"_Mozza_make_haps_probs", (DL_FUNC) &_Mozza_make_haps_probs, 7},
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
     {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
@@ -335,6 +376,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_test_xptr", (DL_FUNC) &_Mozza_test_xptr, 3},
     {"_Mozza_families_of_4_v0", (DL_FUNC) &_Mozza_families_of_4_v0, 4},
     {"_Mozza_families_of_4", (DL_FUNC) &_Mozza_families_of_4, 4},
+    {"_Mozza_write_hap_file", (DL_FUNC) &_Mozza_write_hap_file, 2},
     {NULL, NULL, 0}
 };
 

@@ -17,6 +17,14 @@ getGenoVector <- function(pA, snpIndex, Rindex = TRUE) {
     .Call(`_Mozza_getGenoVector`, pA, snpIndex, Rindex)
 }
 
+make_haps <- function(n, length_tiles, Haplos, chr, dist, ibd = FALSE) {
+    .Call(`_Mozza_make_haps`, n, length_tiles, Haplos, chr, dist, ibd)
+}
+
+make_haps_probs <- function(N, proba_haplos, length_tiles, Haplos, chr, dist, ibd = FALSE) {
+    .Call(`_Mozza_make_haps_probs`, N, proba_haplos, length_tiles, Haplos, chr, dist, ibd)
+}
+
 make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship, fraternity)
 }
@@ -87,5 +95,9 @@ families_of_4_v0 <- function(N, Haplos, chr, dist) {
 
 families_of_4 <- function(N, Haplos, chr, dist) {
     .Call(`_Mozza_families_of_4`, N, Haplos, chr, dist)
+}
+
+write_hap_file <- function(p_A, filename) {
+    invisible(.Call(`_Mozza_write_hap_file`, p_A, filename))
 }
 

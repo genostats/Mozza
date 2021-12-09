@@ -12,4 +12,4 @@ Imports: Rcpp (>= 1.0.0), RcppParallel (>= 4.4.2), gaston
 Depends: gaston
 LinkingTo: Rcpp, RcppParallel, gaston
 SystemRequirements: GNU make, C++11
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
