@@ -14,8 +14,10 @@ NumericMatrix kinship_matrix(std::vector<zygote> & ZYG) {
     double HBD = HBD_length(ZYG[i]);
     K(i,i) = 1.0 + HBD / total_length; // 1 + coeff de consanguinité
     for(int j = i+1; j < n; j++) {
-      auto IBD = IBD_length(ZYG[i], ZYG[j]);
-      K(j,i) = (0.5*std::get<1>(IBD) + std::get<2>(IBD)) / total_length;
+      // auto IBD = IBD_length(ZYG[i], ZYG[j]);
+      // K(j,i) = (0.5*std::get<1>(IBD) + std::get<2>(IBD)) / total_length;
+      double R = relatednessLength(ZYG[i], ZYG[j]);
+      K(j,i) = 2.0 * R / total_length;
     }
   }
   // symetriser

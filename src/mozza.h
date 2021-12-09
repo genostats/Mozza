@@ -17,6 +17,9 @@ namespace mozza {
     
   inline bool HBD_at_point(zygote & Z);
   double HBD_length(zygote & Z);
+
+  inline bool relatedness_at_point(zygote & Z);
+  double relatednessLength(zygote &, zygote &);
      
   NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
   NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG);
