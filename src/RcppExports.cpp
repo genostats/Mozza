@@ -115,6 +115,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// makeSelectedInds
+List makeSelectedInds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, IntegerVector submap, NumericVector beta, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_makeSelectedInds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP submapSEXP, SEXP betaSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type submap(submapSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
+    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
+    rcpp_result_gen = Rcpp::wrap(makeSelectedInds(n, length_tiles, Haplos, chr, dist, submap, beta, kinship, fraternity));
+    return rcpp_result_gen;
+END_RCPP
+}
 // nuclear_families
 List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
 RcppExport SEXP _Mozza_nuclear_families(SEXP nb_famsSEXP, SEXP nb_offspringsSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
@@ -320,6 +339,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
     {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
+    {"_Mozza_makeSelectedInds", (DL_FUNC) &_Mozza_makeSelectedInds, 9},
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 8},
     {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
     {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 6},
