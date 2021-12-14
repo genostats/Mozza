@@ -36,7 +36,8 @@ List make_pairs(int N, double le1, double le2, double length_tiles, XPtr<matrix4
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   List L;
   L["kin"] = make_pairs(N, le1, le2, x, n_haps, length_tiles);
-  L["bed"] = drop_to_bed_matrix(x, Haplos, chr, dist);
+  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
+  L["bed"] = drop_to_bed_matrix(x, MB);
   return L;
 }
 

@@ -52,7 +52,8 @@ List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector c
   std::vector<mozza::zygote> ZYG { make_inds(n, n_haps, length_tiles) }; 
   
   List L;
-  L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
+  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
+  L["bed"] = drop_to_bed_matrix(ZYG, MB);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity) 
@@ -88,7 +89,8 @@ List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_
   }
 
   List L;
-  L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
+  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
+  L["bed"] = drop_to_bed_matrix(ZYG, MB);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity) 

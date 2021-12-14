@@ -63,7 +63,8 @@ List population(int n0, int nGen, int keep, double lambda,
   }
   List L;
 
-  L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
+  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
+  L["bed"] = drop_to_bed_matrix(ZYG, MB);
   L["N"] = ZYG.size();
   L["id"] = wrap(ID);
   L["father"] = wrap(FATHER);

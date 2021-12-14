@@ -44,7 +44,8 @@ List make_haps(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector c
   std::vector<mozza::mosaic> HAP { make_haps(n, n_haps, length_tiles) }; 
   
   List L;
-  L["bed"] = drop_to_bed_matrix(HAP, Haplos, chr, dist);
+  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
+  L["bed"] = drop_to_bed_matrix(HAP, MB);
   if(ibd) 
     L["ibd"] = ibd_matrix(HAP);
   return L;
@@ -78,7 +79,8 @@ List make_haps_probs(IntegerVector N, NumericMatrix proba_haplos, double length_
   }
 
   List L;
-  L["bed"] = drop_to_bed_matrix(HAP, Haplos, chr, dist);
+  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
+  L["bed"] = drop_to_bed_matrix(HAP, MB);
   if(ibd)
     L["ibd"] = ibd_matrix(HAP);
   return L;
