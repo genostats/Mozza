@@ -2,7 +2,11 @@
 #include <Rcpp.h>
 #include "mozza.h"
 #include "gaston/matrix4.h"
+#include "getZygoteScore.h"
 using namespace Rcpp;
+
+// VAST AMOUNT OF COPY PASTING FROM make_inds.cpp
+// pour tester, 1er implémentation : des scores > 1
 
 // cette fonction fait des individus indépendants
 // avec des haplos mosaiques avec tuiles de longueurs 
@@ -12,12 +16,17 @@ using namespace Rcpp;
 // n : number of inds to generate
 // n_haps : tiles will be numbered from 0 to n_haps-1
 // length_tiles : in cM
-void make_inds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, double length_tiles = 20.) {
+void makeSelectedInds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, double length_tiles,
+                      XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist,
+                      IntegerVector submap, NumericVector beta) {
   for(int i = 0; i < n; i++) {
-    ZYG.push_back( mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles) );
+    mozza::zygote z =  mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles);
+    if(getZygoteScore(z, Haplos, chr, dist, submap, beta) > 1)
+      ZYG.push_back(z);
   }
 }
 
+/*
 // idem avec l'autre constructeur de mosaiques
 // qui prend un vecteur de proba des haplotypes de base
 // ZYG : vector in which to push pack the zygote
@@ -29,27 +38,30 @@ void make_inds(std::vector<mozza::zygote> & ZYG, int n, const std::vector<double
     ZYG.push_back( mozza::zygote(mozza::human_autosomes_b37, proba_tiles, length_tiles) );
   }
 }
+*/
 
 // 2 wrapers pour renvoyer des vecteurs de mozza::zygote
-std::vector<mozza::zygote> make_inds(int n, int n_haps, double length_tiles = 20.) {
+std::vector<mozza::zygote> makeSelectedInds(int n, int n_haps, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist,
+                      IntegerVector submap, NumericVector beta) {
   std::vector<mozza::zygote> ZYG;
-  make_inds(ZYG, n, n_haps, length_tiles);
+  makeSelectedInds(ZYG, n, n_haps, length_tiles, Haplos, chr, dist, submap, beta);
   return ZYG;
 }
 
+/*
 std::vector<mozza::zygote> make_inds(int n, const std::vector<double> & proba_tiles, double length_tiles = 20.) {
   std::vector<mozza::zygote> ZYG;
   make_inds(ZYG, n, proba_tiles, length_tiles);
   return ZYG;
-}
+}*/
 
 
 // Habillages avec un drop_to_bed_matrix pour finir
 //[[Rcpp::export]]
-List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
-               bool kinship = false, bool fraternity = false) {
+List makeSelectedInds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
+               IntegerVector submap, NumericVector beta, bool kinship = false, bool fraternity = false) {
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
-  std::vector<mozza::zygote> ZYG { make_inds(n, n_haps, length_tiles) }; 
+  std::vector<mozza::zygote> ZYG { makeSelectedInds(n, n_haps, length_tiles, Haplos, chr, dist, submap, beta) }; 
   
   List L;
   L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
@@ -60,7 +72,11 @@ List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector c
   return L;
 }
 
+/* test viteuf
+x <- makeSelectedInds(100, 20, H@bed, H@snps$chr, H@snps$dist, 1:10, rep(.5, 10), TRUE, TRUE)
+*/
 
+/*
 // proba_haplos est une matrice, chaque colonnes donne un jeu de proba sur les haplotypes
 // le vecteur d'effectif N contient les effectifs à générer pour chacune des colonnees
 // Cela permet de générer plus facilement des données avec des sous-populations ayant des 
@@ -94,4 +110,5 @@ List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_
   if(fraternity) 
     L["fraternity"] = fraternity_matrix(ZYG);
   return L;
-}
+}*/
+
