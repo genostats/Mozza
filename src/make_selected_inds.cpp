@@ -21,8 +21,12 @@ void makeSelectedInds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, doubl
                       mozza::phenotyper<IntegerVector, NumericVector> PT) {
   for(int i = 0; i < n; i++) {
     mozza::zygote z =  mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles);
-    if(PT.getZygoteScore(z) > 1)
+    double zzz = PT.getZygoteScore(z);
+// Rcpp::Rcout << " = " << zzz << "\n";
+    if(zzz > 0) {
       ZYG.push_back(z);
+  //    Rcpp::Rcout << "***\n";
+    }
   }
 }
 
@@ -48,6 +52,7 @@ List makeSelectedInds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerV
   List L;
 
   L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["n"] = ZYG.size();
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity) 

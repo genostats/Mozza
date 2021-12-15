@@ -43,6 +43,7 @@ public:
       // les alleles pour le SNP sont dans haplotypes->data[i]
       // contrairement à la fonction 'drop_to_bed_matrix' on n'a besoin
       // que d'un seul d'entre eux !
+// Rcpp::Rcout << (int) MB.haplotypes->get(i, x.tile_at_cursor()) << "x" << beta[k] << " + ";
       score += (double) MB.haplotypes->get(i, x.tile_at_cursor()) * beta[k++];
     }
     return score;
