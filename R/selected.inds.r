@@ -26,7 +26,7 @@
 #' H <- read.bed.matrix(filepath)
 #' # Generates a bed matrix with 1000 individuals
 #' set.seed(1)
-#' I <- sample.int( ncol(H), 1000 )
+#' I <- sample.int( ncol(H), 10000 )
 #' beta <- rnorm(length(I))/sqrt(length(I))
 #' x <- selected.inds(1000, H, I, beta)
 #' X1 <- as.matrix( x$bed[,I] )
@@ -44,6 +44,9 @@ selected.inds <- function(nb.inds, haplos, submap, beta, proba.haplos, tile.leng
     stop("bad submap")
 
   submap <- as.integer(submap) - 1L
+  o <- order(submap)
+  submap <- submap[o]
+  beta   <- beta[o]
 
   if(missing(proba.haplos))
     L <- makeSelectedInds(nb.inds, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, submap, beta, kinship, fraternity)
