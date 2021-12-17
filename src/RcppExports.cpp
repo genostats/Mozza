@@ -6,11 +6,6 @@
 
 using namespace Rcpp;
 
-#ifdef RCPP_USE_GLOBAL_ROSTREAM
-Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
-Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
-#endif
-
 // GQ
 IntegerVector GQ(NumericMatrix phtab);
 RcppExport SEXP _Mozza_GQ(SEXP phtabSEXP) {
@@ -149,8 +144,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeSelectedInds
-List makeSelectedInds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, IntegerVector submap, NumericVector beta, bool kinship, bool fraternity);
-RcppExport SEXP _Mozza_makeSelectedInds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP submapSEXP, SEXP betaSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
+List makeSelectedInds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, IntegerVector submap, NumericVector beta, double h2, bool kinship, bool fraternity);
+RcppExport SEXP _Mozza_makeSelectedInds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP submapSEXP, SEXP betaSEXP, SEXP h2SEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -161,9 +156,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type submap(submapSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< double >::type h2(h2SEXP);
     Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
     Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
-    rcpp_result_gen = Rcpp::wrap(makeSelectedInds(n, length_tiles, Haplos, chr, dist, submap, beta, kinship, fraternity));
+    rcpp_result_gen = Rcpp::wrap(makeSelectedInds(n, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -385,7 +381,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
     {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
-    {"_Mozza_makeSelectedInds", (DL_FUNC) &_Mozza_makeSelectedInds, 9},
+    {"_Mozza_makeSelectedInds", (DL_FUNC) &_Mozza_makeSelectedInds, 10},
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 8},
     {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
     {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 6},

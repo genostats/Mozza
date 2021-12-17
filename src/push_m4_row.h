@@ -29,6 +29,8 @@ inline void push_m4_row(unsigned char * snp, size_t ncol, std::vector<T> & V) {
   }
 }
 
+
+
 // et un autre bout de code : un moyen de faire du push_back sur une ligne (SNPs) de la bed matrix 
 // on fait attention à ce qu'il y ait bien des NA en bout de ligne
 // et on fournit un opérateur push_back qui va mettre les génotypes 1 à 1

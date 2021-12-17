@@ -4,7 +4,7 @@
 // [[Rcpp::export]]
 IntegerVector getGenoVector(XPtr<matrix4> pA, int snpIndex, bool Rindex = true) {
   if(Rindex) snpIndex--;
-  if(snpIndex < 0 | snpIndex >= pA->nrow) stop("bad index");
+  if((snpIndex < 0) | (snpIndex >= pA->nrow)) stop("bad index");
   IntegerVector X(pA->ncol);
   int tab[4] = {0, 1, 2, NA_INTEGER};
   for(int i = 0; i < pA->true_ncol-1; i++) { 

@@ -33,10 +33,12 @@ void mosaic::step_cursor(double len) {
 
 
 void mosaic::forward_cursor(double pos) {
-  if(pos > cursor_pos) // on avance si c'est plus loin sinon on reste sur place
+  if(pos >= cursor_pos) // on avance si c'est plus loin sinon on reste sur place
     cursor_pos = pos;
-  else
-    return; // warn ?
+  else {
+    Rcpp::warning("Trying to forward cursor to a 'backward' position " + std::to_string(cursor_chr) + ":" + std::to_string(cursor_pos) + " to " + std::to_string(pos));
+    return;
+  }
   
   if(cursor_pos > chr_len[cursor_chr]) 
     cursor_pos = chr_len[cursor_chr];

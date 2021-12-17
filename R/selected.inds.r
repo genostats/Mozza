@@ -32,7 +32,7 @@
 #' X1 <- as.matrix( x$bed[,I] )
 #' range( X1 %*% beta )
 
-selected.inds <- function(nb.inds, haplos, submap, beta, proba.haplos, tile.length = 20, kinship = FALSE, fraternity = FALSE) {
+selected.inds <- function(nb.inds, haplos, submap, beta, proba.haplos, tile.length = 20, h2 = 0.5, kinship = FALSE, fraternity = FALSE) {
 
   if(all(haplos@snps$dist == 0))
     stop("Set genetic distance between markers with set.dist !")
@@ -49,7 +49,7 @@ selected.inds <- function(nb.inds, haplos, submap, beta, proba.haplos, tile.leng
   beta   <- beta[o]
 
   if(missing(proba.haplos))
-    L <- makeSelectedInds(nb.inds, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, submap, beta, kinship, fraternity)
+  L <- makeSelectedInds(nb.inds, tile.length, haplos@bed, haplos@snps$chr, haplos@snps$dist, submap, beta, h2, kinship, fraternity)
   else {
     stop("NOT YET IMPLEMENTED")
     if(is.vector(proba.haplos))

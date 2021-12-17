@@ -3,9 +3,9 @@
 #include "mozza.h"
 #include "gaston/matrix4.h"
 #include "phenotyper.h"
+
 using namespace Rcpp;
 
-// VAST AMOUNT OF COPY PASTING FROM make_inds.cpp
 // pour tester, 1ere implémentation : des scores > 1
 
 // cette fonction fait des individus indépendants
@@ -17,41 +17,43 @@ using namespace Rcpp;
 // n_haps : tiles will be numbered from 0 to n_haps-1
 // length_tiles : in cM
 
-void makeSelectedInds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, double length_tiles, 
+void makeSelectedInds(std::vector<mozza::zygote> & ZYG, std::vector<double> & G, std::vector<double> & E, 
+                      int n, int n_haps, double length_tiles, 
                       mozza::phenotyper<IntegerVector, NumericVector> PT) {
-  for(int i = 0; i < n; i++) {
+  int k = 0;
+  for(int i = 0; k < n; i++) {
     mozza::zygote z =  mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles);
-    double zzz = PT.getZygoteScore(z);
-// Rcpp::Rcout << " = " << zzz << "\n";
-    if(zzz > 0) {
+    std::pair<double, double> GE = PT.getLiability(z);
+    if(!((i+1) % 100)) Rcpp::Rcout << k+1 << "/" << i+1 << "\n";
+    if(true) {
       ZYG.push_back(z);
-  //    Rcpp::Rcout << "***\n";
+      G.push_back(GE.first);
+      E.push_back(GE.second);
+      k++;
     }
   }
 }
 
-// wraper pour renvoyer des vecteurs de mozza::zygote
-std::vector<mozza::zygote> makeSelectedInds(int n, int n_haps, double length_tiles, 
-                                            mozza::phenotyper<IntegerVector, NumericVector> PT) {
-  std::vector<mozza::zygote> ZYG;
-  makeSelectedInds(ZYG, n, n_haps, length_tiles, PT);
-  return ZYG;
-}
-
-
-// Habillages avec un drop_to_bed_matrix pour finir
+// Habillage avec un drop_to_bed_matrix pour finir
 //[[Rcpp::export]]
 List makeSelectedInds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, 
-               IntegerVector submap, NumericVector beta, bool kinship = false, bool fraternity = false) {
+               IntegerVector submap, NumericVector beta, double h2, bool kinship = false, bool fraternity = false) {
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  mozza::phenotyper<IntegerVector, NumericVector> PT(MB, submap, beta);
 
-  std::vector<mozza::zygote> ZYG { makeSelectedInds(n, n_haps, length_tiles, PT) }; 
+  mozza::phenotyper<IntegerVector, NumericVector> PT(MB, submap, beta, h2);
+
+  std::vector<mozza::zygote> ZYG;
+  std::vector<double> G;
+  std::vector<double> E;
+  makeSelectedInds(ZYG, G, E, n, n_haps, length_tiles, PT); 
   
   List L;
 
+  Rcpp::Rcout << "Dropping to bed matrix\n";
   L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["G"] = wrap(G);
+  L["E"] = wrap(E);
   L["n"] = ZYG.size();
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);

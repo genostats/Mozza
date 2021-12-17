@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "gaston/matrix4.h"
 #include "mapped_bed.h"
+#include "scoreMeanVariance.h"
 
 #ifndef _MOZZA_PHENOTYPER__
 #define _MOZZA_PHENOTYPER_
@@ -12,12 +13,19 @@ class phenotyper {
   const mappedBed<IV, DV> & MB;
   const IV & submap;
   const DV & beta;
+  double mu, s2;
+  double s, sdE;
 public:
-  phenotyper<IV, DV>(const mappedBed<IV, DV> & MB_, const IV & submap_, const DV & beta_) : 
-  MB(MB_), submap(submap_), beta(beta_) {
+  phenotyper<IV, DV>(const mappedBed<IV, DV> & MB_, const IV & submap_, const DV & beta_, double h2) 
+                     : MB(MB_), submap(submap_), beta(beta_) {
     if(beta.size() != submap.size()) {
       stop("Submap size and beta coeff size mismatch");
     }
+    std::pair<double, double> MV = scoreMeanVariance(MB, submap, beta);
+    mu = MV.first;
+    s2 = MV.second;
+    s = sqrt(0.5*h2/s2);
+    sdE = sqrt(1 - h2);
   }
 
   double getHaploScore(mozza::mosaic & x) {
@@ -43,7 +51,6 @@ public:
       // les alleles pour le SNP sont dans haplotypes->data[i]
       // contrairement à la fonction 'drop_to_bed_matrix' on n'a besoin
       // que d'un seul d'entre eux !
-// Rcpp::Rcout << (int) MB.haplotypes->get(i, x.tile_at_cursor()) << "x" << beta[k] << " + ";
       score += (double) MB.haplotypes->get(i, x.tile_at_cursor()) * beta[k++];
     }
     return score;
@@ -52,6 +59,13 @@ public:
   double getZygoteScore(mozza::zygote & z) {
     return getHaploScore(z.first) + getHaploScore(z.second);
   }
+
+  std::pair<double, double> getLiability(mozza::zygote & z) {
+    double G = (getZygoteScore(z) - 2*mu)*s;
+    double E = R::norm_rand()*sdE;
+    return std::make_pair(G,E);
+  }
+
 };
 
 }

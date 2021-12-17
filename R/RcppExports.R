@@ -37,8 +37,8 @@ make_pairs <- function(N, le1, le2, length_tiles, Haplos, chr, dist) {
     .Call(`_Mozza_make_pairs`, N, le1, le2, length_tiles, Haplos, chr, dist)
 }
 
-makeSelectedInds <- function(n, length_tiles, Haplos, chr, dist, submap, beta, kinship = FALSE, fraternity = FALSE) {
-    .Call(`_Mozza_makeSelectedInds`, n, length_tiles, Haplos, chr, dist, submap, beta, kinship, fraternity)
+makeSelectedInds <- function(n, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship = FALSE, fraternity = FALSE) {
+    .Call(`_Mozza_makeSelectedInds`, n, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity)
 }
 
 nuclear_families <- function(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
