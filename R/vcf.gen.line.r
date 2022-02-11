@@ -1,7 +1,7 @@
 
-vcf.gen.line <- function(genotypes, err.prob, dp1, dp2) {
+vcf.gen.line <- function(genotypes, err.prob, dp1, dp2, subset) {
   L <- length(genotypes)
-  
+
   mrd <- sample(dp1:dp2, L, replace = TRUE)
   
   probs <- genotypes/2
@@ -46,6 +46,9 @@ vcf.gen.line <- function(genotypes, err.prob, dp1, dp2) {
   genoN <- GT(phtab)
   genoN <- c("0/0", "0/1", "1/1")[genoN]
   
-  pasteVcfElts(genoN, rd, rd2, rd3, GQ, phtab)
+  if(missing(subset)) 
+    pasteVcfElts(genoN, rd, rd2, rd3, GQ, phtab)
+  else
+    pasteVcfElts(genoN[subset], rd[subset], rd2[subset], rd3[subset], GQ[subset], phtab[subset,])
 }
 
