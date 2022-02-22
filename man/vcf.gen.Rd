@@ -9,7 +9,8 @@ vcf.gen(
   filename,
   depth1,
   depth2,
-  eps = 10^((-0.1) * runif(ncol(x), 20, 30))
+  eps = 10^((-0.1) * runif(ncol(x), 20, 30)),
+  subset
 )
 }
 \arguments{

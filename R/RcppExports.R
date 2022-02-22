@@ -17,6 +17,14 @@ getGenoVector <- function(pA, snpIndex, Rindex = TRUE) {
     .Call(`_Mozza_getGenoVector`, pA, snpIndex, Rindex)
 }
 
+liabilitySelectedInds <- function(groupSize, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship = FALSE, fraternity = FALSE) {
+    .Call(`_Mozza_liabilitySelectedInds`, groupSize, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity)
+}
+
+liabilitySelectedIndsProbs <- function(groupSize, probaHaplos, probaDemes, liabilityOffsetDemes, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship = FALSE, fraternity = FALSE) {
+    .Call(`_Mozza_liabilitySelectedIndsProbs`, groupSize, probaHaplos, probaDemes, liabilityOffsetDemes, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity)
+}
+
 make_haps <- function(n, length_tiles, Haplos, chr, dist, ibd = FALSE) {
     .Call(`_Mozza_make_haps`, n, length_tiles, Haplos, chr, dist, ibd)
 }
@@ -35,10 +43,6 @@ make_inds_probs <- function(N, proba_haplos, length_tiles, Haplos, chr, dist, ki
 
 make_pairs <- function(N, le1, le2, length_tiles, Haplos, chr, dist) {
     .Call(`_Mozza_make_pairs`, N, le1, le2, length_tiles, Haplos, chr, dist)
-}
-
-makeSelectedInds <- function(n, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship = FALSE, fraternity = FALSE) {
-    .Call(`_Mozza_makeSelectedInds`, n, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity)
 }
 
 nuclear_families <- function(nb_fams, nb_offsprings, tile_length, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {

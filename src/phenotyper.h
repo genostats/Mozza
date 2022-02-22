@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include "gaston/matrix4.h"
 #include "mapped_bed.h"
-#include "scoreMeanVariance.h"
+#include "scoreAllHaplotypes.h"
 
 #ifndef _MOZZA_PHENOTYPER__
 #define _MOZZA_PHENOTYPER_
@@ -10,22 +10,29 @@ namespace mozza {
 
 template<typename IV, typename DV>
 class phenotyper {
-  const mappedBed<IV, DV> & MB;
-  const IV & submap;
-  const DV & beta;
-  double mu, s2;
-  double s, sdE;
+  const mappedBed<IV, DV> & MB; // (bed matrix + chr + dist)
+  const IV & submap;            //  vecteur d'indices des SNPs avec un effet
+  const DV & beta;              //  vecteur des effets
 public:
-  phenotyper<IV, DV>(const mappedBed<IV, DV> & MB_, const IV & submap_, const DV & beta_, double h2) 
+  double mu;                    //  moyenne du score zygotique
+  double s, sdE;                //  s = pour mettre à la bonne échelle les "raw scores", sdE = variance de l'environnement
+  // constructeur 1, utilise scoreAllHaplotypes pour avoir une estimation de l'espérance et de la variance des scores
+  // pas évident que ça soit pas un peu surestimé puisqu'en pratique on va brasser les haplotypes ! 
+  // L'autre solution est d'utiliser scoreMeanVariance qui fait le même calcul en supposant l'équilibre de liaison...
+
+  phenotyper<IV, DV>(const mappedBed<IV, DV> & MB_, const IV & submap_, const DV & beta_) 
                      : MB(MB_), submap(submap_), beta(beta_) {
     if(beta.size() != submap.size()) {
       stop("Submap size and beta coeff size mismatch");
     }
-    std::pair<double, double> MV = scoreMeanVariance(MB, submap, beta);
-    mu = MV.first;
-    s2 = MV.second;
-    s = sqrt(0.5*h2/s2);
-    sdE = sqrt(1 - h2);
+    // uncalibrated..
+    mu = 0; s = 1; sdE = 1;
+  }
+
+  void setCalibration(double mu_, double s_, double sdE_) {
+    mu = mu_;
+    s = s_;
+    sdE = sdE_;
   }
 
   double getHaploScore(mozza::mosaic & x) {
@@ -56,14 +63,17 @@ public:
     return score;
   }
 
+  // cette fonction renvoie un score "brut"
   double getZygoteScore(mozza::zygote & z) {
     return getHaploScore(z.first) + getHaploScore(z.second);
   }
 
-  std::pair<double, double> getLiability(mozza::zygote & z) {
-    double G = (getZygoteScore(z) - 2*mu)*s;
+  // et celle ci met à l'échelle pour que la liabilité soit centrée réduite
+  std::tuple<double, double, double> getLiability(mozza::zygote & z) {
+    double G0 = getZygoteScore(z);
+    double G1 = (G0 - mu)*s;
     double E = R::norm_rand()*sdE;
-    return std::make_pair(G,E);
+    return std::make_tuple(G0, G1, E);
   }
 
 };
