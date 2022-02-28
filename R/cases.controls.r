@@ -49,7 +49,7 @@
 #' table(x.1$bed@ped$Deme)
 #' z <- LD.thin(select.snps(x.1$bed, maf > 0.05), 0.1)
 #' K <- GRM(z)
-#' plot( eigen(K)$vectors ) #, col = hsv(x.1$bed@ped$TSI) )
+#' plot( eigen(K)$vectors, col = hsv(x.1$bed@ped$TSI) )
 #'
 #' # second test. Default prevalence and heritability, all haplotypes equal.
 #' x.2 <- cases.controls(500, 500, H, I, beta)
