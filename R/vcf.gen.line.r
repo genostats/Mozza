@@ -2,8 +2,12 @@
 vcf.gen.line <- function(genotypes, err.prob, dp1, dp2, subset) {
   L <- length(genotypes)
 
-  mrd <- sample(dp1:dp2, L, replace = TRUE)
-  
+  if(dp1 != dp2) {
+    mrd <- sample(dp1:dp2, L, replace = TRUE)
+  } else {
+    mrd <- rep(dp1, L)
+  } 
+
   probs <- genotypes/2
   errs1 <- err.prob
   Cerrs1 <- (1 - errs1)
@@ -13,12 +17,12 @@ vcf.gen.line <- function(genotypes, err.prob, dp1, dp2, subset) {
   A2 <- probs; A2[A2 == 0.5] <- 0
   
   ## Probabilities of ref, alt err reads depending on the genotype.
-  bA1p <- A1; bA1p[bA1p == 0] <- Cerrs1; bA1p[bA1p == 1] <- (1/3)*errs1
-  bA2p <- A1; bA2p[bA2p == 0] <- (1/3)*errs1; bA2p[bA2p == 1] <- Cerrs1
+  bA1p <- A1;   bA1p[A1 == 0] <- Cerrs1;       bA1p[A1 == 1] <- (1/3)*errs1
+  bA2p <- A1;   bA2p[A1 == 0] <- (1/3)*errs1;  bA2p[A1 == 1] <- Cerrs1
   bA3p <- (2/3)*errs1
   
-  BA1p <- A2; BA1p[BA1p == 0] <- Cerrs1; BA1p[BA1p == 1] <- (1/3)*errs1
-  BA2p <- A2; BA2p[BA2p == 0] <- (1/3)*errs1; BA2p[BA2p == 1] <- Cerrs1
+  BA1p <- A2;   BA1p[A2 == 0] <- Cerrs1;       BA1p[A2 == 1] <- (1/3)*errs1
+  BA2p <- A2;   BA2p[A2 == 0] <- (1/3)*errs1;  BA2p[A2 == 1] <- Cerrs1
   BA3p <- (2/3)*errs1
   
   ## Number of ref, alt, and error reads
@@ -27,15 +31,21 @@ vcf.gen.line <- function(genotypes, err.prob, dp1, dp2, subset) {
   rd3 <- rpois(L, (0.5*mrd*bA3p)+(0.5*mrd*BA3p))
   NAs <- which(is.na(genotypes))
   rd[NAs] <- 0; rd2[NAs] <- 0; rd3[NAs] <- 0
-  ##phred likelihoods
+
+  ## phred likelihoods
   pg00 <- (Cerrs1)^rd * (errs1/3)^rd2 * (2*errs1/3)^rd3
   pg01 <- (0.5*(Cerrs1)+0.5*(errs1/3))^rd * (0.5*(Cerrs1)+0.5*(errs1/3))^rd2 * (2*errs1/3)^rd3
   pg11 <- (errs1/3)^rd * (Cerrs1)^rd2 * (2*errs1/3)^rd3
-  
+ 
+  ## ban zero probabilities
+  pg00 <- ifelse(pg00 == 0, .Machine$double.xmin, pg00)
+  pg01 <- ifelse(pg01 == 0, .Machine$double.xmin, pg01)
+  pg11 <- ifelse(pg11 == 0, .Machine$double.xmin, pg11)
+
   ph00 <- (-10)*log10(pg00)
   ph01 <- (-10)*log10(pg01)
   ph11 <- (-10)*log10(pg11)
-  
+
   ## normalise a la GATK
   phtab <- cbind(ph00, ph01, ph11) - pmin(ph00, ph01, ph11)
   
