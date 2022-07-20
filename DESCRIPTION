@@ -10,6 +10,7 @@ Description: One paragraph description of what the package does as one or more f
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.0), RcppParallel (>= 4.4.2), gaston
 Depends: gaston
+Encoding: UTF-8
 LinkingTo: Rcpp, RcppParallel, gaston
 SystemRequirements: GNU make, C++11
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1

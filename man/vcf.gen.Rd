@@ -24,9 +24,6 @@ vcf.gen(
 
 \item{eps}{}
 }
-\value{
-
-}
 \description{
 Generates VCF file
 }

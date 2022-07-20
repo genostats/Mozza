@@ -23,6 +23,10 @@ cases.controls(
 )
 }
 \arguments{
+\item{nb.cases}{number of (unrelated) cases}
+
+\item{nb.controls}{number of (unrelated) controls}
+
 \item{haplos}{haplotype bed matrix}
 
 \item{submap}{indices of SNPs with an effect}
@@ -33,7 +37,13 @@ cases.controls(
 
 \item{proba.demes}{vector of demes probabilities / weights}
 
+\item{offset.demes}{vector of offset for the environmental component of liability}
+
 \item{tile.length}{tile length in cM}
+
+\item{prevalence}{prevalence}
+
+\item{h2}{heritability}
 
 \item{kinship}{Logical. TRUE to get kinship matrix computed from IBD sharing.}
 
@@ -42,8 +52,6 @@ cases.controls(
 \item{population}{vector giving the population of origin of each haplotype}
 
 \item{...}{addditional parameters give the probability of drawing a tile in each population.}
-
-\item{nb.inds}{number of (unrelated) individuals}
 }
 \value{
 a list width components `bed`, `kinship` and `fraternity` (if applicable).
@@ -76,21 +84,27 @@ set.seed(1)
 I <- sample.int( ncol(H), 10000 )
 beta <- rnorm(length(I))/sqrt(length(I))
 
-# first test. Prevalence 0, only controls : general population
+# first test. Prevalence 0, generate only controls : general population
 # 1000 individuals in 11 demes with different proportions of TSI / IBS
 p <- seq(0, 1, length = 11)
 x.1 <- cases.controls(0, 1000, H, I, beta, prevalence = 0, TSI = p, IBS = 1 - p)
 table(x.1$bed@ped$Deme)
-z <- LD.thin(select.snps(x.1$bed, maf > 0.05), 0.1)
-K <- GRM(z)
-plot( eigen(K)$vectors, col = hsv(x.1$bed@ped$TSI) )
+z.1 <- LD.thin(select.snps(x.1$bed, maf > 0.05), 0.1)
+K.1 <- GRM(z.1)
+plot( eigen(K.1)$vectors, col = hsv(x.1$bed@ped$TSI) )
 
-# second test. Default prevalence and heritability, all haplotypes equal.
+# second test. Default prevalence and heritability, all haplotypes have equal probabilities.
 x.2 <- cases.controls(500, 500, H, I, beta)
 
-# third test
+# third test. Same with 11 demes with different proportions of TSI / IBS
 x.3 <- cases.controls(500, 500, H, I, beta, TSI = p, IBS = 1 - p)
 
-# fourth test
+# fourth test. Same with an offset of liability in the demes 
+# (environmental liability increases with proportion of TSI)
 x.4 <- cases.controls(500, 500, H, I, beta, offset.demes = seq(0,1,length=11), TSI = p, IBS = 1 - p)
+with(x.4$bed@ped, table(pheno, TSI))  # more cases with high TSI ancestry
+boxplot(x.4$E ~ x.4$Deme)             # liability in the 11 Demes
+z.4 <- LD.thin(select.snps(x.4$bed, maf > 0.05), 0.1)
+K.4 <- GRM(z.4)
+plot( eigen(K.4)$vectors, col = hsv(x.4$bed@ped$TSI), pch = 16+x.4$bed@ped$pheno)
 }
