@@ -33,6 +33,10 @@ make_haps_probs <- function(N, proba_haplos, length_tiles, Haplos, chr, dist, ib
     .Call(`_Mozza_make_haps_probs`, N, proba_haplos, length_tiles, Haplos, chr, dist, ibd)
 }
 
+make_inbreds <- function(N, le1, le2, length_tiles, Haplos, chr, dist, segments = FALSE) {
+    .Call(`_Mozza_make_inbreds`, N, le1, le2, length_tiles, Haplos, chr, dist, segments)
+}
+
 make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship, fraternity)
 }

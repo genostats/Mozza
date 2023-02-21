@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include "mosaic.h"
 #include "zygote.h"
-
+#include "HBD_at_point.h"
 /* 
  *
  * calcul des longueurs HBD
@@ -11,12 +11,6 @@
 
 
 namespace mozza {
-
-// cette fonction n'a de sens que si les curseurs sont au même endroit dans les 2 haplotypes
-// on ne vérifie **pas** ceci 
-bool HBD_at_point(zygote & Z) {
-  return(Z.first.tile_at_cursor() == Z.second.tile_at_cursor());
-}
 
 // longueur HBD des deux haplotypes du zygote
 // NOTE la position des curseurs est modifiée (on pourrait la sauver et remettre le curseur à sa place ?)
