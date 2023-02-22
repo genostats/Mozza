@@ -1,6 +1,8 @@
 #include <Rcpp.h>
 #include "mosaic.h"
 #include "sample_cp.h"
+#include "randomExp.h"
+
 using namespace Rcpp;
 
 namespace mozza {
@@ -27,7 +29,7 @@ tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
       // tire et ajoute une tuile
       tiles[i].push_back(R::runif(0,1)*ntiles);
       // position de fin de cette tuile
-      pos += R::rexp(mean_length);
+      pos += randomExp(mean_length); 
       if(pos < le) {
         bpoints[i].push_back(pos);
       } else {
@@ -61,7 +63,7 @@ tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
       // tire et ajoute une tuile
       tiles[i].push_back( sample_cp(cum_probas) );
       // position de fin de cette tuile
-      pos += R::rexp(mean_length);
+      pos += randomExp(mean_length); 
       if(pos < le) {
         bpoints[i].push_back(pos);
       } else {
@@ -75,23 +77,29 @@ tiles(chrs), bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
 // constructeur qui mélange M1 et M2, en prenant dans M1 des morceaux de longueur
 // ~ exp(le1) et dans M2 des morceaux de longueur ~ exp(le2)
 mosaic::mosaic(mosaic & M1, mosaic & M2, double le1, double le2) :
-chrs(M1.chrs), chr_len(M1.chr_len), genome_length(M1.genome_length), 
-tiles(chrs),  bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
+      chrs(M1.chrs), chr_len(M1.chr_len), genome_length(M1.genome_length), 
+      tiles(chrs),  bpoints(chrs), cursor_chr(0), cursor_pos(0.), i_cursor(0) {
+
   double p1 = le1/(le1 + le2); // proba d'être sur M1.
+  if(std::isnan(p1)) {
+    if(std::isinf(le1) && !std::isinf(le2))
+      p1 = double(1);
+    else
+      throw std::invalid_argument("nan lengthes or two infinite lengthes");
+  }
   if(M2.chrs != chrs)
     stop("Two mosaic haplotypes with different chrs");
   for(int i = 0; i < chrs; i++) {
     M1.set_cursor(i);
     M2.set_cursor(i);
     
-    double le = chr_len[i];
-    if(le != M2.chr_len[i])
+    if(chr_len[i] != M2.chr_len[i])
       stop("Chromosomes of different lengths");
     // on tire sur quel haplo on commence
     bool on_m1 = (R::runif(0,1) < p1);
     // on avance...
     while(M1.cursor_pos < chr_len[i]) {
-      double le = on_m1?R::rexp(le1):R::rexp(le2);
+      double le = on_m1?randomExp(le1):randomExp(le2);
       if(on_m1) {
         M1.step_cursor(le, tiles[i], bpoints[i]);
         M2.step_cursor(le);

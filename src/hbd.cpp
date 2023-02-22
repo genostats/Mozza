@@ -23,7 +23,7 @@ double HBD_length(zygote & Z) {
     std::merge(Z.first.bpoints[i].begin(), Z.first.bpoints[i].end(), 
                Z.second.bpoints[i].begin(), Z.second.bpoints[i].end(),
                pos.begin());
-    
+
     double a = 0.;
     Z.first.set_cursor(i); Z.second.set_cursor(i);
     for(auto & b : pos) {
