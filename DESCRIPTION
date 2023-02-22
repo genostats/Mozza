@@ -13,4 +13,4 @@ Depends: gaston
 Encoding: UTF-8
 LinkingTo: Rcpp, RcppParallel, gaston
 SystemRequirements: GNU make, C++11
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3

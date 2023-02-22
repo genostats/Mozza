@@ -27,9 +27,13 @@ segments HBD_segments(zygote & Z) {
       Z.first.forward_cursor(b); 
       Z.second.forward_cursor(b);
       if(HBD_at_point(Z) && b > a) {
-        HBD.chr.push_back(i);
-        HBD.beg.push_back(a);
-        HBD.end.push_back(b);
+        if(HBD.chr.size() > 0 && i == HBD.chr.back() && a == HBD.end.back()) { // fusion avec le segment précédent
+          HBD.end.back() = b;
+        } else { // nouveau segment
+          HBD.chr.push_back(i);
+          HBD.beg.push_back(a);
+          HBD.end.push_back(b);
+        }
       }
       a = b;
     }
