@@ -49,7 +49,7 @@ make.inbreds <- function(nb.inds, haplos, f, a, hbd.length, non.hbd.length, tile
   L <- make_inbreds(nb.inds, hbd.length, non.hbd.length, tile.length, 
                   haplos@bed, haplos@snps$chr, haplos@snps$dist, segments)
 
-  ped <- data.frame(famid = rep(1:nb.inds, each=2), id = c("A", "B"), father = NA, 
+  ped <- data.frame(famid = 1:nb.inds, id = 1:nb.inds, father = NA, 
                     mother = NA, sex = NA, pheno = NA, stringsAsFactors = FALSE)
   
   x <- new("bed.matrix", bed = L$bed, snps = haplos@snps, ped = ped, p = NULL, mu = NULL,
