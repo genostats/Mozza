@@ -144,14 +144,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // make_inbreds
-List make_inbreds(int N, double le1, double le2, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool segments);
+List make_inbreds(int N, NumericVector le1, NumericVector le2, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool segments);
 RcppExport SEXP _Mozza_make_inbreds(SEXP NSEXP, SEXP le1SEXP, SEXP le2SEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP segmentsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type N(NSEXP);
-    Rcpp::traits::input_parameter< double >::type le1(le1SEXP);
-    Rcpp::traits::input_parameter< double >::type le2(le2SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type le1(le1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type le2(le2SEXP);
     Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
     Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);

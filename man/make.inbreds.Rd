@@ -20,7 +20,7 @@ make.inbreds(
 
 \item{haplos}{haplotype bed matrix}
 
-\item{f}{inbreding coefficient}
+\item{f}{inbreding coefficient(s)}
 
 \item{a}{parameter for the length of segments in HMM (in \eqn{cM^{-1}})}
 

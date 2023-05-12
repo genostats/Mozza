@@ -25,13 +25,33 @@ std::vector<double> make_inbreds(int n, double le1, double le2, std::vector<mozz
   return inb;
 }
 
+template<typename T>
+std::vector<double> make_inbreds_vecle(int n, T le1, T le2, std::vector<mozza::zygote> & ZYG, int n_haps = 100, double length_tiles = 20.) {
+  std::vector<double> inb;
+  for(int i = 0; i < n; i++) {
+    mozza::mosaic H(mozza::human_autosomes_b37, n_haps, length_tiles);
+    mozza::mosaic A(mozza::human_autosomes_b37, n_haps, length_tiles);
+
+    mozza::zygote Z( H, mozza::mosaic(H, A, le1[i], le2[i]) );
+
+    auto HBD = HBD_length( Z );
+    inb.push_back( HBD / mozza::length_human_autosomes_b37  );
+    ZYG.push_back(Z);
+  }
+  return inb;
+}
+
 //[[Rcpp::export]]
-List make_inbreds(int N, double le1, double le2, double length_tiles, XPtr<matrix4> Haplos, 
+List make_inbreds(int N, NumericVector le1, NumericVector le2, double length_tiles, XPtr<matrix4> Haplos, 
                   IntegerVector chr, NumericVector dist, bool segments = false) {
   std::vector<mozza::zygote> x; 
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   List L;
-  L["inb"] = make_inbreds(N, le1, le2, x, n_haps, length_tiles);
+  if(le1.size() == 1) {
+    L["inb"] = make_inbreds(N, le1[0], le2[0], x, n_haps, length_tiles);
+  } else {
+    L["inb"] = make_inbreds_vecle(N, le1, le2, x, n_haps, length_tiles);
+  }
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
   L["bed"] = drop_to_bed_matrix(x, MB);
   if(segments) {

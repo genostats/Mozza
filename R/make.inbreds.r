@@ -2,7 +2,7 @@
 #'
 #' @param nb.inds number of (unrelated) individuals
 #' @param haplos haplotype bed matrix
-#' @param f inbreding coefficient
+#' @param f inbreding coefficient(s)
 #' @param a parameter for the length of segments in HMM (in \eqn{cM^{-1}})
 #' @param hbd.length mean length of HBD segments in cM
 #' @param non.hbd.length mean length of non HBD segments in cM
@@ -37,7 +37,7 @@
 make.inbreds <- function(nb.inds, haplos, f, a, hbd.length, non.hbd.length, tile.length = 20, segments = FALSE) {
   if(all(haplos@snps$dist == 0))
     stop("Set genetic distance between markers with set.dist !")
- 
+
   if(missing(hbd.length) | missing(non.hbd.length)) {
     hbd.length <- 1/(a*(1-f))
     non.hbd.length <- 1/(a*f)
@@ -46,6 +46,11 @@ make.inbreds <- function(nb.inds, haplos, f, a, hbd.length, non.hbd.length, tile
     stop("Specify either f and a, or hbd.length and non.hbd.length")
   }
    
+  if(length(hbd.length) > 1 | length(non.hbd.length) > 1) {
+    if(length(non.hbd.length) != nb.inds | length(hbd.length) != nb.inds)
+      stop("Inbreeding parameters should have both length equal to 1 or to nb.inds")
+  }
+ 
   L <- make_inbreds(nb.inds, hbd.length, non.hbd.length, tile.length, 
                   haplos@bed, haplos@snps$chr, haplos@snps$dist, segments)
 
