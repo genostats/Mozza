@@ -65,6 +65,6 @@ make.inbreds <- function(nb.inds, haplos, f, a, hbd.length, non.hbd.length, tile
   
   R <- list("bed.matrix" = x, "inbred.coef" = L$inb)
   if(segments) 
-    R$segments <- lapply( L$segments, \(z) transform(z, chr = chr + 1) ) # chr numbering starting from 0/1
+    R$segments <- lapply( L$segments, function(z) transform(z, chr = chr + 1) ) # chr numbering starting from 0/1
   R
 }
