@@ -1,7 +1,8 @@
 #include <Rcpp.h>
-#include "mozza.h"
+#include "Mozza.h"
 using namespace Rcpp;
 
+// calcule la matrice des proportions d'IBD 2 
 namespace mozza {
 NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG) {
   int n = ZYG.size();

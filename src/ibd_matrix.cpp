@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "mozza.h"
+#include "Mozza.h"
 using namespace Rcpp;
 
 namespace mozza {
@@ -13,7 +13,7 @@ NumericMatrix ibd_matrix(std::vector<mosaic> & HAP) {
     // le coeff diagonal
     K(i,i) = 1.0;
     for(int j = i+1; j < n; j++) {
-      double R = sharing(HAP[i], HAP[j]);
+      double R = IBD_sharing(HAP[i], HAP[j]);
       K(j,i) = R / total_length;
     }
   }

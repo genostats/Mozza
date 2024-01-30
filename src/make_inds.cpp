@@ -1,6 +1,6 @@
 //[[Rcpp::depends(gaston)]]
 #include <Rcpp.h>
-#include "mozza.h"
+#include "Mozza.h"
 #include "gaston/matrix4.h"
 using namespace Rcpp;
 

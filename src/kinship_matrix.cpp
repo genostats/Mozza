@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "mozza.h"
+#include "Mozza.h"
 using namespace Rcpp;
 
 namespace mozza {

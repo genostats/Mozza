@@ -331,16 +331,16 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// test_sharing
-List test_sharing(int n, double le1, double le2);
-RcppExport SEXP _Mozza_test_sharing(SEXP nSEXP, SEXP le1SEXP, SEXP le2SEXP) {
+// test_IBD_sharing
+List test_IBD_sharing(int n, double le1, double le2);
+RcppExport SEXP _Mozza_test_IBD_sharing(SEXP nSEXP, SEXP le1SEXP, SEXP le2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type le1(le1SEXP);
     Rcpp::traits::input_parameter< double >::type le2(le2SEXP);
-    rcpp_result_gen = Rcpp::wrap(test_sharing(n, le1, le2));
+    rcpp_result_gen = Rcpp::wrap(test_IBD_sharing(n, le1, le2));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -443,7 +443,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_essai2", (DL_FUNC) &_Mozza_essai2, 0},
     {"_Mozza_essai3", (DL_FUNC) &_Mozza_essai3, 0},
     {"_Mozza_essai3bis", (DL_FUNC) &_Mozza_essai3bis, 0},
-    {"_Mozza_test_sharing", (DL_FUNC) &_Mozza_test_sharing, 3},
+    {"_Mozza_test_IBD_sharing", (DL_FUNC) &_Mozza_test_IBD_sharing, 3},
     {"_Mozza_test_IBD_sibs", (DL_FUNC) &_Mozza_test_IBD_sibs, 3},
     {"_Mozza_test_push_genos", (DL_FUNC) &_Mozza_test_push_genos, 1},
     {"_Mozza_test_xptr", (DL_FUNC) &_Mozza_test_xptr, 3},

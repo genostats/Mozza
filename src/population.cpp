@@ -1,6 +1,6 @@
 //[[Rcpp::depends(gaston)]]
 #include <Rcpp.h>
-#include "mozza.h"
+#include "Mozza.h"
 using namespace Rcpp;
 
 // n0 : nb indiv à la génération 0

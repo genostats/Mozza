@@ -6,7 +6,7 @@ namespace mozza {
 // longueur IBD entre haplotypes M1 et M2
 // note : on ne vérifie pas que la longueur des chromosomes / la fin de la dernière tuile coincident...
 // NOTE la position du curseur est modifiée (on pourrait la sauver et remettre le curseur à sa place ?)
-double sharing(mosaic & M1, mosaic & M2) {
+double IBD_sharing(mosaic & M1, mosaic & M2) {
   double shared = 0.;
   for(int i = 0; i < M1.chrs; i++)  {
     std::vector<double> pos(M1.bpoints[i].size()+M2.bpoints[i].size());

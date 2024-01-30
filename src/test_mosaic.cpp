@@ -1,6 +1,6 @@
 //[[Rcpp::depends(gaston)]]
 #include <Rcpp.h>
-#include "mozza.h"
+#include "Mozza.h"
 #include "gaston/matrix4.h"
 using namespace Rcpp;
 
@@ -97,9 +97,9 @@ void essai3() {
   mozza::mosaic M1(mozza::human_autosomes_b37, 1);
   mozza::mosaic M2(mozza::human_autosomes_b37, 2);
   mozza::mosaic M(M1, M2, 100, 100);
-  Rcpp::Rcout << "M  et M1 " << mozza::sharing(M1, M) << "\n";
-  Rcpp::Rcout << "M  et M2 " << mozza::sharing(M2, M) << "\n";
-  // Rcpp::Rcout << "M1 et M2 " << mozza::sharing(M1, M2) << "\n";
+  Rcpp::Rcout << "M  et M1 " << mozza::IBD_sharing(M1, M) << "\n";
+  Rcpp::Rcout << "M  et M2 " << mozza::IBD_sharing(M2, M) << "\n";
+  // Rcpp::Rcout << "M1 et M2 " << mozza::IBD_sharing(M1, M2) << "\n";
 }
 
 // [[Rcpp::export]]
@@ -111,12 +111,12 @@ void essai3bis() {
   M1.print_chr(0);
   M2.print_chr(0);
   M.print_chr(0);
-  Rcpp::Rcout << "M  et M1 " << mozza::sharing(M1, M) << "\n";
-  Rcpp::Rcout << "M  et M2 " << mozza::sharing(M2, M) << "\n";
+  Rcpp::Rcout << "M  et M1 " << mozza::IBD_sharing(M1, M) << "\n";
+  Rcpp::Rcout << "M  et M2 " << mozza::IBD_sharing(M2, M) << "\n";
 }
 
 // [[Rcpp::export]]
-List test_sharing(int n, double le1 = 100., double le2 = 100.) {
+List test_IBD_sharing(int n, double le1 = 100., double le2 = 100.) {
   std::vector<double> R1, R2, R3;
   for(int i = 0; i < n; i++) {
     mozza::mosaic M1(mozza::human_autosomes_b37, 100, 20);
@@ -124,9 +124,9 @@ List test_sharing(int n, double le1 = 100., double le2 = 100.) {
     // mozza::mosaic M1(mozza::human_autosomes_b37, 1);
     // mozza::mosaic M2(mozza::human_autosomes_b37, 2);
     mozza::mosaic M(M1, M2, le1, le2);
-    R1.push_back( mozza::sharing(M,M1)  / mozza::length_human_autosomes_b37);
-    R2.push_back( mozza::sharing(M,M2)  / mozza::length_human_autosomes_b37);
-    R3.push_back( mozza::sharing(M1,M2) / mozza::length_human_autosomes_b37);    
+    R1.push_back( mozza::IBD_sharing(M,M1)  / mozza::length_human_autosomes_b37);
+    R2.push_back( mozza::IBD_sharing(M,M2)  / mozza::length_human_autosomes_b37);
+    R3.push_back( mozza::IBD_sharing(M1,M2) / mozza::length_human_autosomes_b37);    
   }
   List L;
   L["S1"] = R1;
@@ -222,10 +222,10 @@ XPtr<matrix4> families_of_4_v0(int N, XPtr<matrix4> Haplos, IntegerVector chr, N
     x.push_back(mozza::zygote(Ma1, Ma2)); 
     x.push_back(mozza::zygote(Mb1, Mb2));
     /* if(i == 0) {
-      SHOW(mozza::sharing(M1, M2) / mozza::length_human_autosomes_b37);
-      SHOW(mozza::sharing(P1, P2) / mozza::length_human_autosomes_b37);
-      SHOW(mozza::sharing(P1, Ma1) / mozza::length_human_autosomes_b37);
-      SHOW(mozza::sharing(Ma1,Mb1&) / mozza::length_human_autosomes_b37);
+      SHOW(mozza::IBD_sharing(M1, M2) / mozza::length_human_autosomes_b37);
+      SHOW(mozza::IBD_sharing(P1, P2) / mozza::length_human_autosomes_b37);
+      SHOW(mozza::IBD_sharing(P1, Ma1) / mozza::length_human_autosomes_b37);
+      SHOW(mozza::IBD_sharing(Ma1,Mb1&) / mozza::length_human_autosomes_b37);
     }*/
   }
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);

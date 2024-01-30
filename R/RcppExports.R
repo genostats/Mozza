@@ -85,8 +85,8 @@ essai3bis <- function() {
     invisible(.Call(`_Mozza_essai3bis`))
 }
 
-test_sharing <- function(n, le1 = 100., le2 = 100.) {
-    .Call(`_Mozza_test_sharing`, n, le1, le2)
+test_IBD_sharing <- function(n, le1 = 100., le2 = 100.) {
+    .Call(`_Mozza_test_IBD_sharing`, n, le1, le2)
 }
 
 test_IBD_sibs <- function(n, n_haps = 100L, length_tiles = 20.) {

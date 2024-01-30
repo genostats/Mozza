@@ -5,7 +5,6 @@
 /* 
  *
  * calcul des longueurs HBD
- * écrit à partir des fonctions IBD_at_point et IBD_length (de ibd.cpp)
  *
  */
 

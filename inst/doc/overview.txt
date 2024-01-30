@@ -123,6 +123,7 @@ Les haplotypes mosaiques sont des vecteurs d'entiers...
 *          sharing.cpp                              *
 *          ibd.cpp                                  *
 *          kinship_matrix.cpp                       *
+*          faternity_matrix.cpp                     *
 *          drop_to_bed_matrix.cpp                   * 
 *****************************************************
 
@@ -147,6 +148,22 @@ NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
 
 * Prend un vecteur de zygotes et renvoie la matrice de kinship, calculée
 * à l'aide de IBD_length
+* Repose sur la fonction suivante :
+
+relatednessLength(zygote & Z1, zygote & Z2);
+
+* qui calcule la somme des longueurs de segments x le degré d'apparentement 
+* sur le segment [peut être perfectible...]
+
+NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG)
+
+* Renvoie la matrice des proportions de génomes partagées IBD 2
+
+
+NumericMatrix ibd_matrix(std::vector<mosaic> & HAP)
+
+* Celle là renvoie la proportion d'IBD entre haplotypes !
+* [voir dans make_haps]
 
 
 XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotypes, IntegerVector chr, NumericVector dist);
@@ -166,11 +183,72 @@ XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotyp
 * Dans le même fichier la fonction push_m4_row permet de pusher les valeurs 
 * contenues dans une ligne d'une matrix4 vers un vecteur d'entiers 
 
+####################################################################
+
+bool HBD_at_point(zygote & Z)
+* test si les deux haplotypes sont HBD au point définis par le curseur
+* note : la fonction ne teste pas que les deux curseurs sont au même endroit...
 
 
+double HBD_length(zygote & Z)
+* idem IBD_length, mais pour la longueur HBD
 
- cousins_1stdegree.cpp
+####################################################################
+
+# fait ce que son nom indique, en finissant par un drop to bed matrix 
+List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist,
+                       bool kinship = false, bool fraternity = false)
+
+
  make_inds.cpp
  make_pairs.cpp
  nuclear_families.cpp
+
+
+population(int n0, int nGen, int keep, double lambda,
+                double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist,
+                bool kinship = false, bool fraternity = false)
+
+Fait une simulation en forward time avec le nombre d'enfants pris dans une loi de Poisson 
+Fini par un drop to bed matrix
+
+##############################################################
+
+dans segments.h : définition de la classe 'segments' 
+class segments {
+  public:
+  std::vector<int> chr;
+  std::vector<double> beg;
+  std::vector<double> end;
+};
+
+segments HBD_segments(zygote & Z) : renvoie un objet segments qui contient les segments HBD
+
+* [appelée dans make_indreds où le résultat est transformé en data frame]
+
+
+
+
+##############################################################
+
+Fonctions utilisées pour la génération du VCF [voir commentaire dans le code]
+GT.cpp : GT(NumericMatrix phtab)
+CQ.cpp : GQ(NumericMatrix phtab)
+std::string pasteVcfElts(CharacterVector genoN, IntegerVector rd, IntegerVector rd2, IntegerVector rd3,
+                         IntegerVector GQ, NumericMatrix phtab)
+
+
+Une fonction qui récupère un vecteur de génotypes...
+IntegerVector getGenoVector(XPtr<matrix4> pA, int snpIndex, bool Rindex = true)
+
+##############################################################
+
+Y a des fonctions pour le modèle de la liabilité... c'est un peu le bordel dedans, ça serait à reprendre
+
+liabilitySelectedInds(std::vector<mozza::zygote> & ZYG, std::vector<double> & Graw, std::vector<double> & G, std::vector<double> & E,
+                      int n_target, int n_haps, double length_tiles, double minimum_liability, double maximum_liability,
+                      mozza::phenotyper<IntegerVector, NumericVector> & PT)
+
+introduction de Demes où les haplotypes ont des fréquences différentes dans
+liabilitySelectedIndsProbs( ... )
 
