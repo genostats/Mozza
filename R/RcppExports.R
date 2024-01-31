@@ -17,6 +17,22 @@ getGenoVector <- function(pA, snpIndex, Rindex = TRUE) {
     .Call(`_Mozza_getGenoVector`, pA, snpIndex, Rindex)
 }
 
+haplotype <- function(ntiles, mean_length_tiles = 20) {
+    .Call(`_Mozza_haplotype`, ntiles, mean_length_tiles)
+}
+
+haplotype_probs <- function(probaTiles, mean_length_tiles = 20) {
+    .Call(`_Mozza_haplotype_probs`, probaTiles, mean_length_tiles)
+}
+
+haplotype_peek <- function(xpm) {
+    .Call(`_Mozza_haplotype_peek`, xpm)
+}
+
+zygote_peek <- function(xpz) {
+    .Call(`_Mozza_zygote_peek`, xpz)
+}
+
 liabilitySelectedInds <- function(groupSize, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_liabilitySelectedInds`, groupSize, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity)
 }
@@ -111,5 +127,13 @@ families_of_4 <- function(N, Haplos, chr, dist) {
 
 write_hap_file <- function(p_A, filename) {
     invisible(.Call(`_Mozza_write_hap_file`, p_A, filename))
+}
+
+zygote <- function(ntiles, mean_length_tiles = 20) {
+    .Call(`_Mozza_zygote`, ntiles, mean_length_tiles)
+}
+
+zygote_probs <- function(probaTiles, mean_length_tiles = 20) {
+    .Call(`_Mozza_zygote_probs`, probaTiles, mean_length_tiles)
 }
 

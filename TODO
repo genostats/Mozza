@@ -1,0 +1,22 @@
+
+!! Le constructeur avec proba_tiles commence par faire une somme cumulative des probas.
+!! Il vaudrait mieux lui passer directement les probas cumulées, mais ça demande de 
+!! changer des choses à d'autres endroits ou de mettre à jour des scripts.
+
+
+Note : le resultat de std::merge peut avoir des doublons (cf la nécessité de tester a < b dans hbd segments)
+
+Dans cases.controls h2 = 0, nb.causal = 0, théoriquement acceptable, ne fonctionne pas.
+
+Mettre des rownames/colnames aux matrices
+
+Note. Pour tirer rapidement les méioses
+il suffit de tirer le nombre n de cross overs dans un chromosome donné
+puis on tire la position des n cross overs de façon uniforme ds le chr.
+
+-> Voir ce que ça gagne comme temps. C'est probablement mineur face
+au temps pris pour créer les objets etc mais va savoir.
+
+
+---------
+Implémenter chaîne de Markov pour faire des individus avec HBD contrôlé.

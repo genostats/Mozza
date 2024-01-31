@@ -1,4 +1,7 @@
 #include <Rcpp.h>
+#ifndef __sample_cp__
+#define __sample_cp__
+
 namespace mozza {
 
 // on donne un vecteur de proba cumulées
@@ -16,4 +19,6 @@ inline int sample_cp(const std::vector<double> & cum_prob) {
 }
 
 } // namespace mozza
+
+#endif
 

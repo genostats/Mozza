@@ -1,5 +1,6 @@
 #include <Rcpp.h>
-
+#ifndef __sampleInt__
+#define __sampleInt__
 template<typename DV>
 inline int sampleInt(DV & probs) {
   double u = R::unif_rand();
@@ -11,3 +12,5 @@ inline int sampleInt(DV & probs) {
   }
   Rcpp::stop("In sampleInt, probs doesn't sum to 1");
 }
+#endif
+

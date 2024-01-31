@@ -186,7 +186,7 @@ XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotyp
 ####################################################################
 
 bool HBD_at_point(zygote & Z)
-* test si les deux haplotypes sont HBD au point définis par le curseur
+* test si les deux haplotypes sont HBD au point défini par le curseur
 * note : la fonction ne teste pas que les deux curseurs sont au même endroit...
 
 
