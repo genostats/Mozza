@@ -109,6 +109,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// kinship_matrix_
+NumericMatrix kinship_matrix_(List L);
+RcppExport SEXP _Mozza_kinship_matrix_(SEXP LSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type L(LSEXP);
+    rcpp_result_gen = Rcpp::wrap(kinship_matrix_(L));
+    return rcpp_result_gen;
+END_RCPP
+}
 // liabilitySelectedInds
 List liabilitySelectedInds(IntegerVector groupSize, NumericVector minimumLiability, NumericVector maximumLiability, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, IntegerVector submap, NumericVector beta, double h2, bool kinship, bool fraternity);
 RcppExport SEXP _Mozza_liabilitySelectedInds(SEXP groupSizeSEXP, SEXP minimumLiabilitySEXP, SEXP maximumLiabilitySEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP submapSEXP, SEXP betaSEXP, SEXP h2SEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
@@ -500,6 +511,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_haplotype_probs", (DL_FUNC) &_Mozza_haplotype_probs, 2},
     {"_Mozza_haplotype_peek", (DL_FUNC) &_Mozza_haplotype_peek, 1},
     {"_Mozza_zygote_peek", (DL_FUNC) &_Mozza_zygote_peek, 1},
+    {"_Mozza_kinship_matrix_", (DL_FUNC) &_Mozza_kinship_matrix_, 1},
     {"_Mozza_liabilitySelectedInds", (DL_FUNC) &_Mozza_liabilitySelectedInds, 12},
     {"_Mozza_liabilitySelectedIndsProbs", (DL_FUNC) &_Mozza_liabilitySelectedIndsProbs, 15},
     {"_Mozza_make_haps", (DL_FUNC) &_Mozza_make_haps, 6},

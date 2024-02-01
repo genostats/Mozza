@@ -8,6 +8,7 @@
 #include "Mozza/zygote.h"
 #include "Mozza/mapped_bed.h"
 #include "Mozza/drop_to_bed_matrix.h"
+#include "Mozza/kinship_matrix.h"
 
 namespace mozza {
 
@@ -24,7 +25,7 @@ namespace mozza {
 
   NumericMatrix ibd_matrix(std::vector<mosaic> & HAP);
 
-  NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
+//  NumericMatrix kinship_matrix(std::vector<zygote> & ZYG);
   NumericMatrix fraternity_matrix(std::vector<zygote> & ZYG);
 }
 

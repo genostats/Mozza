@@ -162,6 +162,10 @@ public:
     }
   }
 
+  // verbose copy cosntructor !!
+  // mosaic(const mosaic & M) {
+  // }
+
   // positionner le curseur
   void set_cursor(unsigned int chr = 0, double pos = 0.);
 

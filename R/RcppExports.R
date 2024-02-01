@@ -33,6 +33,10 @@ zygote_peek <- function(xpz) {
     .Call(`_Mozza_zygote_peek`, xpz)
 }
 
+kinship_matrix_ <- function(L) {
+    .Call(`_Mozza_kinship_matrix_`, L)
+}
+
 liabilitySelectedInds <- function(groupSize, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_liabilitySelectedInds`, groupSize, minimumLiability, maximumLiability, length_tiles, Haplos, chr, dist, submap, beta, h2, kinship, fraternity)
 }
