@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include "Mozza.h"
 
-Rcpp::List haplotype_peek(mozza::mosaic & M) {
+Rcpp::DataFrame haplotype_peek(mozza::mosaic & M) {
   std::vector<int> chr;
   std::vector<double> pos;
   std::vector<int> tile;
@@ -11,19 +11,21 @@ Rcpp::List haplotype_peek(mozza::mosaic & M) {
     for(int j = 0; j < ntile; j++) {
       tile.push_back( M.tiles[i][j] );
       pos.push_back( M.bpoints[i][j] );
-      chr.push_back(i);
+      chr.push_back(i+1); // number chromosomes from 1!
     }
   }   
   List L;
   L["chr"] = chr;
   L["pos"] = pos;
   L["tile"] = tile;
+  L.attr("class") = "data.frame";
+  L.attr("row.names") = IntegerVector::create(NA_INTEGER, -chr.size());
   return L;   
 }
 
  
 //[[Rcpp::export]]
-Rcpp::List haplotype_peek(Rcpp::XPtr<mozza::mosaic> xpm) {
+Rcpp::DataFrame haplotype_peek(Rcpp::XPtr<mozza::mosaic> xpm) {
   return haplotype_peek(*xpm);
 }
 

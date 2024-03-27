@@ -88,7 +88,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // haplotype_peek
-Rcpp::List haplotype_peek(Rcpp::XPtr<mozza::mosaic> xpm);
+Rcpp::DataFrame haplotype_peek(Rcpp::XPtr<mozza::mosaic> xpm);
 RcppExport SEXP _Mozza_haplotype_peek(SEXP xpmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

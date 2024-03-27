@@ -5,8 +5,6 @@
 #' @param depth1 
 #' @param depth2 
 #' @param eps 
-#'
-#' @return
 #' @export
 #'
 #' @examples

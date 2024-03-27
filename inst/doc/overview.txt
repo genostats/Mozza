@@ -252,3 +252,34 @@ liabilitySelectedInds(std::vector<mozza::zygote> & ZYG, std::vector<double> & Gr
 introduction de Demes où les haplotypes ont des fréquences différentes dans
 liabilitySelectedIndsProbs( ... )
 
+
+#####################################################
+### vague d'ajout de fonctions "interface avec R" ###
+
+# HAPLOTYPES:
+
+Ces deux fonctions renvoient un pointeur (XPtr) vers un haplotype, en appelant 
+le constructeur correspondant
+
+haplotype(int ntiles, double mean_length_tiles = 20) 
+haplotype_probs(NumericVector probaTiles, double mean_length_tiles = 20)
+
+Construction d'un data frame avec colonnes chr, pos, tile. 
+Pos correspond à "bpoints" et tile à "tile".
+Dernère pos en fin de chromosome, le numero de tuile correspond à ce qui est présent
+entre [le début du chr/la position précédent] et la position donnée.
+
+haplotype_peek(mozza::mosaic & M)
+haplotype_peek(Rcpp::XPtr<mozza::mosaic> xpm) 
+
+# ZYGOTES:
+
+Appelle les constructeurs de zygotes, renvoie un XPtr
+
+zygote(int ntiles, double mean_length_tiles = 20)
+zygote_probs(NumericVector probaTiles, double mean_length_tiles = 20)
+
+
+# renvoie une liste de deux data frame, un pour chacun des deux haplotypes
+zygote_peek(Rcpp::XPtr<mozza::zygote> xpz) 
+
