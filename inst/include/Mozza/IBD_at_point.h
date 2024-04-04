@@ -1,6 +1,10 @@
 #include <Rcpp.h>
 #include "mosaic.h"
 #include "zygote.h"
+
+#ifndef _mozza_ibd_at_point_
+#define _mozza_ibd_at_point_
+
 namespace mozza {
 
 // cette fonction n'a de sens que si les curseurs sont au même endroit dans les 4 haplotypes
@@ -19,3 +23,4 @@ inline int IBD_at_point(zygote & Z1, zygote & Z2) {
 
 }
 
+#endif

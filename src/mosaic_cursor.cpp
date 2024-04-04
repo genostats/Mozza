@@ -10,11 +10,11 @@ void mosaic::set_cursor(unsigned int chr, double pos){
     if(0 <= pos && pos <= chr_len[chr]) {
       cursor_pos = pos;
     } else {
-      Rcpp::warning("Trying to set cursor pos outside of chr");
+      throw std::runtime_error("Trying to set cursor pos outside of chr");
       cursor_pos = chr_len[chr];
     }
   } else
-    stop("Trying to set cursor to an inexistent chr");
+    throw std::runtime_error("Trying to set cursor to an inexistent chr");
   i_cursor = 0;
   // on incrémente i_cursor tant que le bpoint de la tile n'a pas dépassé pos
   while(bpoints[chr][i_cursor] < pos)
@@ -36,7 +36,7 @@ void mosaic::forward_cursor(double pos) {
   if(pos >= cursor_pos) // on avance si c'est plus loin sinon on reste sur place
     cursor_pos = pos;
   else {
-    Rcpp::warning("Trying to forward cursor to a 'backward' position " + std::to_string(cursor_chr) + ":" + std::to_string(cursor_pos) + " to " + std::to_string(pos));
+    throw std::runtime_error("Trying to forward cursor to a 'backward' position " + std::to_string(cursor_chr) + ":" + std::to_string(cursor_pos) + " to " + std::to_string(pos));
     return;
   }
   

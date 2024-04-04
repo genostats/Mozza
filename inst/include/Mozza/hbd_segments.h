@@ -7,6 +7,8 @@
  * calcul des segments HBD
  */
 
+#ifndef _mozza_hbd_segments_
+#define _mozza_hbd_segments_
 
 namespace mozza {
 
@@ -14,3 +16,5 @@ namespace mozza {
 segments HBD_segments(zygote & Z);
 
 }
+
+#endif

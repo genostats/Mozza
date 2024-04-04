@@ -2,6 +2,9 @@
 #include "mosaic.h"
 #include "zygote.h"
 
+#ifndef _mozza_hbd_at_point_
+#define _mozza_hbd_at_point_
+
 namespace mozza {
 
 // cette fonction n'a de sens que si les curseurs sont au même endroit dans les 2 haplotypes
@@ -11,3 +14,5 @@ inline bool HBD_at_point(zygote & Z) {
 }
 
 }
+
+#endif

@@ -50,6 +50,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// haplo_drop_tile_index
+Rcpp::IntegerVector haplo_drop_tile_index(Rcpp::XPtr<mozza::mosaic> xpm, IntegerVector chr, NumericVector pos);
+RcppExport SEXP _Mozza_haplo_drop_tile_index(SEXP xpmSEXP, SEXP chrSEXP, SEXP posSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::mosaic> >::type xpm(xpmSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type pos(posSEXP);
+    rcpp_result_gen = Rcpp::wrap(haplo_drop_tile_index(xpm, chr, pos));
+    return rcpp_result_gen;
+END_RCPP
+}
+// zygote_drop_tile_index
+Rcpp::List zygote_drop_tile_index(Rcpp::XPtr<mozza::zygote> xpz, IntegerVector chr, NumericVector pos);
+RcppExport SEXP _Mozza_zygote_drop_tile_index(SEXP xpzSEXP, SEXP chrSEXP, SEXP posSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz(xpzSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type pos(posSEXP);
+    rcpp_result_gen = Rcpp::wrap(zygote_drop_tile_index(xpz, chr, pos));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getGenoVector
 IntegerVector getGenoVector(XPtr<matrix4> pA, int snpIndex, bool Rindex);
 RcppExport SEXP _Mozza_getGenoVector(SEXP pASEXP, SEXP snpIndexSEXP, SEXP RindexSEXP) {
@@ -60,6 +86,32 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type snpIndex(snpIndexSEXP);
     Rcpp::traits::input_parameter< bool >::type Rindex(RindexSEXP);
     rcpp_result_gen = Rcpp::wrap(getGenoVector(pA, snpIndex, Rindex));
+    return rcpp_result_gen;
+END_RCPP
+}
+// haplo_group_by_tile_index
+Rcpp::List haplo_group_by_tile_index(Rcpp::XPtr<mozza::mosaic> xpm, IntegerVector chr, NumericVector pos);
+RcppExport SEXP _Mozza_haplo_group_by_tile_index(SEXP xpmSEXP, SEXP chrSEXP, SEXP posSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::mosaic> >::type xpm(xpmSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type pos(posSEXP);
+    rcpp_result_gen = Rcpp::wrap(haplo_group_by_tile_index(xpm, chr, pos));
+    return rcpp_result_gen;
+END_RCPP
+}
+// zygote_group_by_tile_index
+Rcpp::List zygote_group_by_tile_index(Rcpp::XPtr<mozza::zygote> xpz, IntegerVector chr, NumericVector pos);
+RcppExport SEXP _Mozza_zygote_group_by_tile_index(SEXP xpzSEXP, SEXP chrSEXP, SEXP posSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz(xpzSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type pos(posSEXP);
+    rcpp_result_gen = Rcpp::wrap(zygote_group_by_tile_index(xpz, chr, pos));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -107,6 +159,32 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz(xpzSEXP);
     rcpp_result_gen = Rcpp::wrap(zygote_peek(xpz));
     return rcpp_result_gen;
+END_RCPP
+}
+// haplotype_poke
+void haplotype_poke(Rcpp::XPtr<mozza::mosaic> xpm, IntegerVector tile_index, IntegerVector tile);
+RcppExport SEXP _Mozza_haplotype_poke(SEXP xpmSEXP, SEXP tile_indexSEXP, SEXP tileSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::mosaic> >::type xpm(xpmSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type tile_index(tile_indexSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type tile(tileSEXP);
+    haplotype_poke(xpm, tile_index, tile);
+    return R_NilValue;
+END_RCPP
+}
+// zygote_poke
+void zygote_poke(Rcpp::XPtr<mozza::zygote> xpz, IntegerVector tile_index1, IntegerVector tile1, IntegerVector tile_index2, IntegerVector tile2);
+RcppExport SEXP _Mozza_zygote_poke(SEXP xpzSEXP, SEXP tile_index1SEXP, SEXP tile1SEXP, SEXP tile_index2SEXP, SEXP tile2SEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz(xpzSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type tile_index1(tile_index1SEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type tile1(tile1SEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type tile_index2(tile_index2SEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type tile2(tile2SEXP);
+    zygote_poke(xpz, tile_index1, tile1, tile_index2, tile2);
+    return R_NilValue;
 END_RCPP
 }
 // kinship_matrix_
@@ -506,11 +584,17 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_GQ", (DL_FUNC) &_Mozza_GQ, 1},
     {"_Mozza_GT", (DL_FUNC) &_Mozza_GT, 1},
     {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 7},
+    {"_Mozza_haplo_drop_tile_index", (DL_FUNC) &_Mozza_haplo_drop_tile_index, 3},
+    {"_Mozza_zygote_drop_tile_index", (DL_FUNC) &_Mozza_zygote_drop_tile_index, 3},
     {"_Mozza_getGenoVector", (DL_FUNC) &_Mozza_getGenoVector, 3},
+    {"_Mozza_haplo_group_by_tile_index", (DL_FUNC) &_Mozza_haplo_group_by_tile_index, 3},
+    {"_Mozza_zygote_group_by_tile_index", (DL_FUNC) &_Mozza_zygote_group_by_tile_index, 3},
     {"_Mozza_haplotype", (DL_FUNC) &_Mozza_haplotype, 2},
     {"_Mozza_haplotype_probs", (DL_FUNC) &_Mozza_haplotype_probs, 2},
     {"_Mozza_haplotype_peek", (DL_FUNC) &_Mozza_haplotype_peek, 1},
     {"_Mozza_zygote_peek", (DL_FUNC) &_Mozza_zygote_peek, 1},
+    {"_Mozza_haplotype_poke", (DL_FUNC) &_Mozza_haplotype_poke, 3},
+    {"_Mozza_zygote_poke", (DL_FUNC) &_Mozza_zygote_poke, 5},
     {"_Mozza_kinship_matrix_", (DL_FUNC) &_Mozza_kinship_matrix_, 1},
     {"_Mozza_liabilitySelectedInds", (DL_FUNC) &_Mozza_liabilitySelectedInds, 12},
     {"_Mozza_liabilitySelectedIndsProbs", (DL_FUNC) &_Mozza_liabilitySelectedIndsProbs, 15},

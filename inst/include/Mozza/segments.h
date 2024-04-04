@@ -1,4 +1,7 @@
 
+#ifndef _mozza_segments_
+#define _mozza_segments_
+
 namespace mozza {
 
 class segments {
@@ -9,3 +12,5 @@ class segments {
 };
 
 }
+
+#endif

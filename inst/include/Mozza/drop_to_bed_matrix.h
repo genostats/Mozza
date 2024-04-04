@@ -1,10 +1,12 @@
 //[[Rcpp::depends(gaston)]]
-#include <Rcpp.h>
+#include "Mozza/mosaic.h"
+#include "Mozza/zygote.h"
 #include "gaston/matrix4.h"
 #include "push_m4_row.h"
 #include "mapped_bed.h"
 
-using namespace Rcpp;
+#ifndef _mozza_drop_to_bed_matrix_
+#define _mozza_drop_to_bed_matrix_
 
 namespace mozza {
 
@@ -97,3 +99,5 @@ XPtr<matrix4> drop_to_bed_matrix(std::vector<mosaic> & x, const mappedBed<IV, DB
 }
 
 }
+
+#endif

@@ -13,8 +13,24 @@ cousins_1stdegree <- function(n, tile_length, Haplos, chr, dist, kinship = FALSE
     .Call(`_Mozza_cousins_1stdegree`, n, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
+haplo_drop_tile_index <- function(xpm, chr, pos) {
+    .Call(`_Mozza_haplo_drop_tile_index`, xpm, chr, pos)
+}
+
+zygote_drop_tile_index <- function(xpz, chr, pos) {
+    .Call(`_Mozza_zygote_drop_tile_index`, xpz, chr, pos)
+}
+
 getGenoVector <- function(pA, snpIndex, Rindex = TRUE) {
     .Call(`_Mozza_getGenoVector`, pA, snpIndex, Rindex)
+}
+
+haplo_group_by_tile_index <- function(xpm, chr, pos) {
+    .Call(`_Mozza_haplo_group_by_tile_index`, xpm, chr, pos)
+}
+
+zygote_group_by_tile_index <- function(xpz, chr, pos) {
+    .Call(`_Mozza_zygote_group_by_tile_index`, xpz, chr, pos)
 }
 
 haplotype <- function(ntiles, mean_length_tiles = 20) {
@@ -31,6 +47,14 @@ haplotype_peek <- function(xpm) {
 
 zygote_peek <- function(xpz) {
     .Call(`_Mozza_zygote_peek`, xpz)
+}
+
+haplotype_poke <- function(xpm, tile_index, tile) {
+    invisible(.Call(`_Mozza_haplotype_poke`, xpm, tile_index, tile))
+}
+
+zygote_poke <- function(xpz, tile_index1, tile1, tile_index2, tile2) {
+    invisible(.Call(`_Mozza_zygote_poke`, xpz, tile_index1, tile1, tile_index2, tile2))
 }
 
 kinship_matrix_ <- function(L) {

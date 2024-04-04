@@ -2,6 +2,9 @@
 #include "Mozza.h"
 using namespace Rcpp;
 
+#ifndef _mozza_kinship_matrix_
+#define _mozza_kinship_matrix_
+
 namespace mozza {
 
 template<typename T> 
@@ -62,3 +65,5 @@ NumericMatrix kinship_matrix(zygoteVector & ZYG) {
 }
 
 } // end namespace
+
+#endif

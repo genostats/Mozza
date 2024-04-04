@@ -283,3 +283,22 @@ zygote_probs(NumericVector probaTiles, double mean_length_tiles = 20)
 # renvoie une liste de deux data frame, un pour chacun des deux haplotypes
 zygote_peek(Rcpp::XPtr<mozza::zygote> xpz) 
 
+
+# poke fonctions:
+
+Modifient les objets 'in place', créées pour le script de simus de Fabien
+
+Template 'niveau C++' :
+void haplotype_poke(mozza::mosaic & M, intVec tile_index, intVec tile, bool Rindex = true)
+
+remplace la tuile dont l'indice (en partant du premier chromosome) est donné dans tile_index
+par la valeur données dans tile
+Rindex = true si les index commencent à 1
+la fonction suppose que tile_index est trié dans l'ordre croissant
+
+Interface avec R :
+void haplotype_poke(Rcpp::XPtr<mozza::mosaic> xpm, IntegerVector tile_index, IntegerVector tile)
+void zygote_poke(Rcpp::XPtr<mozza::zygote> xpz, IntegerVector tile_index1, IntegerVector tile1, IntegerVector tile_index2, IntegerVector tile2)
+
+
+

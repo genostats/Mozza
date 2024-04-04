@@ -9,6 +9,7 @@
 #' 
 #' @details \code{haplotype_peek} sends back a data frame with columns 'chr', 'pos', 'tile'.
 #' The position in 'pos' is the endpoint of the tile (in cM) whose number is in 'tile'. 
+#' The last position is always the end of the chromosome.
 #' \code{zygote_peek} sends back a list of two such data frames.
 #' 
 #' @examples 
