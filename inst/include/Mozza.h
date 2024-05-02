@@ -5,9 +5,11 @@
 #include "Mozza/mosaic.h"
 #include "Mozza/human_autosomes.h"
 #include "Mozza/push_genotypes_at_cursor.h"
+#include "Mozza/push_haplotypes_at_cursor.h"
 #include "Mozza/zygote.h"
 #include "Mozza/mapped_bed.h"
-#include "Mozza/drop_to_bed_matrix.h"
+#include "Mozza/zygote_to_bed_matrix.h"
+#include "Mozza/haplo_to_bed_matrix.h"
 #include "Mozza/kinship_matrix.h"
 
 namespace mozza {

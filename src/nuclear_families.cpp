@@ -19,7 +19,7 @@ List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<m
   }
   List L;
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["bed"] = zygote_to_bed_matrix(ZYG, MB);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity) 
@@ -70,7 +70,7 @@ List nuclear_families_probs(IntegerVector Nfams, int nb_offsprings, NumericMatri
 
   List L;
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["bed"] = zygote_to_bed_matrix(ZYG, MB);
   if(kinship)
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity)

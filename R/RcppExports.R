@@ -13,6 +13,10 @@ cousins_1stdegree <- function(n, tile_length, Haplos, chr, dist, kinship = FALSE
     .Call(`_Mozza_cousins_1stdegree`, n, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
+drop_genotypes <- function(Z, Haplos, chr, dist) {
+    .Call(`_Mozza_drop_genotypes`, Z, Haplos, chr, dist)
+}
+
 haplo_drop_tile_index <- function(xpm, chr, pos) {
     .Call(`_Mozza_haplo_drop_tile_index`, xpm, chr, pos)
 }

@@ -118,13 +118,14 @@ Les haplotypes mosaiques sont des vecteurs d'entiers...
 *          mozza::sharing                           *
 *          mozza::IBD_length                        *
 *          mozza::kinship_matrix                    *
-*          mozza::drop_to_bed_matrix                *
+*          mozza::zygote_to_bed_matrix              *
+*          mozza::haplo_to_bed_matrix               *
 *    Fichiers mozza.h et                            *
 *          sharing.cpp                              *
 *          ibd.cpp                                  *
 *          kinship_matrix.cpp                       *
 *          faternity_matrix.cpp                     *
-*          drop_to_bed_matrix.cpp                   * 
+*          zygote_to_bed_matrix.h                   * 
 *****************************************************
 
 
@@ -166,9 +167,10 @@ NumericMatrix ibd_matrix(std::vector<mosaic> & HAP)
 * [voir dans make_haps]
 
 
-XPtr<matrix4> drop_to_bed_matrix(std::vector<zygote> & x, XPtr<matrix4> haplotypes, IntegerVector chr, NumericVector dist);
+XPtr<matrix4> zygote_to_bed_matrix(ZYG, mapB)
 
 * Cette fonction fait à peu près ce que son nom indique (drop_to_matrix4 aurait été mieux)
+* mapB est une "mapped bed matrix" d'haplotypes
 * La matrix4 haplotypes est une matrix4 d'haplotypes codés 0, 1
 *
 * NOTE TECHNIQUE
@@ -264,6 +266,23 @@ le constructeur correspondant
 haplotype(int ntiles, double mean_length_tiles = 20) 
 haplotype_probs(NumericVector probaTiles, double mean_length_tiles = 20)
 
+# ZYGOTES:
+
+Appelle les constructeurs de zygotes, renvoie un XPtr
+
+zygote(int ntiles, double mean_length_tiles = 20)
+zygote_probs(NumericVector probaTiles, double mean_length_tiles = 20)
+
+# KINSHIP MATRIX
+
+kinship_matrix_(List L) prend une liste de XPtr de zygotes
+Je n'ai pas réussi à éviter la copie dans un vecteur de pointeurs de zygotes
+Voir les essais dans getZygote.h et les aménagemements dans kinship_matrix.h
+Peut-être est-ce possible...
+
+# VOIR ET MODIFIER LES OBJETS
+# peek functions:
+
 Construction d'un data frame avec colonnes chr, pos, tile. 
 Pos correspond à "bpoints" et tile à "tile".
 Dernère pos en fin de chromosome, le numero de tuile correspond à ce qui est présent
@@ -272,19 +291,11 @@ entre [le début du chr/la position précédent] et la position donnée.
 haplotype_peek(mozza::mosaic & M)
 haplotype_peek(Rcpp::XPtr<mozza::mosaic> xpm) 
 
-# ZYGOTES:
+renvoie une liste de deux data frame, un pour chacun des deux haplotypes
 
-Appelle les constructeurs de zygotes, renvoie un XPtr
-
-zygote(int ntiles, double mean_length_tiles = 20)
-zygote_probs(NumericVector probaTiles, double mean_length_tiles = 20)
-
-
-# renvoie une liste de deux data frame, un pour chacun des deux haplotypes
 zygote_peek(Rcpp::XPtr<mozza::zygote> xpz) 
 
-
-# poke fonctions:
+# poke functions:
 
 Modifient les objets 'in place', créées pour le script de simus de Fabien
 

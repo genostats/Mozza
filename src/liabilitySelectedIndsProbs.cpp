@@ -139,7 +139,7 @@ List liabilitySelectedIndsProbs(IntegerVector groupSize, NumericMatrix probaHapl
   List L;
 
   Rcpp::Rcout << "Dropping to bed matrix\n";
-  L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["bed"] = zygote_to_bed_matrix(ZYG, MB);
   L["G.raw"] = wrap(Graw);
   L["G.adj"] = wrap(G);
   L["E"] = wrap(E);

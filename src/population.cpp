@@ -64,7 +64,7 @@ List population(int n0, int nGen, int keep, double lambda,
   List L;
 
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["bed"] = zygote_to_bed_matrix(ZYG, MB);
   L["N"] = ZYG.size();
   L["id"] = wrap(ID);
   L["father"] = wrap(FATHER);
@@ -119,7 +119,7 @@ List nuclear_families_probs(IntegerVector Nfams, int nb_offsprings, NumericMatri
   }
 
   List L;
-  L["bed"] = drop_to_bed_matrix(ZYG, Haplos, chr, dist);
+  L["bed"] = zygote_to_bed_matrix(ZYG, Haplos, chr, dist);
   if(kinship)
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity)

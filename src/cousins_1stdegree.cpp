@@ -21,7 +21,7 @@ List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerV
   }
   List L;
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  L["bed"] = drop_to_bed_matrix(ZYG, MB);
+  L["bed"] = zygote_to_bed_matrix(ZYG, MB);
   if(kinship) 
     L["kinship"] = kinship_matrix(ZYG);
   if(fraternity) 

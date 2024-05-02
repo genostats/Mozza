@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "mosaic.h"
 #include "zygote.h"
+#include "getZygote.h"
 
 using namespace Rcpp;
 
@@ -17,21 +18,13 @@ namespace mozza {
 // fera l'affaire
 // ça suppose plus ou moins implicitement que les curseur sont à la même
 // position partout mais peu importe
-template<typename T1, typename T2>
-inline void push_genotypes_at_cursor(std::vector<zygote> & x, T1 & allele_at_haplo, T2 & genotypes) {
-  for(auto & p : x) {
+template<typename ZV, typename T1, typename T2>
+inline void push_genotypes_at_cursor(ZV & x, T1 & allele_at_haplo, T2 & genotypes) {
+  for(auto & pp : x) {
+    zygote & p(getZygote(pp));
     int h1 = p.first.tile_at_cursor();
     int h2 = p.second.tile_at_cursor();
     genotypes.push_back( allele_at_haplo[h1] + allele_at_haplo[h2] );
-  }
-}
-
-// le même pour simplement des haplotypes
-template<typename T1, typename T2>
-inline void push_genotypes_at_cursor(std::vector<mosaic> & x, T1 & allele_at_haplo, T2 & genotypes) {
-  for(auto & p : x) {
-    int h = p.tile_at_cursor();
-    genotypes.push_back( allele_at_haplo[h] );
   }
 }
 

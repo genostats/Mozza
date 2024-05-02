@@ -53,7 +53,7 @@ List make_inbreds(int N, NumericVector le1, NumericVector le2, double length_til
     L["inb"] = make_inbreds_vecle(N, le1, le2, x, n_haps, length_tiles);
   }
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  L["bed"] = drop_to_bed_matrix(x, MB);
+  L["bed"] = zygote_to_bed_matrix(x, MB);
   if(segments) {
     List S(N);
     for(int i = 0; i < N; i++) {

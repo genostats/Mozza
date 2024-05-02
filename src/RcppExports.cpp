@@ -50,6 +50,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// drop_genotypes
+List drop_genotypes(List Z, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist);
+RcppExport SEXP _Mozza_drop_genotypes(SEXP ZSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
+    rcpp_result_gen = Rcpp::wrap(drop_genotypes(Z, Haplos, chr, dist));
+    return rcpp_result_gen;
+END_RCPP
+}
 // haplo_drop_tile_index
 Rcpp::IntegerVector haplo_drop_tile_index(Rcpp::XPtr<mozza::mosaic> xpm, IntegerVector chr, NumericVector pos);
 RcppExport SEXP _Mozza_haplo_drop_tile_index(SEXP xpmSEXP, SEXP chrSEXP, SEXP posSEXP) {
@@ -584,6 +598,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_GQ", (DL_FUNC) &_Mozza_GQ, 1},
     {"_Mozza_GT", (DL_FUNC) &_Mozza_GT, 1},
     {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 7},
+    {"_Mozza_drop_genotypes", (DL_FUNC) &_Mozza_drop_genotypes, 4},
     {"_Mozza_haplo_drop_tile_index", (DL_FUNC) &_Mozza_haplo_drop_tile_index, 3},
     {"_Mozza_zygote_drop_tile_index", (DL_FUNC) &_Mozza_zygote_drop_tile_index, 3},
     {"_Mozza_getGenoVector", (DL_FUNC) &_Mozza_getGenoVector, 3},

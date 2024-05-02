@@ -200,7 +200,7 @@ XPtr<matrix4> test_xptr(XPtr<matrix4> Haplos, IntegerVector chr, NumericVector d
     mozza::zygote(Ma1, Ma2), mozza::zygote(Mb1, Mb2) };
  
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  return drop_to_bed_matrix(x, MB);
+  return zygote_to_bed_matrix(x, MB);
 }
 
 //[[Rcpp::export]]
@@ -229,7 +229,7 @@ XPtr<matrix4> families_of_4_v0(int N, XPtr<matrix4> Haplos, IntegerVector chr, N
     }*/
   }
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  return drop_to_bed_matrix(x, MB);
+  return zygote_to_bed_matrix(x, MB);
 }
 
 
@@ -248,5 +248,5 @@ XPtr<matrix4> families_of_4(int N, XPtr<matrix4> Haplos, IntegerVector chr, Nume
     x.push_back(M+F);
   }
   mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  return drop_to_bed_matrix(x, MB);
+  return zygote_to_bed_matrix(x, MB);
 }
