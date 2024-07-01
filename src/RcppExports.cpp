@@ -91,13 +91,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // getGenoVector
-IntegerVector getGenoVector(XPtr<matrix4> pA, int snpIndex, bool Rindex);
+IntegerVector getGenoVector(XPtr<matrix4> pA, unsigned int snpIndex, bool Rindex);
 RcppExport SEXP _Mozza_getGenoVector(SEXP pASEXP, SEXP snpIndexSEXP, SEXP RindexSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< XPtr<matrix4> >::type pA(pASEXP);
-    Rcpp::traits::input_parameter< int >::type snpIndex(snpIndexSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type snpIndex(snpIndexSEXP);
     Rcpp::traits::input_parameter< bool >::type Rindex(RindexSEXP);
     rcpp_result_gen = Rcpp::wrap(getGenoVector(pA, snpIndex, Rindex));
     return rcpp_result_gen;
@@ -435,6 +435,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// reproduce
+Rcpp::XPtr<mozza::zygote> reproduce(Rcpp::XPtr<mozza::zygote> xpz1, Rcpp::XPtr<mozza::zygote> xpz2);
+RcppExport SEXP _Mozza_reproduce(SEXP xpz1SEXP, SEXP xpz2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz1(xpz1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz2(xpz2SEXP);
+    rcpp_result_gen = Rcpp::wrap(reproduce(xpz1, xpz2));
+    return rcpp_result_gen;
+END_RCPP
+}
 // essai
 void essai();
 RcppExport SEXP _Mozza_essai() {
@@ -623,6 +635,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
     {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 6},
     {"_Mozza_population", (DL_FUNC) &_Mozza_population, 10},
+    {"_Mozza_reproduce", (DL_FUNC) &_Mozza_reproduce, 2},
     {"_Mozza_essai", (DL_FUNC) &_Mozza_essai, 0},
     {"_Mozza_test_cursor", (DL_FUNC) &_Mozza_test_cursor, 0},
     {"_Mozza_essai2", (DL_FUNC) &_Mozza_essai2, 0},

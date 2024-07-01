@@ -113,6 +113,10 @@ population <- function(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, k
     .Call(`_Mozza_population`, n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
+reproduce <- function(xpz1, xpz2) {
+    .Call(`_Mozza_reproduce`, xpz1, xpz2)
+}
+
 essai <- function() {
     invisible(.Call(`_Mozza_essai`))
 }

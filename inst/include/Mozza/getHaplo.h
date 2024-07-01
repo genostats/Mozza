@@ -12,12 +12,12 @@ mosaic & getHaplo(T & zyg);
 template<>
 inline mosaic & getHaplo<mosaic>(mosaic & zyg) {
   return zyg;
-};
+}
 
 template<>
 inline mosaic & getHaplo<mosaic *>(mosaic * & zyg) {
   return *zyg;
-};
+}
 
 } // end namespace
 

@@ -12,12 +12,12 @@ zygote & getZygote(T & zyg);
 template<>
 inline zygote & getZygote<zygote>(zygote & zyg) {
   return zyg;
-};
+}
 
 template<>
 inline zygote & getZygote<zygote *>(zygote * & zyg) {
   return *zyg;
-};
+}
 
 /*
 template<>

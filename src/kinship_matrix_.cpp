@@ -3,6 +3,7 @@
 
 //[[Rcpp::export]]
 NumericMatrix kinship_matrix_(List L) {
+  // il faut créer un vecteur de pointeurs... mozza::kinship_matrix ne fonctionne pas avec une liste.
   std::vector<mozza::zygote *> Z;
   for(auto a : L) {
     Rcpp::XPtr<mozza::zygote> pz = a;

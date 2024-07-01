@@ -11,18 +11,18 @@ using namespace Rcpp;
 // cette fonction prend un vecteur d'une bed matrix et le push back dans V
 template<typename T>
 inline void push_m4_row(unsigned char * snp, size_t ncol, std::vector<T> & V) {
-  int true_ncol = ncol/4 + ((ncol%4 == 0)?0:1);
-  for(int ii = 0; ii < true_ncol-1; ii++) {
+  size_t true_ncol = ncol/4 + ((ncol%4 == 0)?0:1);
+  for(size_t ii = 0; ii < true_ncol-1; ii++) {
     unsigned char x = snp[ii];
-    for(int ss = 0; ss < 4; ss++) {
+    for(unsigned int ss = 0; ss < 4; ss++) {
       V.push_back(x&3);
       x >>= 2;
     }
   }
   // the last one (is there any time gain with this ?!)
-  { int ii = true_ncol-1;
+  { size_t ii = true_ncol-1;
     unsigned char x = snp[ii];
-    for(int ss = 0; ss < 4 && 4*ii+ss < ncol; ss++) {
+    for(unsigned int ss = 0; ss < 4 && 4*ii+ss < ncol; ss++) {
       V.push_back(x&3);
       x >>= 2;
     }
@@ -39,8 +39,8 @@ class SNP_push_back {
   unsigned char * snp;
   int s;
 public:
-  SNP_push_back(unsigned char * snp_, int ncol) : snp(snp_), s(0) {
-    int true_ncol = ncol/4 + ((ncol%4 == 0)?0:1);
+  SNP_push_back(unsigned char * snp_, size_t ncol) : snp(snp_), s(0) {
+    size_t true_ncol = ncol/4 + ((ncol%4 == 0)?0:1);
     if(ncol%4 != 0) // seulement s'il y a un padding
       snp[true_ncol - 1] = (255 << ((ncol%4)*2)); // NAs en bout de lignes
   }
