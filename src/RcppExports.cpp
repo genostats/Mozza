@@ -90,6 +90,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getAutosomes
+NumericVector getAutosomes();
+RcppExport SEXP _Mozza_getAutosomes() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(getAutosomes());
+    return rcpp_result_gen;
+END_RCPP
+}
+// setAutosomes
+void setAutosomes(NumericVector A);
+RcppExport SEXP _Mozza_setAutosomes(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    setAutosomes(A);
+    return R_NilValue;
+END_RCPP
+}
 // getGenoVector
 IntegerVector getGenoVector(XPtr<matrix4> pA, unsigned int snpIndex, bool Rindex);
 RcppExport SEXP _Mozza_getGenoVector(SEXP pASEXP, SEXP snpIndexSEXP, SEXP RindexSEXP) {
@@ -436,14 +456,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // reproduce
-Rcpp::XPtr<mozza::zygote> reproduce(Rcpp::XPtr<mozza::zygote> xpz1, Rcpp::XPtr<mozza::zygote> xpz2);
-RcppExport SEXP _Mozza_reproduce(SEXP xpz1SEXP, SEXP xpz2SEXP) {
+Rcpp::XPtr<mozza::zygote> reproduce(Rcpp::XPtr<mozza::zygote> z1, Rcpp::XPtr<mozza::zygote> z2);
+RcppExport SEXP _Mozza_reproduce(SEXP z1SEXP, SEXP z2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz1(xpz1SEXP);
-    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type xpz2(xpz2SEXP);
-    rcpp_result_gen = Rcpp::wrap(reproduce(xpz1, xpz2));
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type z1(z1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type z2(z2SEXP);
+    rcpp_result_gen = Rcpp::wrap(reproduce(z1, z2));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -613,6 +633,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_drop_genotypes", (DL_FUNC) &_Mozza_drop_genotypes, 4},
     {"_Mozza_haplo_drop_tile_index", (DL_FUNC) &_Mozza_haplo_drop_tile_index, 3},
     {"_Mozza_zygote_drop_tile_index", (DL_FUNC) &_Mozza_zygote_drop_tile_index, 3},
+    {"_Mozza_getAutosomes", (DL_FUNC) &_Mozza_getAutosomes, 0},
+    {"_Mozza_setAutosomes", (DL_FUNC) &_Mozza_setAutosomes, 1},
     {"_Mozza_getGenoVector", (DL_FUNC) &_Mozza_getGenoVector, 3},
     {"_Mozza_haplo_group_by_tile_index", (DL_FUNC) &_Mozza_haplo_group_by_tile_index, 3},
     {"_Mozza_zygote_group_by_tile_index", (DL_FUNC) &_Mozza_zygote_group_by_tile_index, 3},

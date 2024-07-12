@@ -21,7 +21,7 @@ using namespace Rcpp;
 void calibrate(int nbSimHaps, int n_haps, double length_tiles, double h2, mozza::phenotyper<IntegerVector, NumericVector> & PT) {
   double sumG = 0, sumGG = 0;
   for(int i = 0; i < nbSimHaps; i++) {
-    mozza::zygote z = mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles);
+    mozza::zygote z = mozza::zygote(mozza::Autosomes(), n_haps, length_tiles);
     double G = PT.getZygoteScore(z);
     sumG += G;
     sumGG += G*G;
@@ -50,7 +50,7 @@ void liabilitySelectedInds(std::vector<mozza::zygote> & ZYG, std::vector<double>
                       mozza::phenotyper<IntegerVector, NumericVector> & PT) {
   int k = 0;
   for(int i = 0; k < n_target; i++) {
-    mozza::zygote z = mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles);
+    mozza::zygote z = mozza::zygote(mozza::Autosomes(), n_haps, length_tiles);
     std::tuple<double, double, double> GGE = PT.getLiability(z);
     if(!((i+1) % 500)) Rcpp::Rcout << k+1 << "/" << i+1 << "\r";
     double liab = std::get<1>(GGE) + std::get<2>(GGE);

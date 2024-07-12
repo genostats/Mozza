@@ -14,7 +14,7 @@ using namespace Rcpp;
 // length_tiles : in cM
 void make_inds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, double length_tiles = 20.) {
   for(int i = 0; i < n; i++) {
-    ZYG.push_back( mozza::zygote(mozza::human_autosomes_b37, n_haps, length_tiles) );
+    ZYG.push_back( mozza::zygote(mozza::Autosomes(), n_haps, length_tiles) );
   }
 }
 
@@ -26,7 +26,7 @@ void make_inds(std::vector<mozza::zygote> & ZYG, int n, int n_haps, double lengt
 // length_tiles : in cM
 void make_inds(std::vector<mozza::zygote> & ZYG, int n, const std::vector<double> & proba_tiles, double length_tiles = 20.) {
   for(int i = 0; i < n; i++) {
-    ZYG.push_back( mozza::zygote(mozza::human_autosomes_b37, proba_tiles, length_tiles) );
+    ZYG.push_back( mozza::zygote(mozza::Autosomes(), proba_tiles, length_tiles) );
   }
 }
 

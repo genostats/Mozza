@@ -10,12 +10,12 @@ List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerV
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   
   for(int i = 0; i < n; i++) {
-    mozza::zygote GM(mozza::human_autosomes_b37, n_haps, tile_length);
-    mozza::zygote GF(mozza::human_autosomes_b37, n_haps, tile_length);
+    mozza::zygote GM(mozza::Autosomes(), n_haps, tile_length);
+    mozza::zygote GF(mozza::Autosomes(), n_haps, tile_length);
     mozza::zygote A = GM + GF;
     mozza::zygote B = GM + GF;
-    mozza::zygote A1(mozza::human_autosomes_b37, n_haps, tile_length);
-    mozza::zygote B1(mozza::human_autosomes_b37, n_haps, tile_length);
+    mozza::zygote A1(mozza::Autosomes(), n_haps, tile_length);
+    mozza::zygote B1(mozza::Autosomes(), n_haps, tile_length);
     ZYG.push_back(A + A1);
     ZYG.push_back(B + B1);
   }

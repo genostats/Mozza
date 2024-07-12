@@ -25,6 +25,14 @@ zygote_drop_tile_index <- function(xpz, chr, pos) {
     .Call(`_Mozza_zygote_drop_tile_index`, xpz, chr, pos)
 }
 
+getAutosomes <- function() {
+    .Call(`_Mozza_getAutosomes`)
+}
+
+setAutosomes <- function(A) {
+    invisible(.Call(`_Mozza_setAutosomes`, A))
+}
+
 getGenoVector <- function(pA, snpIndex, Rindex = TRUE) {
     .Call(`_Mozza_getGenoVector`, pA, snpIndex, Rindex)
 }
@@ -113,8 +121,8 @@ population <- function(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, k
     .Call(`_Mozza_population`, n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
-reproduce <- function(xpz1, xpz2) {
-    .Call(`_Mozza_reproduce`, xpz1, xpz2)
+reproduce <- function(z1, z2) {
+    .Call(`_Mozza_reproduce`, z1, z2)
 }
 
 essai <- function() {

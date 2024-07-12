@@ -11,6 +11,7 @@
 #include "Mozza/zygote_to_bed_matrix.h"
 #include "Mozza/haplo_to_bed_matrix.h"
 #include "Mozza/kinship_matrix.h"
+#include "Mozza/Autosomes.h"
 
 namespace mozza {
 

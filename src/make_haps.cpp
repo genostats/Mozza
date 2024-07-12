@@ -10,7 +10,7 @@ using namespace Rcpp;
 // Ils sont pushed back dans un vecteur de mozza::mosaic
 void make_haps(std::vector<mozza::mosaic> & HAP, int n, int n_haps, double length_tiles = 20.) {
   for(int i = 0; i < n; i++) {
-    HAP.push_back( mozza::mosaic(mozza::human_autosomes_b37, n_haps, length_tiles) );
+    HAP.push_back( mozza::mosaic(mozza::Autosomes(), n_haps, length_tiles) );
   }
 }
 
@@ -18,7 +18,7 @@ void make_haps(std::vector<mozza::mosaic> & HAP, int n, int n_haps, double lengt
 // qui prend un vecteur de proba des haplotypes de base
 void make_haps(std::vector<mozza::mosaic> & HAP, int n, const std::vector<double> & proba_tiles, double length_tiles = 20.) {
   for(int i = 0; i < n; i++) {
-    HAP.push_back( mozza::mosaic(mozza::human_autosomes_b37, proba_tiles, length_tiles) );
+    HAP.push_back( mozza::mosaic(mozza::Autosomes(), proba_tiles, length_tiles) );
   }
 }
 

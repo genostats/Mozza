@@ -10,8 +10,8 @@ List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<m
   int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
   
   for(int i = 0; i < nb_fams; i++) {
-    mozza::zygote M(mozza::human_autosomes_b37, n_haps, tile_length);
-    mozza::zygote F(mozza::human_autosomes_b37, n_haps, tile_length);
+    mozza::zygote M(mozza::Autosomes(), n_haps, tile_length);
+    mozza::zygote F(mozza::Autosomes(), n_haps, tile_length);
     ZYG.push_back(M);
     ZYG.push_back(F);
     for(int j = 0; j < nb_offsprings; j++)
@@ -33,8 +33,8 @@ List nuclear_families(int nb_fams, int nb_offsprings, double tile_length, XPtr<m
 void nuclear_families(std::vector<mozza::zygote> & ZYG, int nb_fams, int nb_offsprings, const std::vector<double> & proba_tiles,
                       double tile_length) {
   for(int i = 0; i < nb_fams; i++) {
-    mozza::zygote M(mozza::human_autosomes_b37, proba_tiles, tile_length);
-    mozza::zygote F(mozza::human_autosomes_b37, proba_tiles, tile_length);
+    mozza::zygote M(mozza::Autosomes(), proba_tiles, tile_length);
+    mozza::zygote F(mozza::Autosomes(), proba_tiles, tile_length);
     ZYG.push_back(M);
     ZYG.push_back(F);
     for(int j = 0; j < nb_offsprings; j++)

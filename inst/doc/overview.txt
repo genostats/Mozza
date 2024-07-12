@@ -295,6 +295,12 @@ renvoie une liste de deux data frame, un pour chacun des deux haplotypes
 
 zygote_peek(Rcpp::XPtr<mozza::zygote> xpz) 
 
+- fonctions haplo_drop_tile_index et zygote_drop_tile_index : récupérer le numéro 
+de tuile à une série de positions données
+
+- fonctions haplo_group_by_tile_index et zygote_group_by_tile_index [pour Fabien]
+création de groupes d'indices qui sont dans la même tuile...
+
 # poke functions:
 
 Modifient les objets 'in place', créées pour le script de simus de Fabien

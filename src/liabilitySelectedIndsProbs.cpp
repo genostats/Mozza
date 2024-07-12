@@ -19,7 +19,7 @@ void calibrate(int nbSimHaps, std::vector< std::vector<double> > & PrHaps, Numer
   double sumG = 0, sumGG = 0;
   for(int i = 0; i < nbSimHaps; i++) {
     int d = sampleInt(probaDemes);
-    mozza::zygote z = mozza::zygote(mozza::human_autosomes_b37, PrHaps[d], length_tiles);
+    mozza::zygote z = mozza::zygote(mozza::Autosomes(), PrHaps[d], length_tiles);
     double G = PT.getZygoteScore(z);
     sumG += G;
     sumGG += G*G;
@@ -73,7 +73,7 @@ void liabilitySelectedInds(std::vector<mozza::zygote> & ZYG, std::vector<double>
   int k = 0;
   for(int i = 0; k < n_target; i++) {
     int d = sampleInt(probaDemes);
-    mozza::zygote z = mozza::zygote(mozza::human_autosomes_b37, PrHaps[d], length_tiles);
+    mozza::zygote z = mozza::zygote(mozza::Autosomes(), PrHaps[d], length_tiles);
     std::tuple<double, double, double> GGE = PT.getLiability(z);
     if(!((i+1) % 500)) Rcpp::Rcout << "\r" << k+1 << "/" << i+1 ;
     double liab = std::get<1>(GGE) + std::get<2>(GGE) + liabilityOffsetDemes[d];

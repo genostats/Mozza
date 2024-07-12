@@ -13,17 +13,17 @@ using namespace Rcpp;
 std::vector<double> make_pairs(int n, double le1, double le2, std::vector<mozza::zygote> & ZYG, int n_haps = 100, double length_tiles = 20.) {
   std::vector<double> kin;
   for(int i = 0; i < n; i++) {
-    mozza::mosaic H1(mozza::human_autosomes_b37, n_haps, length_tiles);
-    mozza::mosaic H2(mozza::human_autosomes_b37, n_haps, length_tiles);
+    mozza::mosaic H1(mozza::Autosomes(), n_haps, length_tiles);
+    mozza::mosaic H2(mozza::Autosomes(), n_haps, length_tiles);
 
-    mozza::mosaic M1(mozza::human_autosomes_b37, n_haps, length_tiles);
-    mozza::mosaic AA(mozza::human_autosomes_b37, n_haps, length_tiles);
+    mozza::mosaic M1(mozza::Autosomes(), n_haps, length_tiles);
+    mozza::mosaic AA(mozza::Autosomes(), n_haps, length_tiles);
 
     mozza::zygote Z1( H1, H2 );
     mozza::zygote Z2( M1, mozza::mosaic(H2, AA, le1, le2) );
 
     auto IBD = IBD_length( Z1, Z2 );
-    kin.push_back( (0.5*std::get<1>(IBD) + std::get<2>(IBD)) / mozza::length_human_autosomes_b37  );
+    kin.push_back( (0.5*std::get<1>(IBD) + std::get<2>(IBD)) / mozza::lengthAutosomes()  );
     ZYG.push_back(Z1);
     ZYG.push_back(Z2);
   }
