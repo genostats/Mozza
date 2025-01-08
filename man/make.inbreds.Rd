@@ -6,7 +6,7 @@
 \usage{
 make.inbreds(
   nb.inds,
-  haplos,
+  ntiles,
   f,
   a,
   hbd.length,
@@ -17,8 +17,6 @@ make.inbreds(
 }
 \arguments{
 \item{nb.inds}{number of (unrelated) individuals}
-
-\item{haplos}{haplotype bed matrix}
 
 \item{f}{inbreding coefficient(s)}
 
@@ -31,6 +29,8 @@ make.inbreds(
 \item{tile.length}{tile length in cM}
 
 \item{segments}{Logical. TRUE to get the position of HBD segments}
+
+\item{haplos}{haplotype bed matrix}
 }
 \value{
 a list with components `bed.matrix`, `inbred.coef` (computed from the HBD length) 
@@ -57,9 +57,14 @@ if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
 H <- read.bed.matrix(filepath)
-# Generates a bed matrix with 100 individuals with specified a and f values
+# Generates 100 individuals (zygotes) with specified a and f values
 set.seed(1)
-x <- make.inbreds(100, H, f = 0.02, a = 0.05, segments = TRUE)
+x <- make.inbreds(100, nrow(H), f = 0.02, a = 0.05, segments = TRUE)
+# their "true" indbreeding coefficients 
+mean(x$inbred.coef)
 hist(x$inbred.coef)
+# their HBD segments
 x$segments[[1]]
+# to get a bed matrix, use drop.genotypes (here on SNPs 1 to 100)
+xbed <- drop.genotypes(x$zygotes, H[,1:100])
 }

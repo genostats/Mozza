@@ -313,20 +313,18 @@ BEGIN_RCPP
 END_RCPP
 }
 // make_inbreds
-List make_inbreds(int N, NumericVector le1, NumericVector le2, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool segments);
-RcppExport SEXP _Mozza_make_inbreds(SEXP NSEXP, SEXP le1SEXP, SEXP le2SEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP segmentsSEXP) {
+List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, NumericVector le2, double length_tiles, bool segments);
+RcppExport SEXP _Mozza_make_inbreds(SEXP NSEXP, SEXP n_hapsSEXP, SEXP le1SEXP, SEXP le2SEXP, SEXP length_tilesSEXP, SEXP segmentsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n_haps(n_hapsSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type le1(le1SEXP);
     Rcpp::traits::input_parameter< NumericVector >::type le2(le2SEXP);
     Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
-    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
     Rcpp::traits::input_parameter< bool >::type segments(segmentsSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inbreds(N, le1, le2, length_tiles, Haplos, chr, dist, segments));
+    rcpp_result_gen = Rcpp::wrap(make_inbreds(N, n_haps, le1, le2, length_tiles, segments));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -649,7 +647,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_liabilitySelectedIndsProbs", (DL_FUNC) &_Mozza_liabilitySelectedIndsProbs, 15},
     {"_Mozza_make_haps", (DL_FUNC) &_Mozza_make_haps, 6},
     {"_Mozza_make_haps_probs", (DL_FUNC) &_Mozza_make_haps_probs, 7},
-    {"_Mozza_make_inbreds", (DL_FUNC) &_Mozza_make_inbreds, 8},
+    {"_Mozza_make_inbreds", (DL_FUNC) &_Mozza_make_inbreds, 6},
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
     {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},

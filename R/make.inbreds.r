@@ -27,17 +27,18 @@
 #' # loads a bed matrix of 1006 european haplotypes
 #' filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
 #' H <- read.bed.matrix(filepath)
-#' # Generates a bed matrix with 100 individuals with specified a and f values
+#' # Generates 100 individuals (zygotes) with specified a and f values
 #' set.seed(1)
-#' x <- make.inbreds(100, H, f = 0.02, a = 0.05, segments = TRUE)
+#' x <- make.inbreds(100, nrow(H), f = 0.02, a = 0.05, segments = TRUE)
+#' # their "true" indbreeding coefficients 
+#' mean(x$inbred.coef)
 #' hist(x$inbred.coef)
+#' # their HBD segments
 #' x$segments[[1]]
+#' # to get a bed matrix, use drop.genotypes (here on SNPs 1 to 100)
+#' xbed <- drop.genotypes(x$zygotes, H[,1:100])
 
-
-make.inbreds <- function(nb.inds, haplos, f, a, hbd.length, non.hbd.length, tile.length = 20, segments = FALSE) {
-  if(all(haplos@snps$dist == 0))
-    stop("Set genetic distance between markers with set.dist !")
-
+make.inbreds <- function(nb.inds, ntiles, f, a, hbd.length, non.hbd.length, tile.length = 20, segments = FALSE) {
   if(missing(hbd.length) | missing(non.hbd.length)) {
     hbd.length <- 1/(a*(1-f))
     non.hbd.length <- 1/(a*f)
@@ -51,20 +52,9 @@ make.inbreds <- function(nb.inds, haplos, f, a, hbd.length, non.hbd.length, tile
       stop("Inbreeding parameters should have both length equal to 1 or to nb.inds")
   }
  
-  L <- make_inbreds(nb.inds, hbd.length, non.hbd.length, tile.length, 
-                  haplos@bed, haplos@snps$chr, haplos@snps$dist, segments)
+  L <- make_inbreds(nb.inds, ntiles, hbd.length, non.hbd.length, tile.length, segments)
 
-  ped <- data.frame(famid = 1:nb.inds, id = 1:nb.inds, father = NA, 
-                    mother = NA, sex = NA, pheno = NA, stringsAsFactors = FALSE)
-  
-  x <- new("bed.matrix", bed = L$bed, snps = haplos@snps, ped = ped, p = NULL, mu = NULL,
-           sigma = NULL, standardize_p = FALSE, standardize_mu_sigma = FALSE )
-  
-  if(getOption("gaston.auto.set.stats", TRUE))
-    x <- set.stats(x)
-  
-  R <- list("bed.matrix" = x, "inbred.coef" = L$inb)
-  if(segments) 
-    R$segments <- lapply( L$segments, function(z) transform(z, chr = chr + 1) ) # chr numbering starting from 0/1
-  R
+  # L <- make_inbreds(nb.inds, hbd.length, non.hbd.length, tile.length, 
+  #                haplos@bed, haplos@snps$chr, haplos@snps$dist, segments)
+  L
 }
