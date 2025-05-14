@@ -24,12 +24,12 @@ drop.genotypes.vcf <- function(x, haplos, filename) {
   if(file.exists(filename)) stop("file already exists")
   # create VCF header
   z <- file(filename, "w")
-  cat("##fileformat=VCFv4.1\n", z)
-  cat('##FILTER=<ID=PASS,Description="All filters passed">\n', z)
-  cat("##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">\n", z)
-  cat("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT", z)
+  cat("##fileformat=VCFv4.1\n", file = z)
+  cat('##FILTER=<ID=PASS,Description="All filters passed">\n', file = z)
+  cat('##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">\n', file = z)
+  cat("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT", file = z)
   n <- length(x)
-  cat(paste0(sprintf("\tIND%0*d", floor(log10(n), collapse = ""), "\n", z)
+  cat(paste0(sprintf("\tIND%0*d", floor(log10(n)) + 1, 1:n), collapse = ""), "\n", file = z)
   close(z)
 
   # append genotypes to VCF
