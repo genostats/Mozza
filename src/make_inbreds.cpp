@@ -57,6 +57,7 @@ List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, Numeri
 
   List ZYG(N);
   for(int i = 0; i < N; i++) ZYG[i] = XPtr<mozza::zygote>(x[i], true);
+  ZYG.attr("class") = CharacterVector::create("zygote");
   L["zygotes"] = ZYG;
 
   if(segments) {

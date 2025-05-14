@@ -24,7 +24,7 @@ inline void push_genotypes_at_cursor(ZV & x, T1 & allele_at_haplo, T2 & genotype
     zygote & p(getZygote(pp));
     int h1 = p.first.tile_at_cursor();
     int h2 = p.second.tile_at_cursor();
-    genotypes.push_back( allele_at_haplo[h1] + allele_at_haplo[h2] );
+    genotypes.push_back( allele_at_haplo[h1], allele_at_haplo[h2] );
   }
 }
 

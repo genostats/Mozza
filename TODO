@@ -1,3 +1,6 @@
+Maintenant qu'on peut changer la taille du génome, il faudrait insérer des
+tests, peut-être en particulier avec drop.genotypes
+
 
 !! Le constructeur avec proba_tiles commence par faire une somme cumulative des probas.
 !! Il vaudrait mieux lui passer directement les probas cumulées, mais ça demande de 

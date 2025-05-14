@@ -22,3 +22,26 @@
 #' @export zygote_probs
 #' 
 NULL
+
+#' Print method for zygotes
+#' @name print.zygote
+#' @usage print(x, ...)
+#' @exportS3Method print zygote
+print.zygote <- function(x, ...) {
+  if(is.list(x)) 
+    cat("Vector of", length(x), "zygotes\n")
+  else
+    cat("Zygote")
+}
+
+#' Str method for zygotes
+#' @name str.zygote
+#' @usage str(object, ...)
+#' @exportS3Method str zygote
+str.zygote <- function(x, ...) {
+  if(is.list(x)) 
+    cat(" zyg [1:", length(x), "] zygotes\n", sep = "")
+  else
+    cat(" zygote")
+}
+

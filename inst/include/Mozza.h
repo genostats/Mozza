@@ -9,6 +9,7 @@
 #include "Mozza/zygote.h"
 #include "Mozza/mapped_bed.h"
 #include "Mozza/zygote_to_bed_matrix.h"
+#include "Mozza/zygote_to_vcf.h"
 #include "Mozza/haplo_to_bed_matrix.h"
 #include "Mozza/kinship_matrix.h"
 #include "Mozza/Autosomes.h"

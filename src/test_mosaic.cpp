@@ -159,32 +159,6 @@ List test_IBD_sibs(int n, int n_haps = 100, double length_tiles = 20.) {
   return L;
 }
 
-// H de longueur 4 au moins !! c(1L, 10L, 100L, 1000L) permet de bien vérifier
-//[[Rcpp::export]]
-std::vector<int> test_push_genos(IntegerVector H) {
-  mozza::mosaic M1(mozza::Autosomes(), 0);
-  mozza::mosaic M2(mozza::Autosomes(), 1);
-  mozza::mosaic P1(mozza::Autosomes(), 2);
-  mozza::mosaic P2(mozza::Autosomes(), 3);
-  mozza::mosaic Ma1(P1, P2, 100, 100);
-  mozza::mosaic Ma2(M1, M2, 100, 100);
-  mozza::mosaic Mb1(P1, P2, 100, 100);
-  mozza::mosaic Mb2(M1, M2, 100, 100);
-  Ma1.print_chr(0);
-  Ma2.print_chr(0);
-  Mb1.print_chr(0);
-  Mb2.print_chr(0);
-  std::vector<mozza::zygote> x 
-  { mozza::zygote(M1,  M2),
-    mozza::zygote(P1,  P2),
-    mozza::zygote(Ma1, Ma2), 
-    mozza::zygote(Mb1, Mb2) };
-  std::vector<int> R;
-  push_genotypes_at_cursor(x, H, R);
-  
-  return R;
-}
-
 //[[Rcpp::export]]
 XPtr<matrix4> test_xptr(XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist) {
   mozza::mosaic M1(mozza::Autosomes(), 0);

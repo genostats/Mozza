@@ -17,6 +17,10 @@ drop_genotypes <- function(Z, Haplos, chr, dist) {
     .Call(`_Mozza_drop_genotypes`, Z, Haplos, chr, dist)
 }
 
+drop_genotypes_to_vcf <- function(Z, filename, Haplos, chr, dist, id, pos, A1, A2) {
+    invisible(.Call(`_Mozza_drop_genotypes_to_vcf`, Z, filename, Haplos, chr, dist, id, pos, A1, A2))
+}
+
 haplo_drop_tile_index <- function(xpm, chr, pos) {
     .Call(`_Mozza_haplo_drop_tile_index`, xpm, chr, pos)
 }
@@ -151,10 +155,6 @@ test_IBD_sharing <- function(n, le1 = 100., le2 = 100.) {
 
 test_IBD_sibs <- function(n, n_haps = 100L, length_tiles = 20.) {
     .Call(`_Mozza_test_IBD_sibs`, n, n_haps, length_tiles)
-}
-
-test_push_genos <- function(H) {
-    .Call(`_Mozza_test_push_genos`, H)
 }
 
 test_xptr <- function(Haplos, chr, dist) {
