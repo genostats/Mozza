@@ -28,8 +28,7 @@ if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
 H <- read.bed.matrix(filepath)
 
-Z <- vector("list", 100)
-for(i in 1:100) Z[[i]] <- zygote(1006)
+x <- make.inds(100, 1006)
 
-bm <- drop.genotypes(Z, H)
+bm <- drop.genotypes(x, H)
 }

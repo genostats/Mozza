@@ -18,6 +18,8 @@ make.inbreds(
 \arguments{
 \item{nb.inds}{number of (unrelated) individuals}
 
+\item{ntiles}{number of distinct tiles}
+
 \item{f}{inbreding coefficient(s)}
 
 \item{a}{parameter for the length of segments in HMM (in \eqn{cM^{-1}})}
@@ -29,8 +31,6 @@ make.inbreds(
 \item{tile.length}{tile length in cM}
 
 \item{segments}{Logical. TRUE to get the position of HBD segments}
-
-\item{haplos}{haplotype bed matrix}
 }
 \value{
 a list with components `bed.matrix`, `inbred.coef` (computed from the HBD length) 

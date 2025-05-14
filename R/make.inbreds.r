@@ -1,7 +1,7 @@
 #' Generating unrelated individuals with fiexed inbreding coeffs
 #'
 #' @param nb.inds number of (unrelated) individuals
-#' @param haplos haplotype bed matrix
+#' @param ntiles number of distinct tiles
 #' @param f inbreding coefficient(s)
 #' @param a parameter for the length of segments in HMM (in \eqn{cM^{-1}})
 #' @param hbd.length mean length of HBD segments in cM

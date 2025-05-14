@@ -71,6 +71,8 @@ List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, Numeri
   }
   return L;
 }
+
+
 /*
  * ye old version (which created 
  * the bed matrix)

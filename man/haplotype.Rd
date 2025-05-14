@@ -2,19 +2,19 @@
 % Please edit documentation in R/haplotype.r
 \name{haplotype}
 \alias{haplotype}
-\alias{haplotype_probs}
+\alias{haplotype.probs}
 \title{Mosaic Haplotypes}
 \usage{
-haplotype(ntiles, mean_length_tiles = 20)
+haplotype(ntiles, mean.length.tiles = 20)
 
-haplotype_probs(probaTiles, mean_length_tiles = 20)
+haplotype.probs(probaTiles, mean.length.tiles = 20)
 }
 \arguments{
 \item{ntiles}{number of different tiles}
 
-\item{probaTiles}{vector of probabilities for each tiles}
+\item{mean.length.tiles}{mean length of the tiles in cM}
 
-\item{mean_length_tiles}{mean length of the tiles in cM}
+\item{probaTiles}{vector of probabilities for each tiles}
 }
 \value{
 an external pointer to an haplotype
@@ -24,11 +24,11 @@ Mosaic Haplotypes
 }
 \details{
 \code{haplotype} generates a mosaic haplotype with tiles numbered from \code{0} to \code{(ntiles - 1)}. 
-The haplotype number is drawn uniformly. \code{haplotype_probs} generates a mosaic haplotype
+The haplotype number is drawn uniformly. \code{haplotype.probs} generates a mosaic haplotype
 with tiles numbered from \code{0} to \code{length(probaTiles) - 1}, drawn according to the probabilities
 in \code{probaTiles}. In both cases, the length of tiles is drawn in a exponential distribution with 
-mean length \code{mean_length_tiles}.
+mean length \code{mean.length.tiles}.
 }
 \seealso{
-\link{zygote}, \link{haplotype_peek}
+\link{zygote}, \link{haplotype.peek}
 }

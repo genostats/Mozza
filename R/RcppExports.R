@@ -49,8 +49,8 @@ zygote_group_by_tile_index <- function(xpz, chr, pos) {
     .Call(`_Mozza_zygote_group_by_tile_index`, xpz, chr, pos)
 }
 
-haplotype <- function(ntiles, mean_length_tiles = 20) {
-    .Call(`_Mozza_haplotype`, ntiles, mean_length_tiles)
+haplotype_ <- function(ntiles, mean_length_tiles = 20) {
+    .Call(`_Mozza_haplotype_`, ntiles, mean_length_tiles)
 }
 
 haplotype_probs <- function(probaTiles, mean_length_tiles = 20) {
@@ -97,12 +97,12 @@ make_inbreds <- function(N, n_haps, le1, le2, length_tiles, segments = FALSE) {
     .Call(`_Mozza_make_inbreds`, N, n_haps, le1, le2, length_tiles, segments)
 }
 
-make_inds <- function(n, length_tiles, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
-    .Call(`_Mozza_make_inds`, n, length_tiles, Haplos, chr, dist, kinship, fraternity)
+make_inds <- function(n, n_haps, length_tiles) {
+    .Call(`_Mozza_make_inds`, n, n_haps, length_tiles)
 }
 
-make_inds_probs <- function(N, proba_haplos, length_tiles, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
-    .Call(`_Mozza_make_inds_probs`, N, proba_haplos, length_tiles, Haplos, chr, dist, kinship, fraternity)
+make_inds_probs <- function(N, proba_haplos, length_tiles) {
+    .Call(`_Mozza_make_inds_probs`, N, proba_haplos, length_tiles)
 }
 
 make_pairs <- function(N, le1, le2, length_tiles, Haplos, chr, dist) {
@@ -125,8 +125,12 @@ population <- function(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, k
     .Call(`_Mozza_population`, n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
-reproduce <- function(z1, z2) {
-    .Call(`_Mozza_reproduce`, z1, z2)
+reproduce_ <- function(z1, z2) {
+    .Call(`_Mozza_reproduce_`, z1, z2)
+}
+
+reproduce_vec <- function(Z1, Z2) {
+    .Call(`_Mozza_reproduce_vec`, Z1, Z2)
 }
 
 essai <- function() {
@@ -173,8 +177,8 @@ write_hap_file <- function(p_A, filename) {
     invisible(.Call(`_Mozza_write_hap_file`, p_A, filename))
 }
 
-zygote <- function(ntiles, mean_length_tiles = 20) {
-    .Call(`_Mozza_zygote`, ntiles, mean_length_tiles)
+zygote_ <- function(ntiles, mean_length_tiles = 20) {
+    .Call(`_Mozza_zygote_`, ntiles, mean_length_tiles)
 }
 
 zygote_probs <- function(probaTiles, mean_length_tiles = 20) {

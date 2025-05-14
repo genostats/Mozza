@@ -15,11 +15,9 @@
 #' filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
 #' H <- read.bed.matrix(filepath)
 #' 
-#' Z <- vector("list", 100)
-#' for(i in 1:100) Z[[i]] <- zygote(1006)
-#' 
+#' x <- make.inds(100, 1006)
 #' filename <- tempfile(fileext = ".vcf")
-#' drop.genotypes.vcf(Z, H, filename)
+#' drop.genotypes.vcf(x, H, filename)
 drop.genotypes.vcf <- function(x, haplos, filename) {
   if(file.exists(filename)) stop("file already exists")
   # create VCF header
@@ -32,10 +30,10 @@ drop.genotypes.vcf <- function(x, haplos, filename) {
   cat(paste0(sprintf("\tIND%0*d", floor(log10(n)) + 1, 1:n), collapse = ""), "\n", file = z)
   close(z)
 
-  # append genotypes to VCF
+  # append genotypes to VCF file
   drop_genotypes_to_vcf(x, filename, haplos@bed, haplos@snps$chr, haplos@snps$dist, 
                         haplos@snps$id, haplos@snps$pos, haplos@snps$A1, haplos@snps$A2)
 
-  NULL
+  invisible(NULL)
 }
 

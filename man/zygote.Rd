@@ -2,19 +2,19 @@
 % Please edit documentation in R/zygote.r
 \name{zygote}
 \alias{zygote}
-\alias{zygote_prob}
+\alias{zygote.prob}
 \title{Zygotes}
 \usage{
-zygote(ntiles, mean_length_tiles = 20)
+zygote(ntiles, mean.length.tiles = 20)
 
-zygote_probs(probaTiles, mean_length_tiles = 20)
+zygote.probs(probaTiles, mean.length.tiles = 20)
 }
 \arguments{
 \item{ntiles}{number of different tiles}
 
-\item{probaTiles}{vector of probabilities for each tiles}
+\item{mean.length.tiles}{mean length of the tiles in cM}
 
-\item{mean_length_tiles}{mean length of the tiles in cM}
+\item{proba.tiles}{vector of probabilities for each tiles}
 }
 \value{
 an external pointer to an haplotype
@@ -23,12 +23,13 @@ an external pointer to an haplotype
 Zygotes
 }
 \details{
-\code{haplotype} generates a mosaic haplotype with tiles numbered from \code{0} to \code{(ntiles - 1)}. 
-The haplotype number is drawn uniformly. \code{haplotype_probs} generates a mosaic haplotype
+\code{zygote} generates a zygote of two mosaic haplotypes, with tiles numbered from \code{0} to \code{(ntiles - 1)}. 
+The haplotype number is drawn uniformly. 
+\code{zygote.probs} generates a zygote of two mosaic haplotypes
 with tiles numbered from \code{0} to \code{length(probaTiles) - 1}, drawn according to the probabilities
 in \code{probaTiles}. In both cases, the length of tiles is drawn in a exponential distribution with 
-mean length \code{mean_length_tiles}.
+mean length \code{mean.length.tiles}.
 }
 \seealso{
-\link{haplotype}, \link{zygote_peek}
+\link{haplotype}, \link{zygote.peek}
 }

@@ -167,15 +167,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// haplotype
-Rcpp::XPtr<mozza::mosaic> haplotype(int ntiles, double mean_length_tiles);
-RcppExport SEXP _Mozza_haplotype(SEXP ntilesSEXP, SEXP mean_length_tilesSEXP) {
+// haplotype_
+Rcpp::XPtr<mozza::mosaic> haplotype_(int ntiles, double mean_length_tiles);
+RcppExport SEXP _Mozza_haplotype_(SEXP ntilesSEXP, SEXP mean_length_tilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type ntiles(ntilesSEXP);
     Rcpp::traits::input_parameter< double >::type mean_length_tiles(mean_length_tilesSEXP);
-    rcpp_result_gen = Rcpp::wrap(haplotype(ntiles, mean_length_tiles));
+    rcpp_result_gen = Rcpp::wrap(haplotype_(ntiles, mean_length_tiles));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -347,37 +347,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // make_inds
-List make_inds(int n, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
-RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
+List make_inds(int n, unsigned int n_haps, double length_tiles);
+RcppExport SEXP _Mozza_make_inds(SEXP nSEXP, SEXP n_hapsSEXP, SEXP length_tilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n_haps(n_hapsSEXP);
     Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
-    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
-    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inds(n, length_tiles, Haplos, chr, dist, kinship, fraternity));
+    rcpp_result_gen = Rcpp::wrap(make_inds(n, n_haps, length_tiles));
     return rcpp_result_gen;
 END_RCPP
 }
 // make_inds_probs
-List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_tiles, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
-RcppExport SEXP _Mozza_make_inds_probs(SEXP NSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
+List make_inds_probs(IntegerVector N, NumericMatrix proba_haplos, double length_tiles);
+RcppExport SEXP _Mozza_make_inds_probs(SEXP NSEXP, SEXP proba_haplosSEXP, SEXP length_tilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type proba_haplos(proba_haplosSEXP);
     Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
-    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
-    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inds_probs(N, proba_haplos, length_tiles, Haplos, chr, dist, kinship, fraternity));
+    rcpp_result_gen = Rcpp::wrap(make_inds_probs(N, proba_haplos, length_tiles));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -471,15 +462,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// reproduce
-Rcpp::XPtr<mozza::zygote> reproduce(Rcpp::XPtr<mozza::zygote> z1, Rcpp::XPtr<mozza::zygote> z2);
-RcppExport SEXP _Mozza_reproduce(SEXP z1SEXP, SEXP z2SEXP) {
+// reproduce_
+Rcpp::XPtr<mozza::zygote> reproduce_(Rcpp::XPtr<mozza::zygote> z1, Rcpp::XPtr<mozza::zygote> z2);
+RcppExport SEXP _Mozza_reproduce_(SEXP z1SEXP, SEXP z2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type z1(z1SEXP);
     Rcpp::traits::input_parameter< Rcpp::XPtr<mozza::zygote> >::type z2(z2SEXP);
-    rcpp_result_gen = Rcpp::wrap(reproduce(z1, z2));
+    rcpp_result_gen = Rcpp::wrap(reproduce_(z1, z2));
+    return rcpp_result_gen;
+END_RCPP
+}
+// reproduce_vec
+Rcpp::List reproduce_vec(Rcpp::List Z1, Rcpp::List Z2);
+RcppExport SEXP _Mozza_reproduce_vec(SEXP Z1SEXP, SEXP Z2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type Z1(Z1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type Z2(Z2SEXP);
+    rcpp_result_gen = Rcpp::wrap(reproduce_vec(Z1, Z2));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -606,15 +609,15 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// zygote
-Rcpp::XPtr<mozza::zygote> zygote(int ntiles, double mean_length_tiles);
-RcppExport SEXP _Mozza_zygote(SEXP ntilesSEXP, SEXP mean_length_tilesSEXP) {
+// zygote_
+Rcpp::XPtr<mozza::zygote> zygote_(int ntiles, double mean_length_tiles);
+RcppExport SEXP _Mozza_zygote_(SEXP ntilesSEXP, SEXP mean_length_tilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type ntiles(ntilesSEXP);
     Rcpp::traits::input_parameter< double >::type mean_length_tiles(mean_length_tilesSEXP);
-    rcpp_result_gen = Rcpp::wrap(zygote(ntiles, mean_length_tiles));
+    rcpp_result_gen = Rcpp::wrap(zygote_(ntiles, mean_length_tiles));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -644,7 +647,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_getGenoVector", (DL_FUNC) &_Mozza_getGenoVector, 3},
     {"_Mozza_haplo_group_by_tile_index", (DL_FUNC) &_Mozza_haplo_group_by_tile_index, 3},
     {"_Mozza_zygote_group_by_tile_index", (DL_FUNC) &_Mozza_zygote_group_by_tile_index, 3},
-    {"_Mozza_haplotype", (DL_FUNC) &_Mozza_haplotype, 2},
+    {"_Mozza_haplotype_", (DL_FUNC) &_Mozza_haplotype_, 2},
     {"_Mozza_haplotype_probs", (DL_FUNC) &_Mozza_haplotype_probs, 2},
     {"_Mozza_haplotype_peek", (DL_FUNC) &_Mozza_haplotype_peek, 1},
     {"_Mozza_zygote_peek", (DL_FUNC) &_Mozza_zygote_peek, 1},
@@ -656,14 +659,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_make_haps", (DL_FUNC) &_Mozza_make_haps, 6},
     {"_Mozza_make_haps_probs", (DL_FUNC) &_Mozza_make_haps_probs, 7},
     {"_Mozza_make_inbreds", (DL_FUNC) &_Mozza_make_inbreds, 6},
-    {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 7},
-    {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 8},
+    {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 3},
+    {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 3},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 8},
     {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
     {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 6},
     {"_Mozza_population", (DL_FUNC) &_Mozza_population, 10},
-    {"_Mozza_reproduce", (DL_FUNC) &_Mozza_reproduce, 2},
+    {"_Mozza_reproduce_", (DL_FUNC) &_Mozza_reproduce_, 2},
+    {"_Mozza_reproduce_vec", (DL_FUNC) &_Mozza_reproduce_vec, 2},
     {"_Mozza_essai", (DL_FUNC) &_Mozza_essai, 0},
     {"_Mozza_test_cursor", (DL_FUNC) &_Mozza_test_cursor, 0},
     {"_Mozza_essai2", (DL_FUNC) &_Mozza_essai2, 0},
@@ -675,7 +679,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_families_of_4_v0", (DL_FUNC) &_Mozza_families_of_4_v0, 4},
     {"_Mozza_families_of_4", (DL_FUNC) &_Mozza_families_of_4, 4},
     {"_Mozza_write_hap_file", (DL_FUNC) &_Mozza_write_hap_file, 2},
-    {"_Mozza_zygote", (DL_FUNC) &_Mozza_zygote, 2},
+    {"_Mozza_zygote_", (DL_FUNC) &_Mozza_zygote_, 2},
     {"_Mozza_zygote_probs", (DL_FUNC) &_Mozza_zygote_probs, 2},
     {NULL, NULL, 0}
 };

@@ -4,48 +4,40 @@
 \alias{make.inds}
 \title{Generating unrelated individuals with tile haplotypes}
 \usage{
-make.inds(
-  nb.inds,
-  haplos,
-  proba.haplos,
-  tile.length = 20,
-  kinship = FALSE,
-  fraternity = FALSE
-)
+make.inds(nb.inds, ntiles, proba.haplos, tile.length = 20)
 }
 \arguments{
 \item{nb.inds}{number of (unrelated) individuals}
 
-\item{haplos}{haplotype bed matrix}
+\item{ntiles}{number of distinct tiles}
 
 \item{proba.haplos}{matrix of haplotypes probabilities}
 
 \item{tile.length}{tile length in cM}
-
-\item{kinship}{Logical. TRUE to get kinship matrix computed from IBD sharing.}
-
-\item{fraternity}{Logical. TRUE to get fraternity matrix computed from IBD sharing.}
 }
 \value{
-a list width components `bed`, `kinship` and `fraternity` (if applicable).
+a zygote vector
 }
 \description{
 Generating unrelated individuals with tile haplotypes
 }
 \details{
 If `proba.haplos` is missing, all haplotypes are used with the same probability.
-`proba.haplos` should be a matrix with as many rows than there are haplotypes in `haplos`. 
+`proba.haplos` should be a matrix with as many rows distinct tiles. 
 If there are several columns in `proba.haplos`, 
 `nb.inds` individuals will be generated for each column of probabilities. If `nb.inds` is 
 a vector of length `ncol(proba.haplos)`, it specifies the number of individuals to be 
 generated for each probability set.
 }
 \examples{
-#' # installs KGH if not already installed
+# installs KGH if not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
 H <- read.bed.matrix(filepath)
-# Generates a bed matrix with 1000 individuals
-x <- make.inds(1000, H)
+# generates 100 individuals
+set.seed(1)
+x <- make.inds(100, nrow(H))
+# to get a bed matrix, use drop.genotypes (here on SNPs 1 to 100)
+xbed <- drop.genotypes(x, H[,1:100])
 }

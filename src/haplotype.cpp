@@ -2,7 +2,7 @@
 #include "Mozza.h"
 
 //[[Rcpp::export]]
-Rcpp::XPtr<mozza::mosaic> haplotype(int ntiles, double mean_length_tiles = 20) {
+Rcpp::XPtr<mozza::mosaic> haplotype_(int ntiles, double mean_length_tiles = 20) {
   mozza::mosaic * pm (new mozza::mosaic(mozza::Autosomes(), ntiles, mean_length_tiles));
   Rcpp::XPtr<mozza::mosaic> xpm(pm, true);
   return xpm;

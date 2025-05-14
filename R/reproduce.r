@@ -2,17 +2,28 @@
 #'
 #' @name reproduce
 #'
-#' @param z1,z2 zygotes
+#' @param z1,z2 zygote vectors of same length
 #'
-#' @details If `z1` and `z2` are zyogtes, this function will proceed to
-#' meiosis and send back an offspring.
+#' @details This function will create offsprings of individuals in z1 x z2
 #'
-#' @return A zygote
+#' @return A zygote vector
 #' @export
 #'
-#' @examples z1 <- zygote(100)
-#' z2 <- zygote(100)
-#' z3 <- reproduce(z1, z2)
-#' kinship.matrix( c(z1, z2, z3) )
-#'
-NULL
+#' @examples
+#' fa <- make.inds(2, 1000)
+#' mo <- make.inds(2, 1000)
+#' of <- reproduce(fa, mo)
+#' K <- kinship.matrix( c(fa, mo, of) )
+#' round(K, 1)
+#' # You can also use `+` for a simple call. 
+#' of2 <- fa + mo
+#' L <- kinship.matrix( c(of, of2) )
+#' round(L, 1)
+
+reproduce <- function(z1, z2) {
+  reproduce_vec(z1, z2)
+}
+
+#' @exportS3Method `+` zygote
+`+.zygote` <- function(e1, e2) reproduce(e1, e2)
+

@@ -19,7 +19,7 @@ void haplotype_poke(mozza::mosaic & M, intVec tile_index, intVec tile, bool RInd
     unsigned int ti = tile[a];
     while(i >= offset + ntiles) {
       offset += ntiles;
-      if(++chr > M.chrs) throw std::runtime_error("Bad tile index");
+      if(++chr >= M.chrs) throw std::runtime_error("Bad tile index");
       ntiles = M.tiles[chr].size();
     }
     // so (i - offset) < ntiles

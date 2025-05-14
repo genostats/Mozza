@@ -3,23 +3,29 @@
 \name{reproduce}
 \alias{reproduce}
 \title{Mating}
+\usage{
+reproduce(z1, z2)
+}
 \arguments{
-\item{z1, z2}{zygotes}
+\item{z1, z2}{zygote vectors of same length}
 }
 \value{
-A zygote
+A zygote vector
 }
 \description{
 Mating
 }
 \details{
-If `z1` and `z2` are zyogtes, this function will proceed to
-meiosis and send back an offspring.
+This function will create offsprings of individuals in z1 x z2
 }
 \examples{
-z1 <- zygote(100)
-z2 <- zygote(100)
-z3 <- reproduce(z1, z2)
-kinship.matrix( c(z1, z2, z3) )
-
+fa <- make.inds(2, 1000)
+mo <- make.inds(2, 1000)
+of <- reproduce(fa, mo)
+K <- kinship.matrix( c(fa, mo, of) )
+round(K, 1)
+# You can also use `+` for a simple call. 
+of2 <- fa + mo
+L <- kinship.matrix( c(of, of2) )
+round(L, 1)
 }
