@@ -16,8 +16,17 @@ vcf.gen <- function(x, filename, depth1, depth2, eps = 10^((-0.1)*runif(ncol(x),
     if(any(subset < 0) | any(subset > nrow(x))) 
       stop("Bad subset") 
 
+  if(missing(depth1) | missing(depth2)) stop("Specify depth1 and depth2")
+
   zz <- file(filename, "w")
-  cat("##fileformat=VCFv4.1\n##fileDate=2021-10-12\n##source=GastonVCFsimulation\n", file=zz)
+  cat("##fileformat=VCFv4.1\n##fileDate=", format(Sys.time(), "%Y%M%d"), "\n##source=Mozza\n", sep = "", file = zz)
+  cat('##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">\n', file = zz)
+  cat('##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles">\n', file = zz)
+  cat('##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read depth">\n', file = zz)
+  cat('##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality. Phred-scaled confidence that the genotype assignment is correct">\n', file = zz)
+  cat('##FORMAT=<ID=PL,Number=G,Type=Integer,Description="Normalized, Phred-scaled likelihoods for genotypes">\n', file = zz)
+  cat('##FORMAT=<ID=GP,Number=G,Type=Float,Description="Genotype posterior probabilities">\n', file = zz)
+  cat('##FORMAT=<ID=DS,Number=1,Type=Float,Description="Dosage of the alternate allele">\n', file = zz)
   cat("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t", file = zz)
   
   if(anyDuplicated(x@ped$id)) {
@@ -37,7 +46,7 @@ vcf.gen <- function(x, filename, depth1, depth2, eps = 10^((-0.1)*runif(ncol(x),
   for(i in 1:ncol(x)) {
     geno <- get.geno.vector(x, i);
     cat(CHR[i], x@snps$pos[i], x@snps$id[i], x@snps$A1[i], x@snps$A2[i], file = zz, sep = "\t")
-    cat("\t999\tPASS\t.\tGT:AD:DP:GQ:PL\t", file = zz)
+    cat("\t999\tPASS\t.\tGT:AD:DP:GQ:PL:GP:DS\t", file = zz)
     cat(vcf.gen.line(geno, eps[i], depth1, depth2, subset), file = zz)
     cat("\n", file = zz)
     if( i %% 100 == 0 ) cat("Writing SNP", i, "\r")

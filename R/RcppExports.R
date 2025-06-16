@@ -117,8 +117,8 @@ nuclear_families_probs <- function(Nfams, nb_offsprings, proba_haplos, length_ti
     .Call(`_Mozza_nuclear_families_probs`, Nfams, nb_offsprings, proba_haplos, length_tiles, Haplos, chr, dist, kinship, fraternity)
 }
 
-pasteVcfElts <- function(genoN, rd, rd2, rd3, GQ, phtab) {
-    .Call(`_Mozza_pasteVcfElts`, genoN, rd, rd2, rd3, GQ, phtab)
+pasteVcfElts <- function(genoN, rd, rd2, rd3, GQ, phtab, GP, DS) {
+    .Call(`_Mozza_pasteVcfElts`, genoN, rd, rd2, rd3, GQ, phtab, GP, DS)
 }
 
 population <- function(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {

@@ -427,8 +427,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // pasteVcfElts
-std::string pasteVcfElts(CharacterVector genoN, IntegerVector rd, IntegerVector rd2, IntegerVector rd3, IntegerVector GQ, NumericMatrix phtab);
-RcppExport SEXP _Mozza_pasteVcfElts(SEXP genoNSEXP, SEXP rdSEXP, SEXP rd2SEXP, SEXP rd3SEXP, SEXP GQSEXP, SEXP phtabSEXP) {
+std::string pasteVcfElts(CharacterVector genoN, IntegerVector rd, IntegerVector rd2, IntegerVector rd3, IntegerVector GQ, NumericMatrix phtab, NumericMatrix GP, NumericVector DS);
+RcppExport SEXP _Mozza_pasteVcfElts(SEXP genoNSEXP, SEXP rdSEXP, SEXP rd2SEXP, SEXP rd3SEXP, SEXP GQSEXP, SEXP phtabSEXP, SEXP GPSEXP, SEXP DSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -438,7 +438,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type rd3(rd3SEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type GQ(GQSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type phtab(phtabSEXP);
-    rcpp_result_gen = Rcpp::wrap(pasteVcfElts(genoN, rd, rd2, rd3, GQ, phtab));
+    Rcpp::traits::input_parameter< NumericMatrix >::type GP(GPSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type DS(DSSEXP);
+    rcpp_result_gen = Rcpp::wrap(pasteVcfElts(genoN, rd, rd2, rd3, GQ, phtab, GP, DS));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -664,7 +666,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 8},
     {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
-    {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 6},
+    {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 8},
     {"_Mozza_population", (DL_FUNC) &_Mozza_population, 10},
     {"_Mozza_reproduce_", (DL_FUNC) &_Mozza_reproduce_, 2},
     {"_Mozza_reproduce_vec", (DL_FUNC) &_Mozza_reproduce_vec, 2},
