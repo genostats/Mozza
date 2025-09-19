@@ -23,11 +23,15 @@ namespace mozza {
 // IV = Integer Vector
 // DB = Double Vector
 template<typename ZV, typename IV, typename DB>
-XPtr<matrix4> zygote_to_bed_matrix(ZV & ZYG, const mappedBed<IV, DB> & mapB) {
+XPtr<matrix4> zygote_to_bed_matrix(ZV & ZYG, const mappedBed<IV, DB> & mapB, bool phased = false) {
   int nb_snps = mapB.nbSnps;
  
   int nb_inds = ZYG.size(); // nb individus à créer
-  XPtr<matrix4> A(new matrix4(nb_snps, nb_inds));
+  XPtr<matrix4> A((matrix4 *) nullptr);
+  if(phased)
+    A = XPtr<matrix4>(new matrix4(nb_snps, 2*nb_inds));
+  else
+    A = XPtr<matrix4>(new matrix4(nb_snps, nb_inds));
 
   // initialiser les positions
   int c = mapB.chr[0] - 1;
@@ -58,8 +62,9 @@ XPtr<matrix4> zygote_to_bed_matrix(ZV & ZYG, const mappedBed<IV, DB> & mapB) {
     // pour pas s'embêter on va juste les copier dans un std::vector
     std::vector<char> alleles;
     push_m4_row(mapB.haplotypes->data[i], mapB.haplotypes->ncol, alleles);
-    // l'objet S permet de push back des valeurs dans A->data[i]
-    SNP_push_back S(A->data[i], A->ncol);
+
+    // l'objet S va permettre de push back des valeurs dans A->data[i]
+    SNP_push_back S(A->data[i], A->ncol, phased);
     // la fonction push back 'dans S' les génotypes à la position courante du curseur
     push_genotypes_at_cursor(ZYG, alleles, S);
   }

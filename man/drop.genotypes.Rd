@@ -4,12 +4,14 @@
 \alias{drop.genotypes}
 \title{Kinship Matrix}
 \usage{
-drop.genotypes(x, haplos)
+drop.genotypes(x, haplos, phased = FALSE)
 }
 \arguments{
 \item{x}{a list of 'zygotes'}
 
 \item{haplos}{a bed.matrix of haplotypes}
+
+\item{phased}{a boolean}
 }
 \value{
 A bed.matrix
@@ -19,7 +21,8 @@ Kinship Matrix
 }
 \details{
 If `x` is a list zygotes, returns a bed.matrix 
-constructed from the template haplotypes in `haplos`
+constructed from the template haplotypes in `haplos`. If phased is TRUE,
+instead of genotypes, two haplotypes are built for each individual.
 }
 \examples{
 #' # installs KGH if not already installed

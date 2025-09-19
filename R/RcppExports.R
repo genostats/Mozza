@@ -13,8 +13,8 @@ cousins_1stdegree <- function(n, tile_length, Haplos, chr, dist, kinship = FALSE
     .Call(`_Mozza_cousins_1stdegree`, n, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
-drop_genotypes <- function(Z, Haplos, chr, dist) {
-    .Call(`_Mozza_drop_genotypes`, Z, Haplos, chr, dist)
+drop_genotypes <- function(Z, Haplos, chr, dist, phased) {
+    .Call(`_Mozza_drop_genotypes`, Z, Haplos, chr, dist, phased)
 }
 
 drop_genotypes_to_vcf <- function(Z, filename, Haplos, chr, dist, id, pos, A1, A2) {

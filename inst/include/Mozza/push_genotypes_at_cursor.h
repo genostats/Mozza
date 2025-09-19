@@ -18,6 +18,9 @@ namespace mozza {
 // fera l'affaire
 // ça suppose plus ou moins implicitement que les curseur sont à la même
 // position partout mais peu importe
+// x = zygote vector
+// allele_at_haplo = un vecteur d'allèles
+// genotypes = un object avec une methode push_back( allele1, allele2 )
 template<typename ZV, typename T1, typename T2>
 inline void push_genotypes_at_cursor(ZV & x, T1 & allele_at_haplo, T2 & genotypes) {
   for(auto & pp : x) {
