@@ -1,6 +1,9 @@
 Maintenant qu'on peut changer la taille du génome, il faudrait insérer des
 tests, peut-être en particulier avec drop.genotypes
 
+Ca serait pas mal d'avoir une astuce pour générer rapidement des données
+"LD thinned" dans les exemples au lieu de faire un drop.genotypes puis un LD.thinned
+(cf par exemple dans mix.pop)
 
 !! Le constructeur avec proba_tiles commence par faire une somme cumulative des probas.
 !! Il vaudrait mieux lui passer directement les probas cumulées, mais ça demande de 
