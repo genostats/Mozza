@@ -109,6 +109,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// forward_
+List forward_(List zygotes, int nGen, int keep, double lambda);
+RcppExport SEXP _Mozza_forward_(SEXP zygotesSEXP, SEXP nGenSEXP, SEXP keepSEXP, SEXP lambdaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type zygotes(zygotesSEXP);
+    Rcpp::traits::input_parameter< int >::type nGen(nGenSEXP);
+    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    rcpp_result_gen = Rcpp::wrap(forward_(zygotes, nGen, keep, lambda));
+    return rcpp_result_gen;
+END_RCPP
+}
 // getAutosomes
 NumericVector getAutosomes();
 RcppExport SEXP _Mozza_getAutosomes() {
@@ -445,26 +459,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// population
-List population(int n0, int nGen, int keep, double lambda, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
-RcppExport SEXP _Mozza_population(SEXP n0SEXP, SEXP nGenSEXP, SEXP keepSEXP, SEXP lambdaSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n0(n0SEXP);
-    Rcpp::traits::input_parameter< int >::type nGen(nGenSEXP);
-    Rcpp::traits::input_parameter< int >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
-    Rcpp::traits::input_parameter< double >::type tile_length(tile_lengthSEXP);
-    Rcpp::traits::input_parameter< XPtr<matrix4> >::type Haplos(HaplosSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type chr(chrSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type dist(distSEXP);
-    Rcpp::traits::input_parameter< bool >::type kinship(kinshipSEXP);
-    Rcpp::traits::input_parameter< bool >::type fraternity(fraternitySEXP);
-    rcpp_result_gen = Rcpp::wrap(population(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship, fraternity));
-    return rcpp_result_gen;
-END_RCPP
-}
 // reproduce_
 Rcpp::XPtr<mozza::zygote> reproduce_(Rcpp::XPtr<mozza::zygote> z1, Rcpp::XPtr<mozza::zygote> z2);
 RcppExport SEXP _Mozza_reproduce_(SEXP z1SEXP, SEXP z2SEXP) {
@@ -645,6 +639,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_drop_genotypes_to_vcf", (DL_FUNC) &_Mozza_drop_genotypes_to_vcf, 9},
     {"_Mozza_haplo_drop_tile_index", (DL_FUNC) &_Mozza_haplo_drop_tile_index, 3},
     {"_Mozza_zygote_drop_tile_index", (DL_FUNC) &_Mozza_zygote_drop_tile_index, 3},
+    {"_Mozza_forward_", (DL_FUNC) &_Mozza_forward_, 4},
     {"_Mozza_getAutosomes", (DL_FUNC) &_Mozza_getAutosomes, 0},
     {"_Mozza_setAutosomes", (DL_FUNC) &_Mozza_setAutosomes, 1},
     {"_Mozza_getGenoVector", (DL_FUNC) &_Mozza_getGenoVector, 3},
@@ -668,7 +663,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_nuclear_families", (DL_FUNC) &_Mozza_nuclear_families, 8},
     {"_Mozza_nuclear_families_probs", (DL_FUNC) &_Mozza_nuclear_families_probs, 9},
     {"_Mozza_pasteVcfElts", (DL_FUNC) &_Mozza_pasteVcfElts, 8},
-    {"_Mozza_population", (DL_FUNC) &_Mozza_population, 10},
     {"_Mozza_reproduce_", (DL_FUNC) &_Mozza_reproduce_, 2},
     {"_Mozza_reproduce_vec", (DL_FUNC) &_Mozza_reproduce_vec, 2},
     {"_Mozza_essai", (DL_FUNC) &_Mozza_essai, 0},

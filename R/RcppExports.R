@@ -29,6 +29,10 @@ zygote_drop_tile_index <- function(xpz, chr, pos) {
     .Call(`_Mozza_zygote_drop_tile_index`, xpz, chr, pos)
 }
 
+forward_ <- function(zygotes, nGen, keep, lambda) {
+    .Call(`_Mozza_forward_`, zygotes, nGen, keep, lambda)
+}
+
 getAutosomes <- function() {
     .Call(`_Mozza_getAutosomes`)
 }
@@ -119,10 +123,6 @@ nuclear_families_probs <- function(Nfams, nb_offsprings, proba_haplos, length_ti
 
 pasteVcfElts <- function(genoN, rd, rd2, rd3, GQ, phtab, GP, DS) {
     .Call(`_Mozza_pasteVcfElts`, genoN, rd, rd2, rd3, GQ, phtab, GP, DS)
-}
-
-population <- function(n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
-    .Call(`_Mozza_population`, n0, nGen, keep, lambda, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
 
 reproduce_ <- function(z1, z2) {
