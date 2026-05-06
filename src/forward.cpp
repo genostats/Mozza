@@ -3,6 +3,8 @@
 #include "Mozza.h"
 #include <memory>
 
+#define _debug_mozza_forward_ false
+
 using namespace Rcpp;
 
 // zygotes : liste de zygotes qui constituent la première génération
@@ -39,8 +41,11 @@ List forward_(List zygotes, int nGen, int keep, double lambda) {
     int parents = (gen - 1) % mykeep;
     int enfants = gen % mykeep;
     if(gen > mykeep) { // pour ne pas appeler delete sur les éléments de 'zygotes'
+      // avant de 'clear' POP, on delete les zygotes qui s'y trouvent
+      if(_debug_mozza_forward_) std::cout << "index = " << enfants << ", " << POP[enfants].size() << " zygotes to delete\n";
       for(auto a : POP[enfants]) delete a;  // pour éviter les fuites de mémoire !
     }
+    if(_debug_mozza_forward_) std::cout << "filling POP at index " << enfants << "\n";
     POP[enfants].clear(); 
     NUM[enfants].clear();
     int nParents = POP[parents].size();
@@ -74,14 +79,27 @@ List forward_(List zygotes, int nGen, int keep, double lambda) {
   int k = 0;
   for(unsigned int gen = nGen-keep; gen < nGen; gen++) {
     int g = gen % mykeep;
+    if(_debug_mozza_forward_) std::cout << "building XPtr from individuals at index " << g << "\n";
     for(int i = 0; i < POP[g].size(); i++) {
       ZYG[k++] = XPtr<mozza::zygote>( POP[g][i], true);
     }
     POP[g].clear(); // il ne faudra pas 'delete' ceux là
   }
 
-  // et on delete les zygotes non renvoyés
+  // si la generation 0 n'a pas été overwritten, il ne faut pas la 'delete' non plus
+  // ça arrive quand nGen = 2 et keep = 1 -> mykeep = 2
+  // ou quand nGen = mykeep !
+  if(nGen <= mykeep) {
+    if(_debug_mozza_forward_) std::cout << "clearing POP[0] to avoid deleting users's zygotes\n";
+    POP[0].clear();
+  }
+ 
+  // on a maintenant clear
+  // et on delete les zygotes créés et non renvoyés à l'utilisateur
+  // le seul cas où il y en a c'est quand keep = 1 et mykeep = 2
+  // il a fallu on garder une génération de plus qu'on en renvoie
   for(unsigned int i = 0; i < mykeep; i ++) {
+    if(_debug_mozza_forward_) std::cout << "index = " << i << ", " << POP[i].size() << " zygotes to delete\n";
     for(auto a : POP[i]) delete a;  
   }
  

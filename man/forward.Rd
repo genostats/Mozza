@@ -13,10 +13,18 @@ forward(zygotes, n.gen, n.keep, lambda = 2)
 
 \item{lambda}{mean number of offspring by pair (default is 2)}
 
-\item{x}{a list of zygotes}
+\item{x}{a vector of zygotes}
+}
+\value{
+A list with named elements 'zygotes', 'father', 'mother', 'sex'.
 }
 \description{
 Forward time
+}
+\details{
+Starting from a population in x, n.gen generations are simulated by random mating, each mate pair having 
+a random number of offspring, drawn in a Poisson distribution of parameter lambda. The last n.keep generations 
+are sent to the user.
 }
 \examples{
 # installs KGH if not already installed
@@ -34,7 +42,7 @@ K <- kinship.matrix(fo$zygotes)
 round(K[1:10, 1:10], 1)
 # to get a bed matrix, use drop.genotypes (here on SNPs 1 to 100)
 ybed <- drop.genotypes(fo$zygotes, H[,1:100])
-# use father / mother / sex information sent by the function
+# integrate father / mother / sex information sent by the function
 ybed@ped$father <- fo$father
 ybed@ped$mother <- fo$mother
 ybed@ped$sex <- fo$sex

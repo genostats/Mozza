@@ -1,9 +1,15 @@
 #' Forward time 
 #'
-#' @param x a list of zygotes
+#' @param x a vector of zygotes
 #' @param n.gen number of generations to simulate
 #' @param n.keep number of generations to keep 
 #' @param lambda mean number of offspring by pair (default is 2)
+#'
+#' @details Starting from a population in x, n.gen generations are simulated by random mating, each mate pair having 
+#' a random number of offspring, drawn in a Poisson distribution of parameter lambda. The last n.keep generations 
+#' are sent to the user.
+#'
+#' @return A list with named elements 'zygotes', 'father', 'mother', 'sex'.
 #'
 #' @examples 
 #' # installs KGH if not already installed
@@ -21,7 +27,7 @@
 #' round(K[1:10, 1:10], 1)
 #' # to get a bed matrix, use drop.genotypes (here on SNPs 1 to 100)
 #' ybed <- drop.genotypes(fo$zygotes, H[,1:100])
-#' # use father / mother / sex information sent by the function
+#' # integrate father / mother / sex information sent by the function
 #' ybed@ped$father <- fo$father
 #' ybed@ped$mother <- fo$mother
 #' ybed@ped$sex <- fo$sex
