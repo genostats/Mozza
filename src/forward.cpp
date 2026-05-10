@@ -15,7 +15,10 @@ using namespace Rcpp;
 List forward_(List zygotes, int nGen, int keep, double lambda) { 
 
   if(keep < 1) keep = 1;
-  
+  if(keep >= nGen) { // on ne peut pas garder plus de génération qu'on en a simulées...
+    keep = nGen;
+  }
+ 
   int mykeep = (keep == 1)?2:keep;  // si keep = 1 il faut garder une génération de plus pour que l'algo ne se marche pas dessus
 
   // vecteur de longueur keep, pour contenir les générations conservées
@@ -79,10 +82,15 @@ List forward_(List zygotes, int nGen, int keep, double lambda) {
   int k = 0;
   for(unsigned int gen = nGen-keep; gen < nGen; gen++) {
     int g = gen % mykeep;
-    if(_debug_mozza_forward_) std::cout << "building XPtr from individuals at index " << g << "\n";
-    for(int i = 0; i < POP[g].size(); i++) {
-      ZYG[k++] = XPtr<mozza::zygote>( POP[g][i], true);
+    if(gen == 0) { // on renvoie les individus de la generation 0 (se produit si nGen == keep)
+      if(_debug_mozza_forward_) std::cout << "copying XPtr from original data\n";
+      // il ne faut pas refaire un XPtr vers le même objet ! (double free)
+      for(int i = 0; i < zygotes.size(); i++) ZYG[k++] = zygotes[i];
+    } else {
+      if(_debug_mozza_forward_) std::cout << "building XPtr from individuals at index " << g << "\n";
+      for(int i = 0; i < POP[g].size(); i++) ZYG[k++] = XPtr<mozza::zygote>( POP[g][i], true);
     }
+    if(_debug_mozza_forward_) std::cout << "clearing POP["<< g << "] to avoid deleting zygotes sent back to user\n";
     POP[g].clear(); // il ne faudra pas 'delete' ceux là
   }
 

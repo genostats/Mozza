@@ -38,7 +38,7 @@ forward <- function(zygotes, n.gen, n.keep, lambda = 2) {
   if(n.keep > n.gen)
     stop("n.gen must be greater or equal to n.keep")
 
-  L <- forward_(x, n.gen, n.keep, lambda)
+  L <- forward_(zygotes, n.gen, n.keep, lambda)
 
   N <- L$N
   # renumbering ids from 1 to N
