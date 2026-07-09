@@ -9,6 +9,10 @@ GT <- function(phtab) {
     .Call(`_Mozza_GT`, phtab)
 }
 
+HBD_segments_ <- function(L) {
+    .Call(`_Mozza_HBD_segments_`, L)
+}
+
 cousins_1stdegree <- function(n, tile_length, Haplos, chr, dist, kinship = FALSE, fraternity = FALSE) {
     .Call(`_Mozza_cousins_1stdegree`, n, tile_length, Haplos, chr, dist, kinship, fraternity)
 }
@@ -97,8 +101,8 @@ make_haps_probs <- function(N, proba_haplos, length_tiles, Haplos, chr, dist, ib
     .Call(`_Mozza_make_haps_probs`, N, proba_haplos, length_tiles, Haplos, chr, dist, ibd)
 }
 
-make_inbreds <- function(N, n_haps, le1, le2, length_tiles, segments = FALSE) {
-    .Call(`_Mozza_make_inbreds`, N, n_haps, le1, le2, length_tiles, segments)
+make_inbreds <- function(N, n_haps, le1, le2, length_tiles) {
+    .Call(`_Mozza_make_inbreds`, N, n_haps, le1, le2, length_tiles)
 }
 
 make_inds <- function(n, n_haps, length_tiles) {

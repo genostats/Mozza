@@ -25,7 +25,7 @@ constructed from the template haplotypes in `haplos`. If phased is TRUE,
 instead of genotypes, two haplotypes are built for each individual.
 }
 \examples{
-#' # installs KGH if not already installed
+# installs KGH if not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

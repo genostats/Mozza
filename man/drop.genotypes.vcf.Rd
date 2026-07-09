@@ -23,7 +23,7 @@ Kinship Matrix
 If `x` is a list zygotes, creates a VCF file (with phased haplotypes)
 }
 \examples{
-#' # installs KGH if not already installed
+# installs KGH if not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

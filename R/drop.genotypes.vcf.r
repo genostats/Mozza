@@ -9,7 +9,7 @@
 #' @return NULL object
 #' @export
 #'
-#' @examples #' # installs KGH if not already installed
+#' @examples # installs KGH if not already installed
 #' if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 #' # loads a bed matrix of 1006 european haplotypes
 #' filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

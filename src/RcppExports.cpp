@@ -33,6 +33,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// HBD_segments_
+Rcpp::List HBD_segments_(Rcpp::List L);
+RcppExport SEXP _Mozza_HBD_segments_(SEXP LSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type L(LSEXP);
+    rcpp_result_gen = Rcpp::wrap(HBD_segments_(L));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cousins_1stdegree
 List cousins_1stdegree(int n, double tile_length, XPtr<matrix4> Haplos, IntegerVector chr, NumericVector dist, bool kinship, bool fraternity);
 RcppExport SEXP _Mozza_cousins_1stdegree(SEXP nSEXP, SEXP tile_lengthSEXP, SEXP HaplosSEXP, SEXP chrSEXP, SEXP distSEXP, SEXP kinshipSEXP, SEXP fraternitySEXP) {
@@ -346,8 +357,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // make_inbreds
-List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, NumericVector le2, double length_tiles, bool segments);
-RcppExport SEXP _Mozza_make_inbreds(SEXP NSEXP, SEXP n_hapsSEXP, SEXP le1SEXP, SEXP le2SEXP, SEXP length_tilesSEXP, SEXP segmentsSEXP) {
+List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, NumericVector le2, double length_tiles);
+RcppExport SEXP _Mozza_make_inbreds(SEXP NSEXP, SEXP n_hapsSEXP, SEXP le1SEXP, SEXP le2SEXP, SEXP length_tilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -356,8 +367,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type le1(le1SEXP);
     Rcpp::traits::input_parameter< NumericVector >::type le2(le2SEXP);
     Rcpp::traits::input_parameter< double >::type length_tiles(length_tilesSEXP);
-    Rcpp::traits::input_parameter< bool >::type segments(segmentsSEXP);
-    rcpp_result_gen = Rcpp::wrap(make_inbreds(N, n_haps, le1, le2, length_tiles, segments));
+    rcpp_result_gen = Rcpp::wrap(make_inbreds(N, n_haps, le1, le2, length_tiles));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -634,6 +644,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_GQ", (DL_FUNC) &_Mozza_GQ, 1},
     {"_Mozza_GT", (DL_FUNC) &_Mozza_GT, 1},
+    {"_Mozza_HBD_segments_", (DL_FUNC) &_Mozza_HBD_segments_, 1},
     {"_Mozza_cousins_1stdegree", (DL_FUNC) &_Mozza_cousins_1stdegree, 7},
     {"_Mozza_drop_genotypes", (DL_FUNC) &_Mozza_drop_genotypes, 5},
     {"_Mozza_drop_genotypes_to_vcf", (DL_FUNC) &_Mozza_drop_genotypes_to_vcf, 9},
@@ -656,7 +667,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Mozza_liabilitySelectedIndsProbs", (DL_FUNC) &_Mozza_liabilitySelectedIndsProbs, 15},
     {"_Mozza_make_haps", (DL_FUNC) &_Mozza_make_haps, 6},
     {"_Mozza_make_haps_probs", (DL_FUNC) &_Mozza_make_haps_probs, 7},
-    {"_Mozza_make_inbreds", (DL_FUNC) &_Mozza_make_inbreds, 6},
+    {"_Mozza_make_inbreds", (DL_FUNC) &_Mozza_make_inbreds, 5},
     {"_Mozza_make_inds", (DL_FUNC) &_Mozza_make_inds, 3},
     {"_Mozza_make_inds_probs", (DL_FUNC) &_Mozza_make_inds_probs, 3},
     {"_Mozza_make_pairs", (DL_FUNC) &_Mozza_make_pairs, 7},

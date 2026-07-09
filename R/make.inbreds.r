@@ -22,7 +22,7 @@
 #' and `segments` (if applicable).
 #' @export
 #'
-#' @examples #' # installs KGH if not already installed
+#' @examples # installs KGH if not already installed
 #' if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 #' # loads a bed matrix of 1006 european haplotypes
 #' filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
@@ -52,9 +52,9 @@ make.inbreds <- function(nb.inds, ntiles, f, a, hbd.length, non.hbd.length, tile
       stop("Inbreeding parameters should have both length equal to 1 or to nb.inds")
   }
  
-  L <- make_inbreds(nb.inds, ntiles, hbd.length, non.hbd.length, tile.length, segments)
-
-  # L <- make_inbreds(nb.inds, hbd.length, non.hbd.length, tile.length, 
-  #                haplos@bed, haplos@snps$chr, haplos@snps$dist, segments)
+  L <- make_inbreds(nb.inds, ntiles, hbd.length, non.hbd.length, tile.length)
+  if(segments) {
+    L$segments <- HBD_segments_(L$zygotes)
+  }
   L
 }

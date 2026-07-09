@@ -73,7 +73,7 @@ component in each deme, and `G.adj` is offsetted accordingly. The resulting liab
 unit variance.
 }
 \examples{
-#' # installs KGH if not already installed
+# installs KGH if not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

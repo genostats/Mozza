@@ -52,7 +52,7 @@ and the mean non-HBD length is \eqn{\frac{1}{af}}{1/(af)}.
 If \code{segments = TRUE} then a list of data frame giving the position of HBD segments (in cM) is returned.
 }
 \examples{
-#' # installs KGH if not already installed
+# installs KGH if not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

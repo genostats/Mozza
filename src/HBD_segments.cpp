@@ -11,7 +11,8 @@
 namespace mozza {
 
 // segments partagés HBD par les deux haplotypes du zygote
-segments HBD_segments(zygote & Z) {
+// mettre shift = 1 pour avoir des R-indices pour les chromosomes
+segments HBD_segments(zygote & Z, int shift = 0) {
   segments HBD;
   for(int i = 0; i < Z.first.chrs; i++)  {
     // on merge les bpoints 
@@ -27,10 +28,10 @@ segments HBD_segments(zygote & Z) {
       Z.first.forward_cursor(b); 
       Z.second.forward_cursor(b);
       if(HBD_at_point(Z) && b > a) {
-        if(HBD.chr.size() > 0 && i == HBD.chr.back() && a == HBD.end.back()) { // fusion avec le segment précédent
+        if(HBD.chr.size() > 0 && i + shift == HBD.chr.back() && a == HBD.end.back()) { // fusion avec le segment précédent
           HBD.end.back() = b;
         } else { // nouveau segment
-          HBD.chr.push_back(i);
+          HBD.chr.push_back(i + shift);
           HBD.beg.push_back(a);
           HBD.end.push_back(b);
         }
@@ -42,3 +43,5 @@ segments HBD_segments(zygote & Z) {
 }
 
 }
+
+

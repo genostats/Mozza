@@ -37,7 +37,7 @@ There will be `nb.haps` haplotypes on each deme. `nb.haps` could be a vector giv
 different number of haplotypes for each deme.
 }
 \examples{
-#' # installs KGH if not already installed
+# installs KGH if not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

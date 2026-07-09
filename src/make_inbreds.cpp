@@ -2,7 +2,6 @@
 #include <Rcpp.h>
 #include "Mozza.h"
 #include "gaston/matrix4.h"
-#include "hbd_segments.h"
 using namespace Rcpp;
 
 // cette fonction fait *des pointeurs vers* des individus avec des haplos 
@@ -45,7 +44,7 @@ std::vector<double> make_inbreds_vecle(int n, T le1, T le2, std::vector<mozza::z
 }
 
 //[[Rcpp::export]]
-List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, NumericVector le2, double length_tiles, bool segments = false) {
+List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, NumericVector le2, double length_tiles) {
   std::vector<mozza::zygote *> x; 
   List L;
 
@@ -60,6 +59,7 @@ List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, Numeri
   ZYG.attr("class") = CharacterVector::create("zygote");
   L["zygotes"] = ZYG;
 
+  /*
   if(segments) {
     List S(N);
     for(int i = 0; i < N; i++) {
@@ -68,38 +68,8 @@ List make_inbreds(unsigned int N, unsigned int n_haps, NumericVector le1, Numeri
       S[i] = D;
     }
     L["segments"] = S;
-  }
+  }*/
+
   return L;
 }
-
-
-/*
- * ye old version (which created 
- * the bed matrix)
- *
- 
-List make_inbreds(int N, NumericVector le1, NumericVector le2, double length_tiles, XPtr<matrix4> Haplos, 
-                  IntegerVector chr, NumericVector dist, bool segments = false) {
-  std::vector<mozza::zygote> x; 
-  int n_haps = Haplos->ncol; // chaque haplotype = un "individu"
-  List L;
-  if(le1.size() == 1) {
-    L["inb"] = make_inbreds(N, le1[0], le2[0], x, n_haps, length_tiles);
-  } else {
-    L["inb"] = make_inbreds_vecle(N, le1, le2, x, n_haps, length_tiles);
-  }
-  mozza::mappedBed<IntegerVector, NumericVector> MB(Haplos, chr, dist);
-  L["bed"] = zygote_to_bed_matrix(x, MB);
-  if(segments) {
-    List S(N);
-    for(int i = 0; i < N; i++) {
-      auto seg = HBD_segments(x[i]);
-      DataFrame D = DataFrame::create( Named("chr") = wrap(seg.chr), Named("beg") = wrap(seg.beg), Named("end") = wrap(seg.end) );
-      S[i] = D;
-    }
-    L["segments"] = S;
-  }
-  return L;
-}
-*/
 

@@ -14,7 +14,7 @@
 #' The bed matrix will have extra columns in @ped giving the probabilities used for the deme of the individuals.
 #' @export
 #'
-#' @examples #' # installs KGH if not already installed
+#' @examples # installs KGH if not already installed
 #' if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 #' # loads a bed matrix of 1006 european haplotypes
 #' filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")

@@ -13,7 +13,7 @@
 namespace mozza {
 
 // segments partagés HBD par les deux haplotypes du zygote
-segments HBD_segments(zygote & Z);
+segments HBD_segments(zygote & Z, int shift);
 
 }
 

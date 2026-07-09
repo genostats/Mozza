@@ -28,7 +28,7 @@ There will be `nb.inds` individuals on each deme. `nb.inds` could be a vector gi
 different number of individuals for each deme.
 }
 \examples{
-#' # installs KGH is not already installed
+# installs KGH is not already installed
 if(!require("KGH")) install.packages("KGH", repos="https://genostats.github.io/R/")
 # loads a bed matrix of 1006 european haplotypes
 filepath <- system.file("extdata", "1KG_haplos.bed", package = "KGH")
